@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  deadline: 2018-06-14 17:42:54
+  description: MyText
+  name: MyText
+  numberpages: 1
+  status: 1
+  type: 1
+  user: one
+  admin: one
+  level: 1
+
+two:
+  deadline: 2018-06-14 17:42:54
+  description: MyText
+  name: MyText
+  numberpages: 1
+  status: 1
+  type: 1
+  user: two
+  admin: two
+  level: 1

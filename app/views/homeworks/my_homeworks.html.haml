@@ -1,0 +1,31 @@
+%body.white-background
+
+= render "partials/noticeToast"
+
+.row
+	.col.s12
+		%ul.tabs
+			%li.tab.col.s3
+				%a{:href => "#test1"} Disponibles
+			%li.tab.col.s3
+				%a.active{:href => "#test2"} En proceso
+			%li.tab.col.s3
+				%a{:href => "#test3"} Terminadas
+
+
+#test1.row
+	-if @homeworks_disponibles
+		=render @homeworks_disponibles
+
+#test2.row
+	-if @homeworks_en_proceso
+		=render @homeworks_en_proceso
+
+#test3.row
+	-if @homeworks_finalizadas
+		=render @homeworks_finalizadas
+
+
+
+/ .row
+/   =render @homeworks

@@ -1,0 +1,47 @@
+<!-- Buscador de los estudiantes de la página principal de los administradores -->
+
+<div class="row center-xs box">
+
+	<div class="col-xs-12">
+
+		<div class="">
+
+			<div class="">
+		     <%=form_tag "/search/search_homeworks", method: :get,class:"" , remote: true, id:"search-form" do  %>
+
+		      
+		      <div class="input-field col s12 l3">
+		      	<%= select_tag :tipo, options_for_select(TC::Type.all.ordenados.collect{ |u| [u.tipo, u.id] }) ,include_blank: "",prompt: "Tipo de tarea", class:"browser-default border-bottom-selector" %>
+
+		      </div>
+
+		      <div class="input-field col s12 l2">
+		      	<%=text_field_tag :minPrice, nil, placeholder: "Precio minimo", class:"labelBuscador" %>
+		      </div>
+
+		      <!-- <div class="input-field col s12 l2">
+		      	<%=text_field_tag :maxPrice, nil, placeholder: "Precio máximo", class:"labelBuscador" %>
+		      </div> -->
+
+		      
+
+          <div class="input-field col s12 l2">
+		      	<button class="btn buttonBuscador" type="submit">
+		      		<%= t("Buscar") %>
+		      </button>
+		      </div>
+
+
+        	<% end %>
+			</div>
+
+
+
+		</div>
+
+	</div>
+
+</div>
+
+
+

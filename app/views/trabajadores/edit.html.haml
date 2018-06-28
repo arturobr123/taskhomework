@@ -1,0 +1,17 @@
+/editar un estudiante
+%body.white-background
+
+= render "partials/noticeToast"
+
+%h4.text-center
+	="Editando mi información"
+
+/= render "partials/noticeToast"
+
+%center
+	=circle_img @admin.avatar.url,150 
+
+= render 'form'
+
+
+

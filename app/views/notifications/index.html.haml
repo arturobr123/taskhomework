@@ -1,0 +1,14 @@
+/esta la vista de TODAS las notificaciones
+%body.white-background
+
+%h4.text-center
+	="Notificaciones"
+
+= link_to t("marcar todas las notificaciones como vistas"), view_all_notifications_path ,class:"underline" 
+
+%ul.collection#notifications
+	=render_notifications @notifications
+
+%div#pagination.text-center
+	= will_paginate @notifications
+

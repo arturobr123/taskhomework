@@ -1,0 +1,13 @@
+%body.white-background
+
+= render "partials/noticeToast"
+
+%h4.text-center
+	="Nueva propuesta"
+
+%h5.text-center
+	="Tarea:#{@homework.name}"
+
+= render 'form'
+
+= link_to 'Back', proposals_path

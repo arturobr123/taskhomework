@@ -1,0 +1,15 @@
+<h1>Main#home</h1>
+<p>Find me in app/views/main/home.html.erb</p>
+<h4>HOLA MUNDO</h4>
+
+
+<li>  <%= link_to "Sign out" , destroy_user_session_path, method: :delete ,class:"black-text"%>   </li>
+
+
+<% if current_admin %>
+	<h4>I am admin</h4>
+<% end %>
+
+<% if current_user %>
+	<h4>I am user</h4>
+<% end %>

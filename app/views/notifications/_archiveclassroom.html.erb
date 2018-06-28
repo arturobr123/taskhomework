@@ -1,0 +1,15 @@
+<!-- Parcial de notificacion de cuando se subió un nuevo archivo al salon -->
+<li class="collection-item avatar">
+
+      <i class="material-icons circle blue">attach_file</i>
+
+      <span class="title"><%= link_to "El trabajador #{notification.item.classroom.admin.name} ha subido un archivo a tu tarea: #{notification.item.classroom.homework.name}. Con el nombre: #{notification.item.archivo_file_name}" , notification.item.classroom, class:"black-text"  %></span>
+
+      <p>Fecha: <%= fechaBonita notification.created_at %> </p> 
+
+      <%= link_to notificationsworker_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
+            <i class="material-icons">check</i>
+
+      <% end %>
+
+</li>

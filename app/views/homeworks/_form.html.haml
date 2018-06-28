@@ -1,0 +1,74 @@
+= form_for @homework,:html => { multipart: true } do |f|
+  - if @homework.errors.any?
+    #error_explanation
+      %h4.text-center.red-text= "#{pluralize(@homework.errors.count, "error")} prohibited this homework from being saved:"
+      %ul.text-center
+        - @homework.errors.full_messages.each do |message|
+          %li= message
+
+
+
+  .row.center-align
+    .col.s10.offset-s1
+
+      .row.center-align
+
+
+        .div.input-field.col.s12.l4
+          = f.text_field :name, autofocus: true, class:"" ,id:"name"
+          = f.label "Nombre", class:"blue-text", for:"name"
+
+        / .div.input-field.col.s12.l4
+        /   = f.text_field :numberpages, class:"" ,id:"numberpages"
+        /   = f.label "Número de páginas", class:"blue-text", for:"numberpages"
+
+
+        .div.input-field.col.s12.l4
+          =f.select :tipo, TC::Type.all.ordenados.collect { |u| [u.tipo, u.id] }, include_blank: "", placeholder:"Placeholder"
+          = f.label "Tipo de tarea", class:"blue-text"
+
+        .div.input-field.col.s12.l4
+          =f.select :level, TC::Level.all.collect { |u| [u.level, u.id] }, include_blank: "", placeholder:"Placeholder"
+          = f.label "Dificultad de la tarea", class:"blue-text", for:"level"
+
+        .div.input-field.col.s12.l2
+          =f.date_field :deadline ,type:"text" , class:"datepicker disponible",id:"deadline"
+          %label.blue-text{:for => "deadline"}
+            ="Fecha de entrega"
+
+        .div.input-field.col.s6.l2
+          = f.number_field :minPrice, class:"" ,id:"minPrice"
+          = f.label "Minimo(pesos)", class:"blue-text", for:"minPrice"
+
+        .div.input-field.col.s6.l2
+          = f.number_field :maxPrice, class:"" ,id:"maxPrice"
+          = f.label "Maximo(pesos)", class:"blue-text", for:"maxPrice"
+
+        .div.col.s12.l6
+          %div.file-field.input-field
+            %div.btn
+              %span
+                Files
+              = file_field_tag "files[]", multiple: true
+            %div.file-path-wrapper
+              %input.file-path.validate{:type => "text"}
+
+
+        .div.input-field.col.full-width
+          = f.text_area :description,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Escribe aqui"
+          = f.label "Descripción", class:"blue-text",for:"textarea1"
+
+
+        /= file_field_tag "files[]", multiple: true
+
+
+        
+
+                
+
+
+
+
+
+      .actions.top-space2
+        = f.submit "Publicar", class:"btn full-width"

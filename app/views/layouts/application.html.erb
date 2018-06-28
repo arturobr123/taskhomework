@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GamificationFaurecia</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <body>
+
+
+  	<!--  Barra de navegacion de los usuarios  -->    
+    <% if user_signed_in? %>  
+          <%= render "partials/navUser" %>
+        <main class="mdl-layout__content">
+          <div class="page-content">  <%= yield %> </div>
+        </main>
+
+    <% end %> 
+
+
+    <!--  Barra de navegacion de los administradores  -->    
+    <% if admin_signed_in? %>  
+          <%= render "partials/navAdmin" %>
+        <main class="mdl-layout__content">
+          <div class="page-content">  <%= yield %> </div>
+        </main>
+
+    <% end %> 
+
+    <% if !current_user and !current_admin %>
+
+      <%= render "partials/navGuess" %>
+
+    <% end %>
+
+
+
+    <% if !current_user and !current_admin %>
+
+      <%= yield %>
+
+    <% end %>
+
+
+  </body>
+</html>

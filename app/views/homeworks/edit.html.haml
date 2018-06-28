@@ -1,0 +1,13 @@
+
+%body.white-background
+
+= render "partials/noticeToast"
+
+%h4.text-center
+	="Editando tarea"
+
+= render 'form'
+
+= link_to 'Show', @homework
+\|
+= link_to 'Back', homeworks_path

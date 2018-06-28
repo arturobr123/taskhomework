@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  admin: one
+  homework: one
+  cost: 1.5
+  notes: MyText
+  status: 
+
+two:
+  admin: two
+  homework: two
+  cost: 1.5
+  notes: MyText
+  status: 

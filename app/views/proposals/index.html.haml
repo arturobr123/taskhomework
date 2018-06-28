@@ -1,0 +1,29 @@
+%h1 Listing proposals
+
+%table
+  %thead
+    %tr
+      %th Admin
+      %th Homework
+      %th Cost
+      %th Notes
+      %th Status
+      %th
+      %th
+      %th
+
+  %tbody
+    - @proposals.each do |proposal|
+      %tr
+        %td= proposal.admin
+        %td= proposal.homework
+        %td= proposal.cost
+        %td= proposal.notes
+        %td= proposal.status
+        %td= link_to 'Show', proposal
+        %td= link_to 'Edit', edit_proposal_path(proposal)
+        %td= link_to 'Destroy', proposal, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Proposal', new_proposal_path

@@ -1,0 +1,260 @@
+.full-heigth {
+    height: 100%;
+    min-height: 1000px !important;
+}
+
+.width70{
+	width: 70%;
+	min-width: 500px !important;
+}
+
+.big-padding{
+	padding: 2em 1.5em;
+}
+
+.top15{
+	margin-top: 15px !important;
+}
+
+.top30{
+	margin-top: 30px !important;
+}
+
+.top45{
+	margin-top: 45px;
+}
+
+.topMinus5{
+	margin-top: -5px;
+}
+
+.bottom15{
+  margin-bottom: 15px !important;
+}
+
+.bottom30{
+	margin-bottom: 30px !important;
+}
+
+.left15{
+  margin-left: 15px !important;
+}
+
+
+.text-center{
+	text-align: center;
+	
+}
+
+.text-left{
+  text-align: left;
+}
+
+.ocultar{
+	display: none;
+}
+
+.full-width{
+	width: 100%;
+
+}
+
+.middle-width{
+  width: 50%;
+
+}
+
+.white-background{
+	background-color: white;
+	background-size: cover;
+}
+
+
+
+
+
+
+/* Animaciones */
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fast {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+
+
+.lighter{
+	font-weight:bold;
+}
+
+.fontSize18{
+  font-size: 18px;
+}
+
+.paddingLeft10{
+  padding-left: 10px;
+}
+
+
+.styleMedal{
+  width: 30px;
+  height: 50px;
+  -webkit-filter: contrast(140%) saturate(120%); /* Safari 6.0 - 9.0 */
+    filter: contrast(140%) saturate(120%);
+}
+
+.opacidad15{
+  opacity: 0.15;
+}
+
+.opacidad85{
+  opacity: 0.85;
+}
+
+
+.centerObject{
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 20% !important;
+}
+
+
+
+
+
+/* Shadows */
+
+.shadow-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.shadow-2 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.shadow-3 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.shadow-4 {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.shadow-5 {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+
+
+
+.iconRanking{
+  font-size: 42px !important;
+}
+
+
+
+.line{
+    display: inline;
+}
+
+
+.fecha_pequena {
+  font-size: 12px;
+}
+
+
+.preloaderDiv {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.borderTop{
+  border-top-color: #D3D3D3;
+  border-top-style: solid;
+  margin-top: 10px;
+}
+
+
+.pregunta_texto{
+  font-size:1.2em;
+  font-weight:bold;
+}
+
+
+
+.notification-badge {
+    position: relative;
+    right: -8px;
+    top: -72px;
+    color: #ffffff;
+    background-color: #FF4081;
+    margin: 0 -.8em;
+    border-radius: 50%;
+    padding: 3px 6px;
+    margin-left: 1px;
+}
+
+.borde_radius50{
+  border-radius: 50px;
+}
+
+
+.opacity90{
+  opacity: 0.90;
+}
+
+
+.parent-flex{
+  display: flex;
+}
+
+
+.texto_justificado{
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+
+.border-line{
+  border-bottom: 3px solid rgba(0, 0, 255, 0.050);
+}
+
+
+.border-line-creditcard{
+  border-bottom: 3px solid rgba(0, 0, 255, 0.30);
+}
+
+
+
+
+
+
+
+
+

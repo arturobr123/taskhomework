@@ -1,0 +1,28 @@
+body{
+	background-color: #eee;
+}
+
+.remotipart{
+	display:none;
+}
+
+.main-background{
+	background-image: url(#{asset_path('fondo.jpg')});
+	background-size: cover;
+		
+}
+
+.white-background{
+	background-color: white;
+	background-size: cover;
+
+}
+
+
+#notificationButton{
+	width: 5em;
+	height: 4em;
+	display:inline-block;
+	text-decoration:none;
+	text-align:center;
+}

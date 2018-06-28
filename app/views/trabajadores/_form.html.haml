@@ -1,0 +1,60 @@
+= form_for @admin do |f|
+  - if @admin.errors.any?
+    #error_explanation
+      %h4.text-center.red-text= "#{pluralize(@user.errors.count, "error")} prohibited this worker from being saved:"
+      %ul.text-center
+        - @admin.errors.full_messages.each do |message|
+          %li= message
+
+
+  .row.center-align
+    .col.s10.offset-s1
+
+      .row.center-align.top15
+
+
+        .div.input-field.col.s12.l4
+          = f.text_field :name, autofocus: true, class:"" ,id:"name"
+          = f.label "Name", class:"blue-text", for:"name"
+
+        / .div.input-field.col.s12.l4
+        /   = f.text_field :firs_last_name, class:"", id:"firs_last_name"
+        /   = f.label "Last name", class:"blue-text" , for:"firs_last_name"
+
+        / .div.input-field.col.s12.l4
+        /   = f.text_field :second_last_name, class:"" , id:"second_last_name"
+        /   = f.label "Middle name", class:"blue-text" , for:"second_last_name"
+
+
+        .div.col.s12.l4
+          %div.file-field.input-field
+            %div.btn
+              %span
+                Foto perfil
+              =f.file_field(:avatar, class: '')
+            %div.file-path-wrapper
+              %input.file-path.validate{:type => "text"}
+
+
+
+      .actions.top-space2
+        = f.submit "Guardar", class:"btn full-width"
+
+
+
+%br
+%br
+%br
+%br
+%br
+%br
+
+
+
+
+
+
+
+
+
+

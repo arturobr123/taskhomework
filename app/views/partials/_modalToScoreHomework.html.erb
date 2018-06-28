@@ -1,0 +1,19 @@
+<!-- Este modal era pra ver las respuestas del juego del estudiante, este modal aparece en el perfil del estudiante -->
+  <div id="modalToScore" class="modal">
+    <div class="modal-content">
+      <h4 class="blue-text">Califica la tarea</h4>
+
+
+      <%= form_tag "/classrooms/score", id:"botonRespuesta" ,method: :get do %>
+        <!-- <%= text_field_tag :score, nil %> -->
+        <%= select_tag :score, options_for_select(TC::Score.all.collect{ |u| [u.id.to_s + " " + u.score, u.id] }),include_blank: "",prompt: "Puntuación", class:"browser-default border-bottom-selector" %>
+        <%= text_field_tag :id, nil,class:"ocultar", value: @classroom.id %>
+        <%= button_tag "Calificar" , class: 'btn-large full-width top15' , type: :submit %>
+      <% end %>
+
+
+    </div>
+    <!-- <div class="modal-footer">
+      <a  class="modal-action modal-close waves-effect waves-green btn-flat">De acuerdo</a>
+    </div> -->
+  </div>

@@ -1,0 +1,80 @@
+.col.s12.m4
+  .card.z-depth-2
+    .card-content
+      %span.card-title
+        = homework.name
+      %p
+        %b
+          ="Descripción:"
+      .texto_justificado
+        = simple_format(homework.description)
+
+      .parent-flex.top15
+        %div
+          %b
+            ="Tipo:"
+          =TC::Type.find(homework.tipo).tipo
+
+        %div.left15
+          %b
+            ="Fecha de entrega:"
+          = fechaBonita homework.deadline
+
+
+      .parent-flex.top15
+        %p
+          %b
+            ="Propuestas:"
+          = homework.proposals.count
+
+        %p.left15
+          %b
+            ="Precio:"
+          /= "$100 - $500"
+          = "$" + homework.minPrice.to_s + " - $" + homework.maxPrice.to_s
+
+
+      %div.top15
+        %b
+          ="Archivos:"
+        - homework.archives.each do |archive|
+          %p
+            = link_to archive.archivo_file_name, archive.archivo.url(:original, false)
+
+
+    
+
+      -if current_admin && !!homework.classrooms.first && homework.classrooms.first.scoreTrabajador
+        %p.top15
+          %b
+            ="Calificación:"
+          = homework.classrooms.first.scoreTrabajador.to_s + ": "
+          =TC::Score.find(homework.classrooms.first.scoreTrabajador).score
+
+      %p.top15.fecha_pequena
+        = fechaBonita homework.created_at
+
+
+    .card-action
+      =link_to "Entrar", homework, class:"pink-text"
+
+      /si el usuario es dueño de esta tarea
+      -if current_user
+        -if current_user.id == homework.user.id
+          =link_to "Editar", edit_homework_path(homework),class:"pink-text"
+          = link_to 'Destruir', homework, method: :delete, data: { confirm: 'Are you sure?' },class:"pink-text"
+
+      /si la tarea ya tiene un salon
+      -if homework.classrooms.count > 0
+        =link_to "Salon", homework.classrooms.first, class:"blue-text"
+
+
+
+
+
+
+
+
+
+
+

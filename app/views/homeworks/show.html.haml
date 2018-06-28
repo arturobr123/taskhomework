@@ -1,0 +1,98 @@
+%head
+  %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+
+%body.white-background
+  = render "partials/noticeToast"
+
+/%a{:href => "#mostrar"} link text
+
+.row
+  /columna de la tarea
+  .col.s12.l3.lighten-4
+
+    .card.z-depth-2
+      .card-content
+        %span.card-title
+          = @homework.name
+        %p
+          %b
+            ="Descripción:"
+        .texto_justificado
+          = simple_format(@homework.description)
+
+        %p.top15
+          %b
+            ="Tipo:"
+        =TC::Type.find(@homework.tipo).tipo
+
+        %p.top15
+          %b
+            ="Fecha de entrega:"
+        = fechaBonita @homework.deadline
+
+        %div.top15
+          %b
+            ="Archivos:"
+          - @homework.archives.each do |archive|
+            %p
+              = link_to archive.archivo_file_name, archive.archivo.url(:original, false)
+
+        %p.top15
+          %b
+            ="Propuestas:"
+          = @homework.proposals.count
+
+        %p.top15
+          %b
+            ="Precio:"
+          = "$" + @homework.minPrice.to_s + " - $" + @homework.maxPrice.to_s
+
+        %p.top15.fecha_pequena
+          = fechaBonita @homework.created_at
+
+
+
+  /Columna de las propuestas
+  .col.s12.l9.lighten-4.full-heigth
+
+    %center
+      %h4
+        %b
+          ="Propuestas:#{@homework.proposals.count}"
+
+    -if @homework.classrooms.first
+      %div
+        =link_to "Ir al salon", @homework.classrooms.first, class:"btn blue"
+
+    -if current_admin && !@homework.classrooms.first
+      %div.top15
+      =link_to "Agregar nueva propuesta", new_proposal_path(id_homework: @homework.id)
+
+    %div.top15
+
+    = render @proposals
+
+
+%div#pagination.text-center
+  = will_paginate @proposals
+
+
+
+
+%br
+%br
+%br
+
+
+  /.col.s3.l1.lighten-4.full-heigth
+
+
+
+
+/ %p#mostrar
+/   ="HOLA MUNDO"
+
+
+
+/= link_to 'Edit', edit_homework_path(@homework)
+

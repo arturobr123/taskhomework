@@ -1,0 +1,193 @@
+%head
+	%meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+
+%body.white-background
+	= render "partials/noticeToast"
+
+.row
+	/columna de la tarea
+	/full-heigth
+	.col.s12.l3.lighten-4
+
+		.card.z-depth-2
+			.card-content
+				%span.card-title
+					= @homework.name
+				%p
+					%b
+						="Descripción:"
+				.texto_justificado
+					= simple_format(@homework.description)
+
+				%p.top15
+					%b
+						="Tipo:"
+				=TC::Type.find(@homework.tipo).tipo
+
+				%p.top15
+					%b
+						="Fecha de entrega:"
+				= fechaBonita @homework.deadline
+
+				%div.top15
+					%b
+						="Archivos:"
+					- @homework.archives.each do |archive|
+						%p
+							= link_to archive.archivo_file_name, archive.archivo.url(:original, false)
+
+				%p.top15
+					%b
+						="Propuestas:"
+					= @homework.proposals.count
+
+				%p.top15
+					%b
+						="Precio:"
+					= "$" + @homework.minPrice.to_s + " - $" + @homework.maxPrice.to_s
+
+				%p.top15.fecha_pequena
+					= fechaBonita @homework.created_at
+
+
+
+
+		.col.s12.l12.lighten-4
+			-if current_admin && @classroom.archive_classrooms.count > 0 && @homework.status != 3
+
+				=link_to "Finalizar tarea", finish_homework_path(homework_id: @homework.id,proposal_id:@proposal.id),data: { confirm: 'Estás seguro de ya terminar esta tarea?' }, class:"btn blue"
+
+			-if @homework.status == 3
+				%b.top15
+					%p Tarea finalizada
+
+		.col.s12.l12.lighten-4	
+			-if current_user && @classroom.archive_classrooms.count > 0 && @homework.status == 3 && !@classroom.scoreTrabajador
+
+				=link_to "Calificar", show_to_score_path(id: @classroom.id), :remote => true , class:"btn blue"
+				
+
+	/Columna de las propuestas #############################################################
+	.col.s12.l9.lighten-4.full-heigth
+
+		%center
+			%h4
+				%b
+					="Salon"
+
+	
+		.col.s12.l6
+			/ESTUDIANTE ######
+			.card.z-depth-2
+				.card-content
+					%span.card-title
+						= "Estudiante"
+					%p
+						/=circle_img @user.avatar.url,50
+						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@user.avatar.url}", :width => "50", :class => "circle cover"}
+						= @user.name + " " + @user.firs_last_name
+
+					.parent-flex
+						%div.top15
+							%b
+								="Tareas:"
+							= @user.homeworks.where(status: 3).count
+
+						%div.top15.left15
+							%b
+								="Fecha de ingreso:"
+							= fechaBonita @user.created_at
+
+
+		.col.s12.l6
+			/TRABAJADOR ######
+			.card.z-depth-2
+				.card-content
+					%span.card-title
+						= "Trabajador"
+					%p
+						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@admin.avatar.url}", :width => "50", :class => "circle cover"}
+						= @admin.name
+
+					.parent-flex
+						%div.top15
+							%b
+								="Tareas:"
+							/por ahora solo cuenta las propuestas, pero de ahi hay que filtar
+							/las que el status ya fue terminado, es decir, cuantas tareas a hecho
+							= @admin.proposals.where(status: 3).count
+
+						%div.top15.left15
+							%b
+								="Rango:"
+							= @admin.rank
+
+						%div.top15.left15
+							%b
+								="Fecha de ingreso:"
+							= fechaBonita @user.created_at
+
+
+
+		/SUBIR NUEVOS ARCHIVOS AL SALON
+
+		-if current_admin
+			=form_tag('/classrooms/uploadFiles', multipart: true) do
+
+				.col.s12.l10.top15
+					%div.file-field.input-field
+						%div.btn
+							%span
+								Add new files
+							= file_field_tag "files[]", multiple: true
+						%div.file-path-wrapper
+							%input.file-path.validate{:type => "text"}
+
+				=text_field_tag :id, nil,class:"ocultar", value: @classroom.id
+
+				.col.s12.l2.top15
+					%div.file-field.input-field
+						=button_tag "Subir" , class: 'btn blue' , type: :submit
+
+
+
+		/ARCHIVOS YA SUBIDOS
+		.col.s12.l12.top15
+			%center
+				%h5
+					%b
+						="Archivos:"
+
+		/CHECA SI HAY ARCHIVOS YA SUBIDOS
+		-if @classroom.archive_classrooms.count <= 0
+			.col.s12.l12.top15
+				.card.z-depth-4
+					.card-content.text-center
+						= "Aun no hay archivos subidos"
+
+		/ITERA ENTRE CADA ARCHIVO Y LO MUESTRA
+		- @classroom.archive_classrooms.each do |archive|
+			.col.s12.l12
+				.card.z-depth-2
+					.card-content
+						= link_to archive.archivo_file_name, archive.archivo.url(:original, false)
+
+
+		/ -if current_admin
+		/ 	.col.s12.l12.top15
+		/ 		%p.fontSize18
+		/ 			="*Se aceptan pdf, excel, word, jpg, png, videos."
+
+
+
+/est es solo para mostrar el modal de calificar
+#modalRespuestas
+
+
+
+/.col.s3.l1.lighten-4.full-heigth
+
+/= link_to 'Edit', edit_homework_path(@homework)
+
+
+

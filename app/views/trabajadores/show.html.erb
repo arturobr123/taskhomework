@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body class="white-background">
+
+  <%= render "partials/noticeToast" %>
+
+  <center class="top30"> <%=circle_img @admin.avatar.url,150  %> </center>
+
+  <center>
+    <h4> <%=@admin.name %> </h4>
+  </center>
+
+
+  <div class="row center-align">
+    <div class="col s10 l10 offset-l1 offset-s1 border-line opacity90"></div>
+    <div class="col s10 l10 offset-l1 offset-s1 top15">
+
+      <div class="row center-align">
+        <div class="col s12 l4">
+          <i class="material-icons medium centerObject pink-text">work</i>
+          <p class="text-center lighter">Tareas hechas:</p>
+          <p class="text-center lighter"><%= @admin.proposals.where(status: 3).count %></p>
+        </div>
+        <div class="col s12 l4">
+          <i class="material-icons medium centerObject pink-text">star</i>
+          <p class="text-center lighter">Calificación:</p>
+          <p class="text-center lighter"><%= @admin.rank %></p>
+        </div>
+        <div class="col s12 l4">
+          <i class="material-icons medium centerObject pink-text">date_range</i>
+          <p class="text-center lighter">Fecha de registro:</p>
+          <p class="text-center lighter"><%= fechaBonita @admin.created_at %></p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+
+  <%-if current_admin.id == @admin.id  %>
+    <center>
+        
+      <%= form_tag charges_path do %>
+        <article>
+          <% if flash[:error].present? %>
+            <div id="error_explanation">
+              <p><%= flash[:error] %></p>
+            </div>
+          <% end %>
+      <!--     <label class="amount">
+            <span>Amount: $5.00</span>
+          </label> -->
+        </article>
+
+        <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-description="Mi tarjeta"
+                data-amount="500"
+                data-email="<%= current_admin.email %>"
+                data-label="Subir tu tarjeta"
+                data-locale="auto"></script>
+
+        <% end %>
+
+    </center>
+  <% end %>
+
+  
+
+</body>
+</html>

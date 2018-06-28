@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  homework: one
+  status: 1
+  user: one
+  admin: one
+
+two:
+  homework: two
+  status: 1
+  user: two
+  admin: two

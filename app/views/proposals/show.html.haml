@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Admin:
+  = @proposal.admin
+%p
+  %b Homework:
+  = @proposal.homework
+%p
+  %b Cost:
+  = @proposal.cost
+%p
+  %b Notes:
+  = @proposal.notes
+%p
+  %b Status:
+  = @proposal.status
+
+= link_to 'Edit', edit_proposal_path(@proposal)
+\|
+= link_to 'Back', proposals_path

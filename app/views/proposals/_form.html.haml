@@ -1,0 +1,40 @@
+= form_for @proposal do |f|
+  - if @proposal.errors.any?
+    #error_explanation
+      %h4.text-center.red-text= "#{pluralize(@proposal.errors.count, "error")} prohibited this proposal from being saved:"
+      %ul.text-center
+        - @proposal.errors.full_messages.each do |message|
+          %li= message
+
+
+  .row.center-align
+    .col.s10.offset-s1
+
+      .row.center-align
+
+
+        .div.input-field.col.s12.l6
+          = f.text_field :cost, autofocus: true, class:"" ,id:"cost"
+          = f.label "Precio", class:"blue-text", for:"cost"
+
+        .div.input-field.col.s4
+          =f.date_field :deadline ,type:"text" , class:"datepicker disponible",id:"deadline"
+          %label.blue-text{:for => "deadline"}
+            ="Fecha de entrega"
+
+        .div.input-field.col.full-width
+          = f.text_area :notes,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Como harás la tarea, porque debe elegirte a ti, etc."
+          = f.label "Comentarios", class:"blue-text",for:"textarea1"
+
+
+        .field.ocultar
+          = f.label :homework_id
+          = f.text_field :homework_id, value: @homework.id
+
+        .field.ocultar
+          = f.label :admin_id
+          = f.text_field :admin_id, value: current_admin.id
+
+      .actions.top-space2
+        = f.submit "Publicar", class:"btn full-width"
+

@@ -1,0 +1,7 @@
+{
+  "name": "gamificationFaurecia",
+  "private": true,
+  "dependencies": {
+    "material-datetime-picker": "^2.4.0"
+  }
+}

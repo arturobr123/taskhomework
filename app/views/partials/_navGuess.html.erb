@@ -1,0 +1,52 @@
+<!-- Esta es la barra de navegación del estudiante: vacantes, editar perfil y cerrar sesión -->
+<nav>
+    <div class="nav-wrapper">
+
+      <%= link_to "Task",home_page_path, class:"brand-logo", style: "text-decoration:none;"%>
+
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+      <!-- Menu escritorio  -->
+      <ul class="right hide-on-med-and-down">
+
+        <li>
+            <%= link_to "Quiero trabajar en task" , new_admin_session_path, class:"white-text right-space"%>
+        </li>
+
+        <li>
+            <%= link_to "Registrarse" , new_user_registration_path, class:"white-text right-space"%>
+        </li>
+
+        <li>
+            <%= link_to "Iniciar sesión" , new_user_session_path, class:"white-text right-space"%>
+        </li>
+
+      </ul>
+
+
+
+      <!-- Menu para telefono  -->
+      <ul class="side-nav" id="mobile-demo">
+        <li class = "logo"> <h4 class="pink-text text-center">Menu</h4> </li>
+        
+        <li>
+            <%= link_to "Quiero trabajar en task" , new_admin_session_path, class:"white-text right-space"%>
+        </li>
+
+        <li>
+            <%= link_to "Registrarse" , new_user_registration_path, class:"white-text right-space"%>
+        </li>
+
+        <li>
+            <%= link_to "Iniciar sesión" , new_user_session_path, class:"white-text right-space"%>
+        </li>
+
+      </ul>
+
+
+    </div>
+
+ </nav>
+
+
+

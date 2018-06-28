@@ -1,0 +1,43 @@
+.card.z-depth-2
+  .card-content
+    %span.card-title
+      = proposal.admin.name
+
+    .parent-flex
+
+      %div
+        %b
+          ="Rango:"
+        = proposal.admin.rank
+
+      %div.left15
+        %b
+          ="Número de tareas:"
+        = proposal.admin.proposals.where(status: 3).count
+
+    
+    %p.top15
+      %b
+        ="Notas:"
+    = simple_format(proposal.notes)
+
+    .parent-flex
+
+      %div.top15
+        %b
+          ="Costo:"
+        = proposal.cost
+
+      %div.top15.left15
+        %b
+          ="Fecha de entrega:"
+        = fechaBonita proposal.deadline
+
+      -if proposal.classroom
+        %div.top15.left15
+          %b.red-text
+            ="Elegido!"
+
+    -if current_user && !proposal.homework.classrooms.first
+      %div.top15
+        =link_to "Elegir",classrooms_path(homework_id: proposal.homework.id, admin_id: proposal.admin.id, proposal_id: proposal.id),method: :post,data: { confirm: 'Estás seguro de aceptar esta propuesta para tu tarea ?' },class:"pink-text", class:"btn"
