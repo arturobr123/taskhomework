@@ -17,13 +17,29 @@
 	-if @homeworks_disponibles
 		=render @homeworks_disponibles
 
+	-else
+		-if current_user
+			%center.top45
+				%h5
+					="No has creado tareas nuevas"
+
 #test2.row
 	-if @homeworks_en_proceso
 		=render @homeworks_en_proceso
 
+	-else
+		%center.top45
+			%h5
+				="No tienes tareas en proceso"
+
 #test3.row
 	-if @homeworks_finalizadas
 		=render @homeworks_finalizadas
+
+	-else
+		%center.top45
+			%h5
+				="No tienes ninguna tarea finalizada"
 
 
 

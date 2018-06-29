@@ -61,6 +61,11 @@ gem "will_paginate"
 #conekta para hacer pagos
 gem 'conekta'
 
+#para llenar el archivo seeds.rb con la informacion de la bd, informacion semilla
+gem 'seed_dump'
+
+#Amazon web services
+#gem 'aws-sdk', '~> 2.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
