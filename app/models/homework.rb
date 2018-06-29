@@ -32,7 +32,7 @@ class Homework < ApplicationRecord
 
 
   #validaciones
-  validates :area, presence: true
+  validates :tipo, presence: true
 
   
 end
