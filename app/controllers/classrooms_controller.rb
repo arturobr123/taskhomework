@@ -104,12 +104,12 @@ class ClassroomsController < ApplicationController
 
 
     #CREATE THE CHARGE
-    charge = Stripe::Charge.create(
-      :customer    => @homework.user.stripe_customer_token,
-      :amount      => 500 + @proposal.cost.to_i,
-      :description => @homework.name,
-      :currency    => 'usd'
-    )
+    # charge = Stripe::Charge.create(
+    #   :customer    => @homework.user.stripe_customer_token,
+    #   :amount      => 500 + @proposal.cost.to_i,
+    #   :description => @homework.name,
+    #   :currency    => 'usd'
+    # )
 
     respond_to do |format|
       if @homework.update!(status: 3) && @proposal.update!(status: 3)
