@@ -54,9 +54,11 @@
         <li><%= link_to "Notifiaciones" , notifications_path ,class:"right-space" %></li>
 
 
+        <li><%= link_to "Perfil" ,current_user, class:"right-space"%></li>
+
         <li><%= link_to "Editar información" , edit_user_path(current_user), class:""%></li>
 
-        <li>  <%= link_to "Sign out" , destroy_user_session_path, method: :delete ,class:"white-text"%>   </li>
+        <li>  <%= link_to "Sign out" , destroy_user_session_path, method: :delete ,class:""%>   </li>
 
       </ul>
 

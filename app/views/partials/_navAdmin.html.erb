@@ -51,7 +51,9 @@
 
         <li><%= link_to "Notifiaciones" , notificationsworker_index_path ,class:"right-space" %></li>
 
-        <li><%= link_to "Editar información" , edit_admin_path(current_admin), class:""%></li>
+        <li><%= link_to "Perfil" ,current_admin, class:"right-space"%></li>
+
+        <li><%= link_to "Editar información" , edit_admin_path(current_admin), class:"right-space"%></li>
 
         <li>  <%= link_to "Sign out" , destroy_admin_session_path, method: :delete %></li>
 
