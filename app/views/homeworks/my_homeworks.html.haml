@@ -18,7 +18,7 @@
 		=render @homeworks_disponibles
 
 	-else
-		-if current_user && @homeworks_disponibles.count <= 0
+		-if !!current_user && @homeworks_disponibles.count <= 0
 			%center.top45
 				%h5
 					="No has creado tareas nuevas"
