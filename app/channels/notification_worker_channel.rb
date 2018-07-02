@@ -1,11 +1,11 @@
 class NotificationWorkerChannel < ApplicationCable::Channel
   def subscribed
 
-  	# puts "÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷"
+  	puts "÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷÷"
 
-  	# if current_admin
-  	# 	stream_from "notificationsWorker.#{current_admin.id}"
-  	# end
+  	if current_admin
+  		stream_from "notificationsWorker.#{current_admin.id}"
+  	end
 
   end
 

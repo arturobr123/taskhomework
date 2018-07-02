@@ -1,17 +1,21 @@
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
 
-  	identified_by :current_user
-    #identified_by :current_admin
+  	identified_by :current_user #just a name
+    identified_by :current_admin #just a name
 
   	def connect
+
+      puts "!!!!!!!!!!!!!!"
+
   		self.current_user = find_user
-      #self.current_admin = find_admin
+      self.current_admin = find_admin
   		
   	end
 
   	#encuentra el usuario actual
   	def find_user
+
   		user_id = cookies.signed["user.id"]
 
   		current_user = User.find_by(id: user_id) #find_by => si no encuentra un usuario retorna nulo en lugar de marcar error
@@ -19,15 +23,18 @@ module ApplicationCable
   		if current_user
   			return current_user
   		else
-  			reject_unauthorized_connection
-        #return nil
+  			#reject_unauthorized_connection
+        return nil
   		end
   		
   	end
 
     #encuentra el worker actual
     def find_admin
-      admin_id = cookies.signed["admin.id"]
+
+      admin_id = cookies.signed["user.id"]
+
+      puts admin_id
 
       current_admin = Admin.find_by(id: admin_id) #find_by => si no encuentra un usuario retorna nulo en lugar de marcar error
 
@@ -44,7 +51,8 @@ module ApplicationCable
 end
 
 
-
+#find_by
+# returns the first item or nil.
 
 
 

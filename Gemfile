@@ -59,7 +59,7 @@ gem 'sinatra',github:'sinatra/sinatra', require: nil
 gem "will_paginate"
 
 #conekta para hacer pagos
-gem 'conekta'
+gem 'openpay'
 
 #para llenar el archivo seeds.rb con la informacion de la bd, informacion semilla
 gem 'seed_dump'

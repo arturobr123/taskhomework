@@ -8,7 +8,7 @@ class Classroom < ApplicationRecord
 
 
   #incluye el concern Notificable
-	#include NotificableWorkers
+	include NotificableWorkers
   #a quien enviará la notificación
   def admin_ids
   	return self.admin.id
