@@ -32,7 +32,22 @@ class Homework < ApplicationRecord
 
 
   #validaciones
+  validates :name, presence: true
   validates :tipo, presence: true
+  validates :level, presence: true
+  validates :maxPrice, presence: true
+  validates :description, presence: true
+
+  validates :minPrice, numericality: { greater_than_or_equal_to: 100 }
+
+  validate :expiration_date_cannot_be_in_the_past
+
+
+  def expiration_date_cannot_be_in_the_past
+    if deadline.present? && deadline < DateTime.now
+      errors.add(:deadline, "can't be in the past")
+    end
+  end 
 
   
 end
