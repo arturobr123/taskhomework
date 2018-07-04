@@ -104,7 +104,7 @@ class HomeworksController < ApplicationController
   def destroy
     @homework.destroy
     respond_to do |format|
-      format.html { redirect_to homeworks_url, notice: 'Homework was successfully destroyed.' }
+      format.html { redirect_to my_homeworks_path, notice: 'Homework was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
