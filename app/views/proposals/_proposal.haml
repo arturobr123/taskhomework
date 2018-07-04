@@ -1,8 +1,11 @@
 .card.z-depth-2
   .card-content
     %span.card-title
-      = proposal.admin.name
 
+      %img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{proposal.admin.avatar.url}", :width => "50", :class => "circle cover"}
+      = proposal.admin.name + " " + proposal.admin.last_name
+
+            
     .parent-flex
 
       %div

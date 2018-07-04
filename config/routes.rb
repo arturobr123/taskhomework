@@ -2,6 +2,8 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  #delete archive from homework
+  get "homeworks/delete_file_homework" => 'homeworks#delete_file_homework', :as => :delete_file_homework
 
   #search
   get 'search/search_homeworks'

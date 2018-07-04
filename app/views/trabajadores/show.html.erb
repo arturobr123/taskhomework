@@ -41,34 +41,28 @@
 
 
 
+  <div class="row border-line">
+    <h5 class="center-align">Mis propuestas: <%= @admin.proposals.count %> </h5>
+    <div class="col s10 l10 offset-l1 offset-s1 opacity90"></div>
+    <div class="col s10 l10 offset-l1 offset-s1 top15">
 
-  <%-if current_admin.id == @admin.id  %>
-    <center>
-        
-      <%= form_tag charges_path do %>
-        <article>
-          <% if flash[:error].present? %>
-            <div id="error_explanation">
-              <p><%= flash[:error] %></p>
-            </div>
-          <% end %>
-      <!--     <label class="amount">
-            <span>Amount: $5.00</span>
-          </label> -->
-        </article>
+      <div class="row">
 
-        <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-                data-description="Mi tarjeta"
-                data-amount="500"
-                data-email="<%= current_admin.email %>"
-                data-label="Subir tu tarjeta"
-                data-locale="auto"></script>
-
+        <% @admin.proposals.each do |proposal| %>
+          <%= render 'proposals/profileProposal', proposal: proposal %>
         <% end %>
 
-    </center>
-  <% end %>
+      </div>
+
+
+      
+    </div>
+  </div>
+
+
+
+
+
 
   
 

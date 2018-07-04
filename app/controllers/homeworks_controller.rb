@@ -109,6 +109,20 @@ class HomeworksController < ApplicationController
     end
   end
 
+
+  def delete_file_homework
+    archive_id = params[:archive_id]
+
+    @archive = Archive.find(archive_id)
+
+    @archive.destroy
+    respond_to do |format|
+      format.html { redirect_back fallback_location: root_path }
+      format.json { head :no_content }
+    end
+    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_homework

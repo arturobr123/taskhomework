@@ -54,6 +54,16 @@
               %input.file-path.validate{:type => "text"}
 
 
+        .div.col.s12.l12
+          -if @homework.archives.count > 0
+            %h5
+              ="Archivos"
+            - @homework.archives.each do |archive|
+              %div
+                = archive.archivo_file_name
+                = link_to "Eliminar", delete_file_homework_path(archive_id: archive.id)
+
+
         .div.input-field.col.full-width
           = f.text_area :description,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Escribe aqui"
           = f.label "Descripción", class:"blue-text",for:"textarea1"
