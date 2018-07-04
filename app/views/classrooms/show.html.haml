@@ -55,7 +55,7 @@
 		.col.s12.l12.lighten-4
 			-if current_admin && @classroom.archive_classrooms.count > 0 && @homework.status != 3
 
-				=link_to "Finalizar tarea", finish_homework_path(homework_id: @homework.id,proposal_id:@proposal.id),data: { confirm: 'Estás seguro de ya terminar esta tarea?' }, class:"btn blue"
+				=link_to "Finalizar tarea", finish_homework_path(homework_id: @homework.id,proposal_id:@proposal.id),data: { confirm: 'Estás seguro de ya terminar esta tarea? Los archivos que hayas subido deben ser la tarea.' }, class:"btn blue"
 
 			-if @homework.status == 3
 				%b.top15

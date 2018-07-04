@@ -1,7 +1,8 @@
-require "stripe"
+require 'openpay'
 class ClassroomsController < ApplicationController
   before_action :set_classroom, only: [:show, :edit, :update, :destroy, :uploadFiles , :score]
   before_action :authenticate_admin!, only: [:finish_homework]
+  before_action :check_card, only: [:create]
   # GET /classrooms
   # GET /classrooms.json
   def index
@@ -34,24 +35,32 @@ class ClassroomsController < ApplicationController
     admin_id = params[:admin_id]
     homework_id = params[:homework_id]
     proposal_id = params[:proposal_id]
-    @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id)
+
+    @homework = Homework.find(homework_id)
+    @proposal = Proposal.find(proposal_id)
+    
+    @pago = pay_user(@homework, @proposal) #antes que nada hace el cobro
+
+    @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id) 
 
     #ahora la tarea cambia su status a en proceso
-    @homework = Homework.find(homework_id)
-    @homework.update!(status: 2) 
-
+    #@homework.update!(status: 2) 
     #ahora la propuesta cambia su status a en proceso
-    @proposal = Proposal.find(proposal_id)
-    @proposal.update!(status: 2) 
+    #@proposal.update!(status: 2)
 
     respond_to do |format|
-      if @classroom.save
-        format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea.' }
-        format.json { render :show, status: :created, location: @classroom }
+      if @pago
+        if @classroom.save && @homework.update!(status: 2) && @proposal.update!(status: 2)
+          format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea.' }
+          format.json { render :show, status: :created, location: @classroom }
+        else
+          format.html { render :new }
+          format.json { render json: @classroom.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render :new }
-        format.json { render json: @classroom.errors, status: :unprocessable_entity }
+        format.html { redirect_to root_path, notice: 'No se pudo hacer el cargo. Revisa que tengas los fondos necesarios y si no, contactanos.' }
       end
+      
     end
   end
 
@@ -102,25 +111,89 @@ class ClassroomsController < ApplicationController
     #ahora la propuesta cambia su status a finalizada
     @proposal = Proposal.find(proposal_id)
 
-
-    #CREATE THE CHARGE
-    # charge = Stripe::Charge.create(
-    #   :customer    => @homework.user.stripe_customer_token,
-    #   :amount      => 500 + @proposal.cost.to_i,
-    #   :description => @homework.name,
-    #   :currency    => 'usd'
-    # )
+    @pago = pay(@homework, @proposal)#hace el pago por open pay
 
     respond_to do |format|
-      if @homework.update!(status: 3) && @proposal.update!(status: 3)
-        format.html { redirect_to root_path, notice: 'Tarea terminada! Recibirás tu pago pronto.' }
-        format.json { render :show, status: :ok, location: root_path }
+      if(@pago)
+        if @homework.update!(status: 3) && @proposal.update!(status: 3)
+          format.html { redirect_to root_path, notice: 'Tarea terminada! Recibirás tu pago pronto.' }
+          format.json { render :show, status: :ok, location: root_path }
+        else
+          format.html { redirect_to root_path, notice: 'Error'}
+        end
       else
-        format.html { redirect_to root_path, notice: 'Error'}
+        format.html { redirect_to root_path, notice: 'Hubo un error en el cobro. Por favor vuelvelo a intentar y si no contactanos.' }
       end
     end
     
   end
+
+  #cuando el usuario acepta quien le hará la tarea, este se le hace el cobro de lo que tiene
+  #asignado la propuesta(y se le agrega a su cuenta en openpay)
+  def pay_user(homework, proposal)
+
+    #CREATE THE CHARGE OPEN PAY
+
+    #merchant and private key
+    merchant_id='mnn5gyble3oezlf6ca3v'
+    private_key='sk_33044f35a7364f81b7139b21327a5927'
+    openpay=OpenpayApi.new(merchant_id,private_key)
+
+    request_hash={
+      "method" => "card",
+      "source_id" => homework.user.card_id,
+      "amount" => proposal.cost,
+      "currency" => "MXN",
+      "description" => homework.name,
+      "device_session_id" => "kR1MiQhz2otdIuUlQkbEyitIqVMiI16f",
+      "order_id" => homework.id #este id puede ser inventado pero debe ser unico
+    }
+
+    charges=openpay.create(:charges)
+
+    begin
+      @charge = charges.create(request_hash.to_h, homework.user.open_pay_user_id)
+    rescue Exception => e
+      puts e.description# => 'The api key or merchant id are invalid.'
+      return false
+    end
+
+    return true #si se pudo hacer el cargo
+    
+  end
+
+
+
+  def pay(homework, proposal)
+
+    #merchant and private key
+    merchant_id='mnn5gyble3oezlf6ca3v'
+    private_key='sk_33044f35a7364f81b7139b21327a5927'
+    openpay=OpenpayApi.new(merchant_id,private_key)
+
+    #HACER TRANSFERENCIAS ENTRE CLIENTES USUARIOS
+    new_transaction_hash={
+       "customer_id" => proposal.admin.open_pay_user_id,
+       "amount" => proposal.cost,
+       "description" => "Transferencia entre cuentas"
+     }
+
+    transfers=openpay.create(:transfers)
+
+    begin
+      transfers.create(new_transaction_hash.to_h, homework.user.open_pay_user_id) #de aqui se sacara el dinero
+    rescue Exception => e
+      puts e.http_code  #  => 401
+      puts e.error_code # => 1002
+      puts e.description# => 'The api key or merchant id are invalid.'
+      puts e.json_body #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
+      return false
+    end
+
+    return true
+    
+  end
+
 
 
   def show_to_score
@@ -170,6 +243,13 @@ class ClassroomsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_classroom
       @classroom = Classroom.find(params[:id])
+    end
+
+    #checa que el usuario tenga una tarjeta agregada
+    def check_card
+      if !current_user.card_id
+        redirect_to edit_user_path(current_user), notice: "No tienes tarjeta de debito agregada."
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

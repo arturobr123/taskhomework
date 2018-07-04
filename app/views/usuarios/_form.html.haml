@@ -38,44 +38,35 @@
 
 
         /TARJETA DE CREDITO
-        / .col.s12.l12.offset-s1.top15.bottom30.border-line-creditcard
+        .col.s12.l12.offset-s1.top15.bottom30.border-line-creditcard
 
-        /   %center
-        /     %h5 Tarjeta credito/debito
+          %center
+            %h5 Tarjeta credito/debito
 
+          -if current_user.card_id
+            %center
+              %p
+                ="Ya tienes una tarjeta agregada con token: #{current_user.card_id[0,5] + "...."}"
+                ="Si quieres cambiar tu tarjeta, llena nuevamente los datos con la nueva tarjeta"
+                ="Por temas de seguridad no mostramos información de la tarjeta antes mencionada."
 
-        / .div.col.s12.l4
-        /   = label_tag('card', 'Credit Card Number:')
-        /   = text_field_tag('card', nil, maxlength: 20, autocomplete: 'off', autofocus: true)
+        .div.col.s12.l4
+          = label_tag('card', 'Credit Card Number:')
+          = text_field_tag('card', nil, maxlength: 20, autocomplete: 'off', autofocus: true)
 
-        / .div.col.s12.l4
-        /   = label_tag('cc-cvc', 'CVC:')
-        /   = text_field_tag('cc-cvc', nil, maxlength: 4, autocomplete: 'off')
-
-
-        / .div.col.s12.l4
-        /   = label_tag('cc-exp-month', 'Expiry Date:')
-        /   .row
-        /     .div.col.s12.l6
-        /       = select_month(Date.new(Date.today.year, 1).beginning_of_month, {use_two_digit_numbers: true}, {id: 'cc-exp-month'})
-        /     .div.col.s12.l6
-        /       = select_year(Date.today, {start_year: Date.today.year, end_year: Date.today.year+10}, {id: 'cc-exp-year'})
+        .div.col.s12.l4
+          = label_tag('cc-cvc', 'CVC:')
+          = text_field_tag('cc_cvc', nil, maxlength: 4, autocomplete: 'off')
 
 
+        .div.col.s12.l4
+          = label_tag('cc-exp-month', 'Expiry Date:')
+          .row
+            .div.col.s12.l6
+              = select_month(Date.new(Date.today.year, 1).beginning_of_month, {use_two_digit_numbers: true}, {id: 'cc-exp-month'})
+            .div.col.s12.l6
+              = select_year(Date.today, {start_year: Date.today.year, end_year: Date.today.year+10}, {id: 'cc-exp-year'})
 
-
-        / - if(current_user.stripe_customer_token)
-        /   .div.col.s12.l12
-        /     = form_tag charges_path do
-        /       %article
-        /         - if flash[:error].present?
-        /           #error_explanation
-        /             %p= flash[:error]
-        /         /
-        /           <label class="amount">
-        /           <span>Amount: $5.00</span>
-        /           </label>
-        /       %script.stripe-button{"data-amount" => "500", "data-description" => "Tarjeta de pago", "data-email" => "#{current_user.email}", "data-key" => "#{Rails.configuration.stripe[:publishable_key]}", "data-label" => "Subir tarjeta", "data-locale" => "auto", :src => "https://checkout.stripe.com/v2/checkout.js"}
 
 
       .actions.top-space2

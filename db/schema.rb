@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180627011655) do
+ActiveRecord::Schema.define(version: 20180703010517) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -34,6 +34,9 @@ ActiveRecord::Schema.define(version: 20180627011655) do
     t.datetime "avatar_updated_at"
     t.string "stripe_customer_token"
     t.float "rank", default: 5.0
+    t.string "card_id"
+    t.string "open_pay_user_id"
+    t.string "last_name"
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
@@ -180,6 +183,8 @@ ActiveRecord::Schema.define(version: 20180627011655) do
     t.string "stripe_customer_token"
     t.text "card1"
     t.float "rank", default: 5.0
+    t.string "card_id"
+    t.string "open_pay_user_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -2,9 +2,13 @@
   <%= devise_error_messages! %>
 
   <div class='row'>
-    <div class="input-field col s12 l12">
+    <div class="input-field col s12 l6">
       <%= f.text_field :name, class:"", id:"name" %>
       <%= f.label "Nombre", class:"", for:"name" %>
+    </div>
+    <div class="input-field col s12 l6">
+      <%= f.text_field :last_name, class:"", id:"last_name" %>
+      <%= f.label "Apellido", class:"", for:"last_name" %>
     </div>
   </div>
 
