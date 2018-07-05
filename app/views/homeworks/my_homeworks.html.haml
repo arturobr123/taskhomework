@@ -5,8 +5,9 @@
 .row
 	.col.s12
 		%ul.tabs
-			%li.tab.col.s3
-				%a{:href => "#test1"} Disponibles
+			-if current_user
+				%li.tab.col.s3
+					%a{:href => "#test1"} Disponibles
 			%li.tab.col.s3
 				%a.active{:href => "#test2"} En proceso
 			%li.tab.col.s3
