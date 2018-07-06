@@ -5,13 +5,13 @@ class HomeworksController < ApplicationController
   # GET /homeworks
   # GET /homeworks.json
   def index
-    @homeworks = Homework.where(status:1).nuevos
+    @homeworks = Homework.where(status:1).nuevos.paginate(page:params[:page], per_page:25)
   end
 
   # GET /homeworks/1
   # GET /homeworks/1.json
   def show
-    @proposals = @homework.proposals.nuevos.paginate(page:params[:page], per_page:5)
+    @proposals = @homework.proposals.nuevos.paginate(page:params[:page], per_page:15)
   end
 
   def my_homeworks

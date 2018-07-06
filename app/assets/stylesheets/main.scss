@@ -12,6 +12,12 @@ body{
 		
 }
 
+.main-background2{
+	background-image: url(#{asset_path('workHere2.jpg')});
+	background-size: cover;
+		
+}
+
 .white-background{
 	background-color: white;
 	background-size: cover;

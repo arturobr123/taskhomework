@@ -43,12 +43,13 @@
 
   <div class="row border-line">
     <h5 class="center-align">Mis propuestas: <%= @admin.proposals.count %> </h5>
+    <h5 class="center-align">Ganancias totales: <%= @money %> </h5>
     <div class="col s10 l10 offset-l1 offset-s1 opacity90"></div>
     <div class="col s10 l10 offset-l1 offset-s1 top15">
 
       <div class="row">
 
-        <% @admin.proposals.each do |proposal| %>
+        <% @proposals.each do |proposal| %>
           <%= render 'proposals/profileProposal', proposal: proposal %>
         <% end %>
 
@@ -59,11 +60,15 @@
     </div>
   </div>
 
+  <div class="text-center">
+    <%= will_paginate @proposals %>
+  </div>
 
 
 
-
-
+<br>
+<br>
+<br>
   
 
 </body>

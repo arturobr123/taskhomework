@@ -14,6 +14,14 @@ class TrabajadoresController < ApplicationController
 	end
 	
 	def show
+		@proposals = @admin.proposals.nuevos.paginate(page:params[:page], per_page:15)
+		@proposals_money = @admin.proposals.where(status: 3).nuevos
+
+		@money = 0 #total de ganancias
+
+		@proposals_money.each do |proposal|
+			@money = @money + proposal.cost
+		end
 	end
 
 
@@ -43,7 +51,7 @@ class TrabajadoresController < ApplicationController
 
 	  def authenticate_owner!
 	  	if current_admin != @admin
-	  		redirect_to root_path, notice: "No estas autorizado", status: :unauthorized
+	  		redirect_to root_path, notice: "No estas autorizado"
 	  		
 	  	end
 	  	

@@ -1,5 +1,5 @@
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "col s12 "}) do |f| %>
 
 
   <div class='row'>
@@ -45,4 +45,4 @@
 
 <%= render "admins/shared/links" %>
 
-<%= link_to "User login", new_user_session_path ,class:"underline"  %>
+<!-- <%= link_to "User login", new_user_session_path ,class:"underline"  %> -->
