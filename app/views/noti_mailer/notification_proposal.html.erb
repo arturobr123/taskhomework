@@ -11,8 +11,13 @@
 	Tarea: <%= @homework.name %>
 </h4>
 
-<p></p>
+<h4>
+	Costo: <%= @proposal.cost.to_s %>
+</h4>
 
+<h4>
+	Fecha de entrega: <%= fechaBonita @proposal.deadline %>
+</h4>
 
 <p> Da click en el siguiente link para poder ver la propuesta.</p>
 
