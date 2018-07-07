@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'search/search_homeworks'
 
   #Landing page
+  get "landing/faqs" => 'landing#faqs', :as => :faqs
   get "landing/workHere" => 'landing#workHere', :as => :work_here
   get "landing/home" => 'landing#home', :as => :home_page
 

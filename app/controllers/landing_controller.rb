@@ -9,4 +9,8 @@ class LandingController < ApplicationController
 		
 	end
 
+	def faqs
+		
+	end
+
 end
