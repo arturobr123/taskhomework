@@ -23,9 +23,9 @@
 			%center.top45
 				%h5
 					="No has creado tareas nuevas"
-
-	%center
-		= will_paginate @homeworks_disponibles, param_name:'homeworks_disponibles',params: {active_tab: 'homeworks_disponibles'}
+	-if @homeworks_disponibles				
+		%center
+			= will_paginate @homeworks_disponibles, param_name:'homeworks_disponibles',params: {active_tab: 'homeworks_disponibles'}
 
 #test2.row
 	.row

@@ -41,8 +41,8 @@ class HomeworksController < ApplicationController
         ids_finalizadas << p.homework_id
       end
 
-      @homeworks_en_proceso = Homework.where("id in (?)" , ids_en_proceso).nuevos
-      @homeworks_finalizadas = Homework.where("id in (?)" , ids_finalizadas).nuevos
+      @homeworks_en_proceso = Homework.where("id in (?)" , ids_en_proceso).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:15)
+      @homeworks_finalizadas = Homework.where("id in (?)" , ids_finalizadas).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:15)
     end
 
   end
