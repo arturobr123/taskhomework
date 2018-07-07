@@ -25,6 +25,9 @@
           = f.text_field :second_last_name, class:"" , id:"second_last_name"
           = f.label "Middle name", class:"blue-text" , for:"second_last_name"
 
+        .div.input-field.col.s12.l4
+          = f.text_field :email, autofocus: true, class:"" ,id:"email"
+          = f.label "Email", class:"blue-text", for:"email"
 
         .div.col.s12.l4
           %div.file-field.input-field
