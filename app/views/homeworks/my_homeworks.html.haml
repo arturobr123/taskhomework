@@ -7,41 +7,60 @@
 		%ul.tabs
 			-if current_user
 				%li.tab.col.s3
-					%a{:href => "#test1"} Disponibles
+					%a{:href => "#test1", :class => ("active" if params[:active_tab] == 'homeworks_disponibles')} Disponibles
 			%li.tab.col.s3
-				%a.active{:href => "#test2"} En proceso
+				%a{:href => "#test2",:class => ("active" if params[:active_tab] == 'homeworks_en_proceso' || !params[:active_tab])} En proceso
 			%li.tab.col.s3
-				%a{:href => "#test3"} Terminadas
+				%a{:href => "#test3",:class => ("active" if params[:active_tab] == 'homeworks_finalizadas')} Terminadas
 
 
 #test1.row
-	-if @homeworks_disponibles
-		=render @homeworks_disponibles
+	.row
+		-if @homeworks_disponibles
+			=render @homeworks_disponibles
 
-	-if current_user && @homeworks_disponibles.count <= 0
-		%center.top45
-			%h5
-				="No has creado tareas nuevas"
+		-if current_user && @homeworks_disponibles.count <= 0
+			%center.top45
+				%h5
+					="No has creado tareas nuevas"
+
+	%center
+		= will_paginate @homeworks_disponibles, param_name:'homeworks_disponibles',params: {active_tab: 'homeworks_disponibles'}
 
 #test2.row
-	-if @homeworks_en_proceso
-		=render @homeworks_en_proceso
+	.row
+		-if @homeworks_en_proceso
+			=render @homeworks_en_proceso
 
-	-if @homeworks_en_proceso.count <= 0
-		%center.top45
-			%h5
-				="No tienes tareas en proceso"
+		-if @homeworks_en_proceso.count <= 0
+			%center.top45
+				%h5
+					="No tienes tareas en proceso"
+	%center
+		= will_paginate @homeworks_en_proceso, param_name:'homeworks_en_proceso',params: {active_tab: 'homeworks_en_proceso'}
 
 #test3.row
-	-if @homeworks_finalizadas
-		=render @homeworks_finalizadas
+	.row
+		-if @homeworks_finalizadas
+			=render @homeworks_finalizadas
 
-	-if @homeworks_finalizadas.count <= 0
-		%center.top45
-			%h5
-				="No tienes ninguna tarea finalizada"
+		-if @homeworks_finalizadas.count <= 0
+			%center.top45
+				%h5
+					="No tienes ninguna tarea finalizada"
+
+	%center
+		= will_paginate @homeworks_finalizadas, param_name:'homeworks_finalizadas',params: {active_tab: 'homeworks_finalizadas'}
 
 
 
 / .row
 /   =render @homeworks
+
+
+
+
+
+
+
+

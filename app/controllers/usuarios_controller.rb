@@ -117,8 +117,7 @@ class UsuariosController < ApplicationController
 
 	  def authenticate_owner!
 	  	if current_user != @user
-	  		redirect_to root_path, notice: "No estas autorizado", status: :unauthorized
-	  		
+	  		redirect_to root_path, notice: "No estas autorizado"
 	  	end
 	  	
 	  end

@@ -1,6 +1,10 @@
 class HomeworksController < ApplicationController
   before_action :set_homework, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:new, :destroy]
+  before_action :authenticate_person # NUEVO un usuario o trabajador deben haber iniciado sesion
+  before_action :authenticate_user!, only: [:new, :destroy,:edit, :update]
+  before_action :own_user,only: [:destroy,:edit, :update] #NUEVO
+  before_action :authenticate_admin!, only: [:index] #NUEVO
+  
 
   # GET /homeworks
   # GET /homeworks.json
@@ -17,17 +21,13 @@ class HomeworksController < ApplicationController
   def my_homeworks
     #USUSARIO
     if(current_user)
-      #@homeworks = current_user.homeworks.nuevos
-
-      @homeworks_disponibles = current_user.homeworks.where(status: 1).nuevos
-      @homeworks_en_proceso = current_user.homeworks.where(status: 2).nuevos
-      @homeworks_finalizadas = current_user.homeworks.where(status: 3).nuevos
+      @homeworks_disponibles = current_user.homeworks.where(status: 1).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:15)
+      @homeworks_en_proceso = current_user.homeworks.where(status: 2).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:15)
+      @homeworks_finalizadas = current_user.homeworks.where(status: 3).nuevos.paginate(page:params[:homeworks_finalizadas], per_page: 15)
     end
 
     #TRABAJADOR
     if(current_admin)
-      #@proposals = current_admin.proposals.where("status not in (?)", [1])
-
       @proposals_en_proceso = current_admin.proposals.where(status: 2)
       @proposals_finalizadas = current_admin.proposals.where(status: 3)
 
@@ -41,12 +41,9 @@ class HomeworksController < ApplicationController
         ids_finalizadas << p.homework_id
       end
 
-      #@homeworks = Homework.where("id in (?)" , ids).nuevos
-
       @homeworks_en_proceso = Homework.where("id in (?)" , ids_en_proceso).nuevos
       @homeworks_finalizadas = Homework.where("id in (?)" , ids_finalizadas).nuevos
     end
-
 
   end
 
@@ -128,6 +125,20 @@ class HomeworksController < ApplicationController
     def set_homework
       @homework = Homework.find(params[:id])
     end
+
+    def authenticate_person
+      if(!current_user && !current_admin)
+        redirect_to home_page_path, notice: "Inicia sesión"
+      end
+      
+    end
+
+    def own_user
+      if @homework.user.id != current_user.id
+        redirect_to root_path, notice: "No estas autorizado"
+      end
+    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def homework_params

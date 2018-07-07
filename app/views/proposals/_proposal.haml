@@ -44,7 +44,7 @@
 
     -if current_user && !proposal.homework.classrooms.first
       %div.top15
-        =link_to "Elegir",classrooms_path(homework_id: proposal.homework.id, admin_id: proposal.admin.id, proposal_id: proposal.id),method: :post,data: { confirm: 'Estás seguro de aceptar esta propuesta para tu tarea ?' },class:"pink-text", class:"btn"
+        =link_to "Elegir",classrooms_path(homework_id: proposal.homework.id, admin_id: proposal.admin.id, proposal_id: proposal.id, user_id: current_user.id),method: :post,data: { confirm: 'Estás seguro de aceptar esta propuesta para tu tarea ?' },class:"pink-text", class:"btn"
 
 
 

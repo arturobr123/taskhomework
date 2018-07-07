@@ -2,6 +2,9 @@ class ProposalsController < ApplicationController
   before_action :set_proposal, only: [:show, :edit, :update, :destroy]
   before_action :set_homework, only: [:new]
 
+  before_action :authenticate_admin!, only: [:new, :create] #NUEVO
+  before_action :own_admin,only: [:destroy,:edit] #NUEVO
+
   # GET /proposals
   # GET /proposals.json
   def index
@@ -70,8 +73,14 @@ class ProposalsController < ApplicationController
 
     def set_homework
       @homework = Homework.find(params[:id_homework])
-      
     end
+
+    def own_admin
+      if @proposal.admin.id != current_admin.id
+        redirect_to root_path, notice: "No estas autorizado"
+      end
+    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proposal_params

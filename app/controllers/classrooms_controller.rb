@@ -1,8 +1,12 @@
 require 'openpay'
 class ClassroomsController < ApplicationController
   before_action :set_classroom, only: [:show, :edit, :update, :destroy, :uploadFiles , :score]
-  before_action :authenticate_admin!, only: [:finish_homework]
+  before_action :authenticate_admin!, only: [:finish_homework, :update]
+  before_action :own_user, only: [:create]
+  before_action :own_admin, only: [:update]
   before_action :check_card, only: [:create]
+  before_action :check_user_admin, only: [:show]
+  
   # GET /classrooms
   # GET /classrooms.json
   def index
@@ -43,11 +47,6 @@ class ClassroomsController < ApplicationController
 
     @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id) 
 
-    #ahora la tarea cambia su status a en proceso
-    #@homework.update!(status: 2) 
-    #ahora la propuesta cambia su status a en proceso
-    #@proposal.update!(status: 2)
-
     respond_to do |format|
       if @pago
         if @classroom.save && @homework.update!(status: 2) && @proposal.update!(status: 2)
@@ -64,8 +63,6 @@ class ClassroomsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /classrooms/1
-  # PATCH/PUT /classrooms/1.json
   def update
     respond_to do |format|
       if @classroom.update(classroom_params)
@@ -229,15 +226,15 @@ class ClassroomsController < ApplicationController
     
   end
 
-  # DELETE /classrooms/1
-  # DELETE /classrooms/1.json
   def destroy
-    @classroom.destroy
+    #@classroom.destroy
     respond_to do |format|
       format.html { redirect_to classrooms_url, notice: 'Classroom was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -249,6 +246,32 @@ class ClassroomsController < ApplicationController
     def check_card
       if !current_user.card_id
         redirect_to edit_user_path(current_user), notice: "No tienes tarjeta de debito agregada."
+      end
+    end
+
+    def own_user
+      if current_user.id != params[:user_id].to_i
+        redirect_to root_path, notice: "No estas autorizado"
+      end
+    end
+
+    def check_user_admin
+      if current_user
+        if @classroom.user_id != current_user.id
+          redirect_to root_path, notice: "No estas autorizado"
+        end
+      end
+
+      if current_admin
+        if @classroom.admin_id != current_admin.id
+          redirect_to root_path, notice: "No estas autorizado"
+        end
+      end
+    end
+
+    def own_admin
+      if current_admin.id != @classroom.admin_id
+        redirect_to root_path, notice: "No estas autorizado"
       end
     end
 
