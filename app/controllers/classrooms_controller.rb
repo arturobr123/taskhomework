@@ -7,14 +7,12 @@ class ClassroomsController < ApplicationController
   before_action :check_card, only: [:create]
   before_action :check_user_admin, only: [:show]
   
-  # GET /classrooms
-  # GET /classrooms.json
+
   def index
     @classrooms = Classroom.all
   end
 
-  # GET /classrooms/1
-  # GET /classrooms/1.json
+
   def show
     @homework = Homework.find(@classroom.homework.id)
     @user = User.find(@classroom.user.id)
@@ -22,17 +20,14 @@ class ClassroomsController < ApplicationController
     @proposal = Proposal.find(@classroom.proposal.id)
   end
 
-  # GET /classrooms/new
   def new
     @classroom = Classroom.new
   end
 
-  # GET /classrooms/1/edit
+
   def edit
   end
 
-  # POST /classrooms
-  # POST /classrooms.json
   def create
     #@classroom = Classroom.new(classroom_params)
 

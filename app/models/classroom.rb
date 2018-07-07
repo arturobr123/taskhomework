@@ -6,6 +6,7 @@ class Classroom < ApplicationRecord
 
   has_many :archive_classrooms, dependent: :destroy
 
+  after_create_commit :notify_worker
 
   #incluye el concern Notificable
 	include NotificableWorkers
@@ -18,6 +19,10 @@ class Classroom < ApplicationRecord
   #solo para verificar que es un salon
   def iam_classroom
     return true
+  end
+
+  def notify_worker
+    NotiMailer.notification_accepted_homework(self.proposal.admin.email, self.proposal, self.homework).deliver 
   end
 
 end

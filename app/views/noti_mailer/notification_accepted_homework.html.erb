@@ -1,0 +1,29 @@
+<!-- #Notification when user accepts a homework and notify the worker -->
+
+<h3>Task</h3>
+
+<h3>
+  Hola, el usuario de la tarea <%= @homework.name %> ha aceptado tu propuesta
+</h3>
+
+
+<h4>
+	Ahora tienes que entregar la tarea en la fecha seleccionada
+</h4>
+
+<h4>
+	Ganancia que obtendrás: <%= @proposal.cost.to_s %>
+</h4>
+
+
+<p> Da click en el siguiente link para ir al salon. </p>
+
+
+<%= link_to  "Ir al salon" , classroom_url(@homework.classrooms.first.id) %>
+
+
+ <p>
+ 	Saludos.
+
+ 	Task 2018.
+ </p>

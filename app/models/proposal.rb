@@ -23,9 +23,6 @@ class Proposal < ApplicationRecord
 
   #despues de crear la propuesta, se envia correo notificacion al usuario
   def notify_user
-    puts "///////////"
-    puts "///////////"
-    puts "///////////"
     NotiMailer.notification_proposal(self.homework.user.email, self, self.homework).deliver 
   end
 
