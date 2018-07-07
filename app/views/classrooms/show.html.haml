@@ -44,7 +44,7 @@
 				%p.top15
 					%b
 						="Precio:"
-					= "$" + @homework.minPrice.to_s + " - $" + @homework.maxPrice.to_s
+					= "$" + @classroom.proposal.cost.to_s
 
 				%p.top15.fecha_pequena
 					= fechaBonita @homework.created_at

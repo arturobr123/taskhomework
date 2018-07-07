@@ -13,6 +13,10 @@ class Proposal < ApplicationRecord
 
   after_create_commit :notify_user
 
+  #validaciones
+  validates :cost, presence: true
+  validates :deadline, presence: true
+
   #incluye el concern Notificable
 	include Notificable
   
