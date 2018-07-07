@@ -62,7 +62,9 @@
       -if current_user
         -if current_user.id == homework.user.id
           =link_to "Editar", edit_homework_path(homework),class:"pink-text"
-          = link_to 'Destruir', homework, method: :delete, data: { confirm: 'Are you sure?' },class:"pink-text"
+
+          -if homework.status == 1
+            = link_to 'Destruir', homework, method: :delete, data: { confirm: 'Are you sure?' },class:"pink-text"
 
       /si la tarea ya tiene un salon
       -if homework.classrooms.count > 0
