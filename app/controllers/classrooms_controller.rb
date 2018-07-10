@@ -25,7 +25,6 @@ class ClassroomsController < ApplicationController
       @deadline = "2015, 7, 24"
     end
     
-
   end
 
   def new
