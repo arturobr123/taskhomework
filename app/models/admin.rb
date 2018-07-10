@@ -24,7 +24,7 @@ class Admin < ApplicationRecord
   after_create_commit :create_openpay_account
 
 
-
+  include CreateToken
 
   #este metodo crea el perfil del trabajador en openpay al momento de registrarlo
   def create_openpay_account

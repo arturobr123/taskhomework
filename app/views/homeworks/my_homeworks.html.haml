@@ -2,6 +2,8 @@
 
 = render "partials/noticeToast"
 
+
+
 .row
 	.col.s12
 		%ul.tabs
@@ -14,8 +16,10 @@
 				%a{:href => "#test3",:class => ("active" if params[:active_tab] == 'homeworks_finalizadas')} Terminadas
 
 
+
+
 #test1.row
-	.row
+	.col.s12.cards-container
 		-if @homeworks_disponibles
 			=render @homeworks_disponibles
 
@@ -27,8 +31,11 @@
 		%center
 			= will_paginate @homeworks_disponibles, param_name:'homeworks_disponibles',params: {active_tab: 'homeworks_disponibles'}
 
+
+
 #test2.row
-	.row
+	/row
+	.col.s12.cards-container
 		-if @homeworks_en_proceso
 			=render @homeworks_en_proceso
 
@@ -39,8 +46,11 @@
 	%center
 		= will_paginate @homeworks_en_proceso, param_name:'homeworks_en_proceso',params: {active_tab: 'homeworks_en_proceso'}
 
+
+
+
 #test3.row
-	.row
+	.col.s12.cards-container
 		-if @homeworks_finalizadas
 			=render @homeworks_finalizadas
 
@@ -51,11 +61,6 @@
 
 	%center
 		= will_paginate @homeworks_finalizadas, param_name:'homeworks_finalizadas',params: {active_tab: 'homeworks_finalizadas'}
-
-
-
-/ .row
-/   =render @homeworks
 
 
 

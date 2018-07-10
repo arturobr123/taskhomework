@@ -19,11 +19,12 @@ class HomeworksController < ApplicationController
   end
 
   def my_homeworks
+
     #USUSARIO
     if(current_user)
-      @homeworks_disponibles = current_user.homeworks.where(status: 1).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:15)
-      @homeworks_en_proceso = current_user.homeworks.where(status: 2).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:15)
-      @homeworks_finalizadas = current_user.homeworks.where(status: 3).nuevos.paginate(page:params[:homeworks_finalizadas], per_page: 15)
+      @homeworks_disponibles = current_user.homeworks.where(status: 1).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:10)
+      @homeworks_en_proceso = current_user.homeworks.where(status: 2).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:10)
+      @homeworks_finalizadas = current_user.homeworks.where(status: 3).nuevos.paginate(page:params[:homeworks_finalizadas], per_page: 10)
     end
 
     #TRABAJADOR
@@ -41,8 +42,8 @@ class HomeworksController < ApplicationController
         ids_finalizadas << p.homework_id
       end
 
-      @homeworks_en_proceso = Homework.where("id in (?)" , ids_en_proceso).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:15)
-      @homeworks_finalizadas = Homework.where("id in (?)" , ids_finalizadas).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:15)
+      @homeworks_en_proceso = Homework.where("id in (?)" , ids_en_proceso).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:10)
+      @homeworks_finalizadas = Homework.where("id in (?)" , ids_finalizadas).nuevos.paginate(page:params[:homeworks_en_proceso], per_page:10)
     end
 
   end

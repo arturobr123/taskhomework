@@ -16,9 +16,10 @@ module ApplicationCable
   	#encuentra el usuario actual
   	def find_user
 
-  		user_id = cookies.signed["user.id"]
+      puts cookies.signed["user.token"]
+      token = cookies.signed["user.token"]
 
-  		current_user = User.find_by(id: user_id) #find_by => si no encuentra un usuario retorna nulo en lugar de marcar error
+  		current_user = User.find_by_token(token) #find_by => si no encuentra un usuario retorna nulo en lugar de marcar error
 
   		if current_user
   			return current_user
@@ -32,11 +33,10 @@ module ApplicationCable
     #encuentra el worker actual
     def find_admin
 
-      admin_id = cookies.signed["user.id"]
+      puts cookies.signed["user.token"] #SI FUNCIONA!!
+      token = cookies.signed["user.token"]
 
-      puts admin_id
-
-      current_admin = Admin.find_by(id: admin_id) #find_by => si no encuentra un usuario retorna nulo en lugar de marcar error
+      current_admin = Admin.find_by_token(token) #find_by => si no encuentra un usuario retorna nulo en lugar de marcar error
 
       if current_admin
         return current_admin

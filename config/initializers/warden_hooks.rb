@@ -6,7 +6,7 @@
 Warden::Manager.after_set_user do |user,auth,opts|
 
 	auth.cookies.signed["user.id"] = user.id
-	auth.cookies.signed["user.email"] = user.email #not work
+	auth.cookies.signed["user.token"] = user.token #YES it works
 	auth.cookies.signed["user.expires_at"] = 50.minutes.from_now
 
 end
