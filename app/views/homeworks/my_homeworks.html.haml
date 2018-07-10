@@ -19,7 +19,8 @@
 
 
 #test1.row
-	.col.s12.cards-container
+	/.col.s12.cards-container
+	.row
 		-if @homeworks_disponibles
 			=render @homeworks_disponibles
 
@@ -35,7 +36,7 @@
 
 #test2.row
 	/row
-	.col.s12.cards-container
+	.row
 		-if @homeworks_en_proceso
 			=render @homeworks_en_proceso
 
@@ -50,7 +51,7 @@
 
 
 #test3.row
-	.col.s12.cards-container
+	.row
 		-if @homeworks_finalizadas
 			=render @homeworks_finalizadas
 
