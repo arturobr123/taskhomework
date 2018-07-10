@@ -37,6 +37,7 @@ class Homework < ApplicationRecord
   validates :level, presence: true
   validates :maxPrice, presence: true
   validates :description, presence: true
+  validates :deadline, presence: true
 
   validates :minPrice, numericality: { greater_than_or_equal_to: 100 }
 

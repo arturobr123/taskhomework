@@ -29,15 +29,15 @@ class UsuariosController < ApplicationController
 			if @user.update(user_params)
 
 				#subida de tarjeta
-		        if params[:card].length > 0 && params[:cc_cvc].length > 0 && params[:date][:month] && params[:date][:year]
-		        	result = upload_card(params[:card],params[:cc_cvc],params[:date][:month],params[:date][:year])
-		        end
+        if params[:card].length > 0 && params[:cc_cvc].length > 0 && params[:date][:month] && params[:date][:year]
+        	result = upload_card(params[:card],params[:cc_cvc],params[:date][:month],params[:date][:year])
+        end
 
-		        if(result)
-		        	notice = result
-		        else
-		        	notice = "Información guardada correctamente"
-		        end
+        if(result)
+        	notice = result
+        else
+        	notice = "Información guardada correctamente"
+        end
 
 				format.html {redirect_to my_homeworks_path, notice: notice}
 				format.js

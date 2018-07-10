@@ -12,12 +12,13 @@
       .parent-flex.top15
         %div
           %b
-            ="Tipo:"
+            ="Materia:"
           =TC::Type.find(homework.tipo).tipo
 
         %div.left15
           %b
             ="Fecha de entrega:"
+        .pink-text
           = fechaBonita homework.deadline
 
 
@@ -33,6 +34,10 @@
           /= "$100 - $500"
           = "$" + homework.minPrice.to_s + " - $" + homework.maxPrice.to_s
 
+      %div.top15
+        %b
+          ="Nivel:"
+        =TC::Level.find(homework.level).level
 
       %div.top15
         %b
@@ -56,7 +61,7 @@
 
 
     .card-action
-      =link_to "Entrar", homework, class:"pink-text"
+      =link_to "Propuestas", homework, class:"pink-text"
 
       /si el usuario es dueño de esta tarea
       -if current_user

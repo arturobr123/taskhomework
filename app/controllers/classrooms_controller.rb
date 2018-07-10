@@ -18,6 +18,14 @@ class ClassroomsController < ApplicationController
     @user = User.find(@classroom.user.id)
     @admin = Admin.find(@classroom.admin.id)
     @proposal = Proposal.find(@classroom.proposal.id)
+
+    if @homework.status != 3
+      @deadline = @proposal.deadline.strftime("%Y, %m, %e")
+    else
+      @deadline = "2015, 7, 24"
+    end
+    
+
   end
 
   def new
@@ -45,7 +53,7 @@ class ClassroomsController < ApplicationController
     respond_to do |format|
       if @pago
         if @classroom.save && @homework.update!(status: 2) && @proposal.update!(status: 2)
-          format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea.' }
+          format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea. Se le notificará al trabajador' }
           format.json { render :show, status: :created, location: @classroom }
         else
           format.html { render :new }

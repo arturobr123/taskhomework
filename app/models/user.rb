@@ -13,6 +13,12 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :destroy
 
 
+  #validaciones
+  validates :name, presence: true
+  validates :firs_last_name, presence: true
+  validates :second_last_name, presence: true
+
+
   has_attached_file :avatar,default_url:"/images/fondoFaurecia4.jpg"
   validates_attachment_content_type :avatar,:content_type => [/\Aimage\/.*\z/]
 

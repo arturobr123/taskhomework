@@ -9,12 +9,11 @@
 		%ul.tabs
 			-if current_user
 				%li.tab.col.s3
-					%a{:href => "#test1", :class => ("active" if params[:active_tab] == 'homeworks_disponibles')} Disponibles
+					%a{:href => "#test1", :class => ("active" if params[:active_tab] == 'homeworks_disponibles')} Por hacer
 			%li.tab.col.s3
 				%a{:href => "#test2",:class => ("active" if params[:active_tab] == 'homeworks_en_proceso' || !params[:active_tab])} En proceso
 			%li.tab.col.s3
 				%a{:href => "#test3",:class => ("active" if params[:active_tab] == 'homeworks_finalizadas')} Terminadas
-
 
 
 

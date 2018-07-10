@@ -11,7 +11,7 @@
 
 		      
 		      <div class="input-field col s12 l3">
-		      	<%= select_tag :tipo, options_for_select(TC::Type.all.ordenados.collect{ |u| [u.tipo, u.id] }) ,include_blank: "",prompt: "Tipo de tarea", class:"browser-default border-bottom-selector" %>
+		      	<%= select_tag :tipo, options_for_select(TC::Type.all.ordenados.collect{ |u| [u.tipo, u.id] }) ,include_blank: "",prompt: "Materia", class:"browser-default border-bottom-selector" %>
 
 		      </div>
 
@@ -24,7 +24,6 @@
 		      </div> -->
 
 		      
-
           <div class="input-field col s12 l2">
 		      	<button class="btn buttonBuscador" type="submit">
 		      		<%= t("Buscar") %>

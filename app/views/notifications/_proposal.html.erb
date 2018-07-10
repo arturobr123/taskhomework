@@ -9,6 +9,7 @@
       <p>Fecha: <%= fechaBonita notification.created_at %> </p> 
 
       <%= link_to notification_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
+      		<i>visto</i>
             <i class="material-icons">check</i>
 
       <% end %>

@@ -16,5 +16,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require cable
+//= require jquery.countdown.js
 
 //= require_tree .

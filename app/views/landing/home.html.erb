@@ -32,6 +32,18 @@
   </div>
 
 
+
+    <div id="getting-started"></div>
+<script type="text/javascript">
+  $("#getting-started")
+  .countdown(new Date(2018, 7, 24, 10, 33), function(event) {
+    $(this).text(
+      event.strftime('%D days %H:%M:%S')
+    );
+  });
+</script>
+
+
   <div class="container">
     <div class="section">
 
