@@ -1,6 +1,12 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  #send insatisfaction comment
+  get 'classrooms/send_disagree_homework_email' => 'classrooms#send_disagree_homework_email', :as => :send_disagree_homework_email
+  #page to send the insatisfaction comment homework
+  get 'classrooms/disagree_homework' => 'classrooms#disagree_homework', :as => :disagree_homework
+  #user agree with homework
+  get 'classrooms/agree_homework' => 'classrooms#agree_homework', :as => :agree_homework
 
   #delete archive from homework
   get "homeworks/delete_file_homework" => 'homeworks#delete_file_homework', :as => :delete_file_homework

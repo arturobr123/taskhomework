@@ -101,31 +101,86 @@ class ClassroomsController < ApplicationController
   def finish_homework
 
     homework_id = params[:homework_id]
-
     proposal_id = params[:proposal_id]
 
     #ahora la tarea cambia su status a finalizada
     @homework = Homework.find(homework_id)
+    #ahora la propuesta cambia su status a finalizada
+    @proposal = Proposal.find(proposal_id)
 
+    #@pago = pay(@homework, @proposal)#hace el pago por open pay
+
+    respond_to do |format|
+      if @homework.update!(status: 3) && @proposal.update!(status: 3)
+        format.html { redirect_to root_path, notice: 'Tarea terminada! Recibirás tu pago pronto.' }
+        format.json { render :show, status: :ok, location: root_path }
+      else
+        format.html { redirect_to root_path, notice: 'Error'}
+      end
+    end
+    
+  end
+
+
+  def agree_homework
+
+    homework_id = params[:homework_id]
+    proposal_id = params[:proposal_id]
+    classroom_id = params[:classroom_id]
+
+    #ahora la tarea cambia su status a finalizada
+    @homework = Homework.find(homework_id)
     #ahora la propuesta cambia su status a finalizada
     @proposal = Proposal.find(proposal_id)
 
     @pago = pay(@homework, @proposal)#hace el pago por open pay
 
+    #actualiza el boleano diciendo que el usuario ya aprobo
+    @classroom = Classroom.find(classroom_id)
+    @classroom.update(user_accepts: true)
+
     respond_to do |format|
       if(@pago)
-        if @homework.update!(status: 3) && @proposal.update!(status: 3)
-          format.html { redirect_to root_path, notice: 'Tarea terminada! Recibirás tu pago pronto.' }
-          format.json { render :show, status: :ok, location: root_path }
-        else
-          format.html { redirect_to root_path, notice: 'Error'}
-        end
+        format.html { redirect_back(fallback_location: root_path, notice: 'Muchas gracias. Ahora puedes calificar al trabajador en el salon.') }
+        format.json { render :show, status: :ok, location: root_path }
       else
         format.html { redirect_to root_path, notice: 'Hubo un error en el cobro. Por favor vuelvelo a intentar y si no contactanos.' }
       end
     end
     
   end
+
+
+  def disagree_homework
+    classroom_id = params[:classroom_id]
+    @classroom = Classroom.find(classroom_id)
+
+    if !@classroom
+      redirect_to root_path, notice: 'Error'
+    end
+
+  end
+
+  def send_disagree_homework_email
+    
+    if(params[:classroom_id])
+      classroom_id = params[:classroom_id]
+      @classroom = Classroom.find(classroom_id)
+      @classroom.update(user_accepts: false)
+    end
+
+    if(params[:comment])
+      comment = params[:comment]
+    end
+
+    NotiMailer.disagree_homework_email(comment, classroom_id , @classroom.homework.user.open_pay_user_id).deliver
+
+    respond_to do |format|
+      format.html { redirect_to @classroom, notice:"Muchas gracias. Se te notificará por correo en 24 horas. Ahora puedes calificar al trabajador." }
+    end
+
+  end
+
 
   #cuando el usuario acepta quien le hará la tarea, este se le hace el cobro de lo que tiene
   #asignado la propuesta(y se le agrega a su cuenta en openpay)
@@ -174,7 +229,7 @@ class ClassroomsController < ApplicationController
     new_transaction_hash={
        "customer_id" => proposal.admin.open_pay_user_id,
        "amount" => proposal.cost,
-       "description" => "Transferencia entre cuentas"
+       "description" => "Transferencia entre cuentas tarea #{homework.id}"
      }
 
     transfers=openpay.create(:transfers)

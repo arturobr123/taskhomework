@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180709232049) do
+ActiveRecord::Schema.define(version: 20180710231928) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20180709232049) do
     t.datetime "updated_at", null: false
     t.integer "scoreTrabajador"
     t.integer "proposal_id"
+    t.boolean "user_accepts"
     t.index ["admin_id"], name: "index_classrooms_on_admin_id"
     t.index ["homework_id"], name: "index_classrooms_on_homework_id"
     t.index ["proposal_id"], name: "index_classrooms_on_proposal_id"

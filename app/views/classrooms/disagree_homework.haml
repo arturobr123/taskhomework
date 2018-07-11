@@ -1,0 +1,36 @@
+/enviar porque no esta satisfecho con la tarea
+%body.white-background
+
+= render "partials/noticeToast"
+
+
+%div.blue-text.card-panel
+	%p.center-align.pregunta_texto
+		Por favor escribenos porque no estas satisfecho con la tarea.
+
+
+.row
+	.col.s12
+		.row
+			.col.s12
+
+
+				=form_tag send_disagree_homework_email_path , method: :get do
+
+
+					=label_tag "Porque esta insatisfecho",nil, for:"textarea1"
+
+					=text_area_tag :comment, "", class:"materialize-textarea" , id:"textarea1", placeholder:"Escribe aqui tu comentario"
+
+					=text_field_tag :classroom_id, nil,class:"ocultar", value: @classroom.id
+
+					
+
+					=button_tag "Enviar" , class: 'btn full-width' , type: :submit
+
+
+
+
+.row.center-xs
+	%p.pregunta_texto.texto_justificado.center-align
+		Cabe recordar que si se detecta que si se detecta que esto es algo malo, se le dará baja inmediata en la plataforma.
