@@ -51,7 +51,7 @@ class ClassroomsController < ApplicationController
 
     respond_to do |format|
       if @pago
-        if @classroom.save && @homework.update!(status: 2) && @proposal.update!(status: 2)
+        if @homework.update!(status: 2) && @proposal.update!(status: 2) &&  @classroom.save
           format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea. Se le notificará al trabajador' }
           format.json { render :show, status: :created, location: @classroom }
         else
@@ -135,16 +135,17 @@ class ClassroomsController < ApplicationController
 
     @pago = pay(@homework, @proposal)#hace el pago por open pay
 
-    #actualiza el boleano diciendo que el usuario ya aprobo
     @classroom = Classroom.find(classroom_id)
-    @classroom.update(user_accepts: true)
 
     respond_to do |format|
       if(@pago)
+        #actualiza el boleano diciendo que el usuario ya aprobo
+        @classroom.update(user_accepts: true)
+
         format.html { redirect_back(fallback_location: root_path, notice: 'Muchas gracias. Ahora puedes calificar al trabajador en el salon.') }
         format.json { render :show, status: :ok, location: root_path }
       else
-        format.html { redirect_to root_path, notice: 'Hubo un error en el cobro. Por favor vuelvelo a intentar y si no contactanos.' }
+        format.html { redirect_to root_path, notice: 'Hubo un error. Por favor vuelvelo a intentar y si no contactanos.' }
       end
     end
     

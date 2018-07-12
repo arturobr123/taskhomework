@@ -1,6 +1,9 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+
+  resources :chat_rooms, only: [:new, :create, :show, :index]
+  
   #send insatisfaction comment
   get 'classrooms/send_disagree_homework_email' => 'classrooms#send_disagree_homework_email', :as => :send_disagree_homework_email
   #page to send the insatisfaction comment homework

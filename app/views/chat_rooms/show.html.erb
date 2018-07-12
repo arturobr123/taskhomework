@@ -1,0 +1,35 @@
+<body class="white-background">
+	
+
+
+<h5> Chat: <%= @chat_room.title %></h5>
+
+<div id="messages" data-chat-room-id="<%= @chat_room.id %>">
+  <%= render @chat_room.messages %>
+</div>
+
+
+<%= form_for @message, url: '#' do |f| %>
+  <%= hidden_field_tag 'chat_room_id', @chat_room.id %>
+
+  <%- if current_user %>
+  	<%= f.hidden_field :user_id, :value => current_user.id %>
+  <% end %>
+
+  <%- if current_admin %>
+  	<%= f.hidden_field :admin_id, :value => current_admin.id %>
+  <% end %>
+
+
+  <div class="input-field col full-width">
+    <%= f.label "Escribe aqui cualquier duda que tengas...",class:"blue-text",for:"textarea1" %>
+    <%= f.text_area :body, class: 'anchoLetra materialize-textarea",placeholder' %>
+
+  </div>
+
+  <%= f.submit "Enviar", class: 'btn full-width' %>
+<% end %>
+
+
+
+</body>

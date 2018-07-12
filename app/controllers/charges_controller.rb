@@ -28,14 +28,6 @@ class ChargesController < ApplicationController
 	  	current_admin.update!(stripe_customer_token: customer.id)
 	  end
 
-	  #CREATE THE CHARGE
-	  # charge = Stripe::Charge.create(
-	  #   :customer    => customer.id,
-	  #   :amount      => @amount,
-	  #   :description => 'Rails Stripe customer 2',
-	  #   :currency    => 'usd'
-	  # )
-
 	  respond_to do |format|
   		format.html { redirect_to root_path, notice: 'Información guardada de manera correcta' }
   		format.js

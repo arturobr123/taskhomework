@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  body: MyText
+  user: one
+  admin: one
+  chat_room: one
+
+two:
+  body: MyText
+  user: two
+  admin: two
+  chat_room: two

@@ -11,6 +11,8 @@ class User < ApplicationRecord
 	#relations
   has_many :homeworks , dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :chat_rooms, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
 
   #validaciones

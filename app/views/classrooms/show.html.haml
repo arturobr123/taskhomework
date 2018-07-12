@@ -42,7 +42,8 @@
 				%p.top15
 					%b
 						="Fecha de entrega:"
-				= fechaBonita @homework.deadline
+				.pink-text
+					= fechaBonita @classroom.proposal.deadline
 
 				%div.top15
 					%b
@@ -69,11 +70,15 @@
 
 		.col.s12.l12.lighten-4
 
+			-if @classroom.chat_room
+				=link_to "Chatear: #{@classroom.chat_room.messages.count}", @classroom.chat_room , class:"btn green top15"
+
 			.fontSize18
 				%b
 					="Tiempo para la fecha de entrega: "
 				#deadline
 
+			.border-line-creditcard.top30
 			-if current_admin && @classroom.archive_classrooms.count > 0 && @homework.status != 3
 
 				=link_to "Finalizar tarea", finish_homework_path(homework_id: @homework.id,proposal_id:@proposal.id),data: { confirm: 'Estás seguro de ya terminar esta tarea? Los archivos que hayas subido deben ser la tarea. Con esto se notificará al usuario para que el vea su tarea.' }, class:"btn blue top15"
@@ -145,7 +150,7 @@
 						%div.top15.left15
 							%b
 								="Rango:"
-							= @admin.rank
+							= @admin.rank.round(2)
 
 						%div.top15.left15
 							%b
@@ -198,6 +203,11 @@
 						= link_to archive.archivo_file_name, archive.archivo.url(:original, false)
 
 
+		-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
+			.col.s12.l12
+				%h5
+					="Recuerda oprimir alguno de los 2 botones, satisfecho o no satisfecho dependiendo de si te gustó la tarea o no."
+
 		/ -if current_admin
 		/ 	.col.s12.l12.top15
 		/ 		%p.fontSize18
@@ -207,12 +217,6 @@
 
 /est es solo para mostrar el modal de calificar
 #modalRespuestas
-
-
-
-/.col.s3.l1.lighten-4.full-heigth
-
-/= link_to 'Edit', edit_homework_path(@homework)
 
 
 
