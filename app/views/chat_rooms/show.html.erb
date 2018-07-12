@@ -1,8 +1,10 @@
 <body class="white-background">
 	
 
+<center>
+  <h5> Chat: <%= @chat_room.title %></h5>
+</center>
 
-<h5> Chat: <%= @chat_room.title %></h5>
 
 <div id="messages" data-chat-room-id="<%= @chat_room.id %>">
   <%= render @chat_room.messages %>
@@ -22,14 +24,16 @@
 
 
   <div class="input-field col full-width">
-    <%= f.label "Escribe aqui cualquier duda que tengas...",class:"blue-text",for:"textarea1" %>
-    <%= f.text_area :body, class: 'anchoLetra materialize-textarea",placeholder' %>
+    <%= f.text_area :body, class: 'anchoLetra materialize-textarea', placeholder:"Escribe aqui cualquier duda que tengas para el trabajador" %>
 
   </div>
 
-  <%= f.submit "Enviar", class: 'btn full-width' %>
+  <%= f.submit "Enviar", class: 'btn-large full-width' %>
 <% end %>
 
 
+<br>
+<br>
+<br>
 
 </body>

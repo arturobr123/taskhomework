@@ -3,22 +3,26 @@
     <span class='card-title'>
     </span>
 
-    <h5 class="inline">
+    <div class="row">
+      <p class="alignleft lighter">
+        <%- if message.admin_id %>
+          <%= "Trabajador"  %>
+        <% end %>
 
-      <%- if message.admin_id %>
-        <%= "Trabajador"  %>
-      <% end %>
+        <%- if message.user_id %>
+          <%= "Estudiante"  %>
+        <% end %>
+      </p>
 
-      <%- if message.user_id %>
-        <%= "Estudiante"  %>
-      <% end %>
-      
-    </h5>
+      <p class="alignright fecha_pequena"> <%= message.timestamp %> </p>
+    </div>
+    
 
-    <small class="inline"> <%= message.timestamp %> </small>
-
-    <p class='top15'>
+    <div class="">
       <%= message.body %>
-    </p>
+    </div>
+    
+
+
   </div>
 </div>

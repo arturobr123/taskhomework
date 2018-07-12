@@ -24,8 +24,8 @@ class ClassroomsController < ApplicationController
     else
       @deadline = "2015, 7, 24"
     end
-    
   end
+
 
   def new
     @classroom = Classroom.new
@@ -36,8 +36,6 @@ class ClassroomsController < ApplicationController
   end
 
   def create
-    #@classroom = Classroom.new(classroom_params)
-
     admin_id = params[:admin_id]
     homework_id = params[:homework_id]
     proposal_id = params[:proposal_id]
@@ -61,9 +59,9 @@ class ClassroomsController < ApplicationController
       else
         format.html { redirect_to root_path, notice: 'No se pudo hacer el cargo. Revisa que tengas los fondos necesarios y si no, contactanos.' }
       end
-      
     end
   end
+
 
   def update
     respond_to do |format|
@@ -76,6 +74,7 @@ class ClassroomsController < ApplicationController
       end
     end
   end
+
 
   def uploadFiles
 
@@ -107,8 +106,6 @@ class ClassroomsController < ApplicationController
     @homework = Homework.find(homework_id)
     #ahora la propuesta cambia su status a finalizada
     @proposal = Proposal.find(proposal_id)
-
-    #@pago = pay(@homework, @proposal)#hace el pago por open pay
 
     respond_to do |format|
       if @homework.update!(status: 3) && @proposal.update!(status: 3)
