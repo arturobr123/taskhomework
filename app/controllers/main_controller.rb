@@ -96,6 +96,27 @@ class MainController < ApplicationController
 
 
 
+    
+
+
+    #REGRESAR DINERO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    request_hash={
+      "description" => "Monto de cargo devuelto",
+      "amount" => 500.00
+    }
+
+    # @charges=openpay.create(:charges)
+
+    # #transaccion_id,  user_id
+    # response_hash= @charges.refund("trl0x4zfsiiy8kifsbck", request_hash.to_hash, "adcuzsxm7ndvah1xfmoh")
+
+    # puts response_hash
+
+
+
+
+
 
 
     #OBTENER COMISIONES

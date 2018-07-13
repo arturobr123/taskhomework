@@ -87,7 +87,7 @@ class UsuariosController < ApplicationController
 
 		#CREATE CARD TO CUSTOMER
 	    new_card_hash={
-	        "holder_name" => "Deadpool Bravo",
+	        "holder_name" => current_user.name + " " + current_user.firs_last_name,
 	        "card_number" => card_number,
 	        "cvv2" => cvv2,
 	        "expiration_month" => expiration_month,
