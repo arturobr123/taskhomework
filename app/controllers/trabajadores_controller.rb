@@ -67,6 +67,27 @@ class TrabajadoresController < ApplicationController
 
 	def upload_clabe_open_pay(clabe)
 
+		#merchant and private key
+    merchant_id='mnn5gyble3oezlf6ca3v'
+    private_key='sk_33044f35a7364f81b7139b21327a5927'
+    openpay=OpenpayApi.new(merchant_id,private_key)
+
+		#OBTENER COMISIONES
+		request_hash={
+		 "holder_name" => current_admin.name + " " + current_admin.last_name,
+		 "alias" => "Cuenta principal",
+		 "clabe" => clabe
+		}
+
+    @bank_accounts= openpay.create(:bankaccounts)
+
+    begin
+      response_hash=@bank_accounts.create(request_hash.to_hash, current_admin.open_pay_user_id)
+    rescue Exception => e
+      return[false, "erro: #{e.description.to_s}"]
+    end
+
+    current_admin.update(open_pay_clabe_id: response_hash["id"])
     return [true,"Subida de CLABE exitoso !"]		
 	end
 
