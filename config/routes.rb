@@ -2,6 +2,11 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  get "trabajadores/first_phrase" => 'trabajadores#first_phrase', :as => :first_phrase
+  get "trabajadores/upload_clabe" => 'trabajadores#upload_clabe', :as => :upload_clabe
+  get "trabajadores/phrase" => 'trabajadores#phrase', :as => :phrase
+  get "trabajadores/clabe" => 'trabajadores#clabe', :as => :clabeAccount
+
   resources :chat_rooms, only: [:new, :create, :show, :index]
   
   #send insatisfaction comment

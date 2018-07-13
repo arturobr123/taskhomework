@@ -8,7 +8,14 @@ class MainController < ApplicationController
 
   def homeAdmin
 
-  	redirect_to my_homeworks_path
+    respond_to do |format|
+      if(current_admin.open_pay_clabe_id.nil?)
+        format.html { redirect_to clabeAccount_path, notice: "Por favor ingresa tu CLABE" }
+      else
+        format.html { redirect_to my_homeworks_path }
+
+      end
+    end
 
   end
 
@@ -19,11 +26,6 @@ class MainController < ApplicationController
   def userUnregistered
   	#redirect_to new_user_registration_path
     redirect_to home_page_path
-
-    puts "!!!!!!!!!"
-    puts "!!!!!!!!!"
-    puts "!!!!!!!!!"
-    puts "!!!!!!!!!"
 
     #merchant and private key
     merchant_id='mnn5gyble3oezlf6ca3v'

@@ -23,7 +23,7 @@
             ="Fecha de entrega"
 
         .div.input-field.col.full-width
-          = f.text_area :notes,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Como harás la tarea, porque debe elegirte a ti, etc."
+          = f.text_area :notes,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Como harás la tarea, porque debe elegirte a ti, etc.",value: @phrase
           = f.label "Comentarios", class:"blue-text",for:"textarea1"
 
 

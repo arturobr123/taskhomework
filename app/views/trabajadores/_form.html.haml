@@ -32,6 +32,10 @@
             %div.file-path-wrapper
               %input.file-path.validate{:type => "text"}
 
+        .div.input-field.col.full-width
+          = f.text_area :phrase,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Como harás la tarea, porque debe elegirte a ti, etc.",value: @phrase
+          = f.label "Frase", class:"blue-text",for:"textarea1"
+
 
 
       .actions.top-space2

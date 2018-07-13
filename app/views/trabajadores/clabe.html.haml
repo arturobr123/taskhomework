@@ -1,0 +1,32 @@
+
+%body.white-background
+= render "partials/noticeToast"
+
+%div.pink-text.card-panel
+	%h4.center-align
+		="Bienvenido a Task"
+
+
+
+%center.pregunta_texto.top30
+	="Por favor escriba su CLABE de la cuenta en la que quiere recibir sus pagos"
+
+
+
+.row.top30
+	.col.s12.l6.offset-l3
+
+		=form_tag upload_clabe_path , method: :get do
+
+			=text_field_tag :clabe, "", class:"materialize-textarea" , id:"textarea1", placeholder:"CLABE",length:"18", type:"number"
+
+			=text_field_tag :admin_id, nil,class:"ocultar", value: 1
+
+			
+			=button_tag "Subir" , class: 'btn full-width' , type: :submit
+
+
+		.top30.center
+			%img{:align => "middle", :alt => "Smiley face", :height => "30", :src => "#{asset_path('cards1.png')}", :class => ""}
+
+			%img{:align => "middle", :alt => "Smiley face", :height => "30", :src => "#{asset_path('cards2.png')}", :class => ""}

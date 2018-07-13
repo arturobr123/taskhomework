@@ -1,7 +1,6 @@
 class TrabajadoresController < ApplicationController
-	before_action :set_worker ,except: [:index]
-	before_action :authenticate_admin!,only: [:index] #gema devise
-	before_action :authenticate_admin!,only: [:update]
+	before_action :set_worker ,except: [:index, :clabe, :phrase, :first_phrase,:upload_clabe, :upload_clabe_open_pay]
+	before_action :authenticate_admin!,only: [:index, :update, :clabe, :phrase, :first_phrase,:upload_clabe, :upload_clabe_open_pay] #gema devise
 	before_action :authenticate_owner!,only: [:update]
 
 	def index
@@ -22,15 +21,22 @@ class TrabajadoresController < ApplicationController
 		@proposals_money.each do |proposal|
 			@money = @money + proposal.cost
 		end
+
 	end
 
 
 	def edit
+
+		if current_admin.phrase
+      @phrase = current_admin.phrase
+    else
+      @phrase = ""
+    end
+    
 	end
 
 
 	def update
-		
 		respond_to do |format|
 			if @admin.update(user_params)
 				format.html {redirect_to current_admin, notice: "información guardada correctamente"}
@@ -39,6 +45,40 @@ class TrabajadoresController < ApplicationController
 			else
 				format.html { render :edit }
 				format.json { render json: @admin.errors }
+			end
+		end
+	end
+
+	def upload_clabe
+		clabe = params[:clabe]
+
+		@clabe = upload_clabe_open_pay(clabe)
+
+
+    respond_to do |format|
+			if @clabe[0] == true
+				format.html {redirect_to phrase_path, notice: @clabe[1]}
+			else
+				format.html {redirect_back(fallback_location: root_path, notice: @clabe[1])}
+			end
+		end
+	end
+
+
+	def upload_clabe_open_pay(clabe)
+
+    return [true,"Subida de CLABE exitoso !"]		
+	end
+
+
+	def first_phrase
+		phrase = params[:phrase]
+
+		respond_to do |format|
+			if current_admin.update(phrase: phrase)
+				format.html {redirect_to homeworks_path, notice: "Bienvenido a Task, ahora puedes buscar tareas y subir propuestas. Exito!"}
+			else
+				format.html {redirect_back(fallback_location: root_path, notice: "ocurrio un error, intentalo nuevamente")}
 			end
 		end
 	end
@@ -58,7 +98,7 @@ class TrabajadoresController < ApplicationController
 	  end
 
 	  def user_params
-	  	params.require(:admin).permit(:email,:name, :avatar)
+	  	params.require(:admin).permit(:email,:name, :avatar, :phrase)
 	  	
 	  end
 end

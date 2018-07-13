@@ -1,0 +1,24 @@
+
+%body.white-background
+= render "partials/noticeToast"
+/%p#notice= notice
+%div.pink-text.card-panel
+	%h4.center-align
+		="Ahora escribe tu frase"
+
+.row
+	.col.s12.l8.offset-l2
+		%center.pregunta_texto.top30
+			="Tu frase es el texto que los estudiantes verán cuando hagas tus propuestas, es tu carta de presentación para que los estudiantes puedan elegirte, se breve pero directo, recomendamos no mas de 280 caracteres. Se creativo ;)"
+
+
+.row.top30
+	.col.s12.l8.offset-l2
+
+		=form_tag first_phrase_path , method: :get do
+
+			=text_area_tag :phrase, "", class:"materialize-textarea" , id:"textarea1", placeholder:"ejem. Hola buena tarde, soy Arturo, una persona trabajadora, dedicada, constante. Siempre me comprometo a entregar las tareas mucho antes de la fecha de entrega, y mis tareas siempre son excelentes. Me encantaría poder contribuir a tu tarea y ayudarte en tu calificación.",length:"280", type:"number"
+
+			=text_field_tag :admin_id, nil,class:"ocultar", value: 1
+
+			=button_tag "Subir" , class: 'btn full-width' , type: :submit

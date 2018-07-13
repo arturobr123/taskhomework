@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180711231931) do
+ActiveRecord::Schema.define(version: 20180713215747) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -36,8 +36,10 @@ ActiveRecord::Schema.define(version: 20180711231931) do
     t.float "rank", default: 5.0
     t.string "card_id"
     t.string "open_pay_user_id"
-    t.string "last_name"
     t.string "token"
+    t.string "open_pay_clabe_id"
+    t.text "phrase", default: ""
+    t.string "last_name", default: ""
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end

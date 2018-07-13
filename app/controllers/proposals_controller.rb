@@ -19,6 +19,12 @@ class ProposalsController < ApplicationController
   # GET /proposals/new
   def new
     @proposal = Proposal.new
+
+    if current_admin.phrase
+      @phrase = current_admin.phrase
+    else
+      @phrase = ""
+    end
   end
 
   # GET /proposals/1/edit
