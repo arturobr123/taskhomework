@@ -14,11 +14,11 @@ class ClassroomsController < ApplicationController
 
 
   def show
+    @proposal = Proposal.find(@classroom.proposal.id)
     @homework = Homework.find(@classroom.homework.id)
     @user = User.find(@classroom.user.id)
     @admin = Admin.find(@classroom.admin.id)
-    @proposal = Proposal.find(@classroom.proposal.id)
-
+    
     if @homework.status != 3
       @deadline = @proposal.deadline.strftime("%Y, %m, %e")
     else

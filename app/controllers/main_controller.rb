@@ -81,16 +81,16 @@ class MainController < ApplicationController
         "order_id" => "elshss9zrujnygnydwgca" #este id puede ser inventado pero debe ser unico
     }
 
-    charges=openpay.create(:charges)
+    # charges=openpay.create(:charges)
 
-    begin
-      charges.create(request_hash.to_h, "afab2dieo94yhjxbsh2s")
-    rescue Exception => e
-      puts e.http_code  #  => 401
-      puts e.error_code # => 1002
-      puts e.description# => 'The api key or merchant id are invalid.'
-      puts e.json_body #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
-    end
+    # begin
+    #   charges.create(request_hash.to_h, "afab2dieo94yhjxbsh2s")
+    # rescue Exception => e
+    #   puts e.http_code  #  => 401
+    #   puts e.error_code # => 1002
+    #   puts e.description# => 'The api key or merchant id are invalid.'
+    #   puts e.json_body #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
+    # end
 
 
 

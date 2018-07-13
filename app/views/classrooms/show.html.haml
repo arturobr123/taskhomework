@@ -6,11 +6,10 @@
 
 
 :javascript
-	$("#deadline")
-	.countdown(new Date("#{@deadline}"), function(event) {
-	$(this).text(
-	  event.strftime('%D dias %H:%M:%S')
-	);
+	$("#deadline").countdown(new Date("#{@deadline}"), function(event) {
+		$(this).text(
+		  event.strftime('%D dias %H:%M:%S')
+		);
 	});
 
 
@@ -78,9 +77,11 @@
 					="Tiempo para la fecha de entrega: "
 				#deadline
 
-			.border-line-creditcard.top30
+			
 			-if current_admin && @classroom.archive_classrooms.count > 0 && @homework.status != 3
 
+				.border-line-creditcard.top30
+				
 				=link_to "Finalizar tarea", finish_homework_path(homework_id: @homework.id,proposal_id:@proposal.id),data: { confirm: 'Estás seguro de ya terminar esta tarea? Los archivos que hayas subido deben ser la tarea. Con esto se notificará al usuario para que el vea su tarea.' }, class:"btn blue top15"
 
 			-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
