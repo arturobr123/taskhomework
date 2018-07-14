@@ -1,0 +1,20 @@
+<!-- #Notification when worker finished the homework and notify the user -->
+
+<h3>Task</h3>
+
+<h3>
+  Hola, han terminado tu tarea: <%= @homework.name %>
+</h3>
+
+
+<p> Da click en el siguiente link para ver la tarea </p>
+
+
+<%= link_to  "Ir al salon" , classroom_url(@classroom) %>
+
+
+ <p>
+ 	Saludos.
+
+ 	Task 2018.
+ </p>

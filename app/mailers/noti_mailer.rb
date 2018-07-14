@@ -28,6 +28,12 @@ class NotiMailer < ApplicationMailer
     mail(to: email ,subject: "Han subido un archivo a tu tarea #{homework.name}")
   end
 
+  def notification_finished_homework(email, classroom, homework)
+    @homework = homework
+    @classroom = classroom
+
+    mail(to: email ,subject: "HAN TERMINADO TU TAREA: #{homework.name}")
+  end
 
   def disagree_homework_email(comment, classroom_id , open_pay_user_id)
     

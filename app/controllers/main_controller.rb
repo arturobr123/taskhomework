@@ -153,7 +153,8 @@ class MainController < ApplicationController
     # #pagos a CLABE
     # @payouts = openpay.create(:payouts)
 
-    #OBTENER LAS COMISIONES!
+
+    #OBTENER LAS COMISIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # @trabajadores.each do |trabajador|
     #   puts trabajador.name
 
@@ -202,7 +203,7 @@ class MainController < ApplicationController
 
 
 
-    #AHORA TOCA HACER EL DEPOSITO A LA "CLABE"  DEL TRABAJADOR
+    #AHORA TOCA HACER EL DEPOSITO A LA "CLABE" DEL TRABAJADOR
     # request_hash={
     #   "method" => "bank_account",
     #   "destination_id" => "bmnxej10hbgvdszb4zt8",   
