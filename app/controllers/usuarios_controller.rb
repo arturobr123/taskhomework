@@ -20,6 +20,25 @@ class UsuariosController < ApplicationController
 
 
 	def edit
+
+		merchant_id='mnn5gyble3oezlf6ca3v'
+		private_key='sk_33044f35a7364f81b7139b21327a5927'
+		@openpay=OpenpayApi.new(merchant_id,private_key)
+
+		@cards=@openpay.create(:cards)
+
+		@card_numer = ""
+
+		begin
+		  @require_hash = @cards.get(current_user.card_id, current_user.open_pay_user_id)
+		rescue Exception => e
+		  puts e.description
+		end
+
+		if @require_hash
+			@card_numer = @require_hash["card_number"]
+		end
+
 	end
 
 

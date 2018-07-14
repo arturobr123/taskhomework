@@ -54,13 +54,18 @@
           -if current_user.card_id
             %center
               %p
-                ="Ya tienes una tarjeta agregada con token: #{current_user.card_id[0,5] + "...."}"
+                ="Ya tienes una tarjeta agregada."
                 ="Si quieres cambiar tu tarjeta, llena nuevamente los datos con la nueva tarjeta"
-                ="Por temas de seguridad no mostramos información de la tarjeta antes mencionada."
+                ="Por seguridad no mostramos toda la información de la tarjeta"
+
+            %center
+              %ul
+                %li
+                  ="Numero de tarjeta: #{@card_numer}"
 
         .div.col.s12.l4
           = label_tag('card', 'Credit Card Number:')
-          = text_field_tag('card', nil, maxlength: 20, autocomplete: 'off', autofocus: true)
+          = text_field_tag('card', nil, maxlength: 20, autocomplete: 'off')
 
         .div.col.s12.l4
           = label_tag('cc-cvc', 'CVC:')
