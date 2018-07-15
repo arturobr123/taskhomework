@@ -28,9 +28,9 @@ class MainController < ApplicationController
     redirect_to home_page_path
 
     #merchant and private key
-    # merchant_id='mnn5gyble3oezlf6ca3v'
-    # private_key='sk_33044f35a7364f81b7139b21327a5927'
-    # openpay=OpenpayApi.new(merchant_id,private_key)
+    merchant_id='mnn5gyble3oezlf6ca3v'
+    private_key='sk_33044f35a7364f81b7139b21327a5927'
+    openpay=OpenpayApi.new(merchant_id,private_key)
 
 
 
@@ -200,10 +200,10 @@ class MainController < ApplicationController
 
 
 
+    
+    # @payouts = openpay.create(:payouts)
 
-
-
-    #AHORA TOCA HACER EL DEPOSITO A LA "CLABE" DEL TRABAJADOR
+    # #AHORA TOCA HACER EL DEPOSITO A LA "CLABE" DEL TRABAJADOR
     # request_hash={
     #   "method" => "bank_account",
     #   "destination_id" => "bmnxej10hbgvdszb4zt8",   
@@ -261,6 +261,9 @@ class MainController < ApplicationController
     #   end
 
     # end
+
+
+
 
 
 

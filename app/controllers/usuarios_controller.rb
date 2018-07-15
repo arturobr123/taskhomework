@@ -29,14 +29,18 @@ class UsuariosController < ApplicationController
 
 		@card_numer = ""
 
-		begin
-		  @require_hash = @cards.get(current_user.card_id, current_user.open_pay_user_id)
-		rescue Exception => e
-		  puts e.description
-		end
+		if current_user.card_id && current_user.open_pay_user_id
 
-		if @require_hash
-			@card_numer = @require_hash["card_number"]
+			begin
+			  @require_hash = @cards.get(current_user.card_id, current_user.open_pay_user_id)
+			rescue Exception => e
+			  puts e.description.to_s
+			end
+
+			if @require_hash
+				@card_numer = @require_hash["card_number"]
+			end
+			
 		end
 
 	end
