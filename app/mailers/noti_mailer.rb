@@ -35,13 +35,14 @@ class NotiMailer < ApplicationMailer
     mail(to: email ,subject: "HAN TERMINADO TU TAREA: #{homework.name}")
   end
 
-  def disagree_homework_email(comment, classroom_id , open_pay_user_id)
+  def disagree_homework_email(comment, classroom_id , open_pay_user_id, worker_email)
     
     @classroom = classroom_id
     @comment = comment
     @open_pay_user_id = open_pay_user_id
 
     mail(to: "arturo.bravo.rovirosa@hotmail.com" ,subject: "EMERGENCIA! Alguien no estuvo de acuerdo con una tarea salon id: #{classroom_id}")
+    mail(to: worker_email ,subject: "Alguien no estuvo de acuerdo con una tarea salon id: #{classroom_id}")
   end
 
 end

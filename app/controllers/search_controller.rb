@@ -10,12 +10,12 @@ class SearchController < ApplicationController
     end
 
     if(params[:minPrice].present?)
-      queryTemp = "minPrice <= #{params[:minPrice]} AND "
+      queryTemp = "homeworks.minPrice <= #{params[:minPrice]} AND "
       query = query + queryTemp
     end
 
     if(params[:maxPrice].present?)
-      queryTemp = "maxPrice >= #{params[:maxPrice]} AND "
+      queryTemp = "homeworks.maxPrice >= #{params[:maxPrice]} AND "
       query = query + queryTemp
     end
 

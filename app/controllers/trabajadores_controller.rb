@@ -14,12 +14,12 @@ class TrabajadoresController < ApplicationController
 	
 	def show
 		@proposals = @admin.proposals.nuevos.paginate(page:params[:page], per_page:15)
-		@proposals_money = @admin.proposals.where(status: 3).nuevos
+		@classrooms = @admin.classrooms.where(user_accepts: true)
 
 		@money = 0 #total de ganancias
 
-		@proposals_money.each do |proposal|
-			@money = @money + proposal.cost
+		@classrooms.each do |classroom|
+			@money = @money + classroom.proposal.cost
 		end
 
 	end

@@ -171,7 +171,7 @@ class ClassroomsController < ApplicationController
       comment = params[:comment]
     end
 
-    NotiMailer.disagree_homework_email(comment, classroom_id , @classroom.homework.user.open_pay_user_id).deliver
+    NotiMailer.disagree_homework_email(comment, classroom_id , @classroom.homework.user.open_pay_user_id,  @classroom.admin.email).deliver
 
     respond_to do |format|
       format.html { redirect_to @classroom, notice:"Muchas gracias. Se te notificará por correo en 24 horas. Ahora puedes calificar al trabajador." }

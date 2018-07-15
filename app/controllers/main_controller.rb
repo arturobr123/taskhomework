@@ -13,7 +13,6 @@ class MainController < ApplicationController
         format.html { redirect_to clabeAccount_path, notice: "Por favor ingresa tu CLABE" }
       else
         format.html { redirect_to my_homeworks_path }
-
       end
     end
 
@@ -200,7 +199,7 @@ class MainController < ApplicationController
 
 
 
-    
+
     # @payouts = openpay.create(:payouts)
 
     # #AHORA TOCA HACER EL DEPOSITO A LA "CLABE" DEL TRABAJADOR
