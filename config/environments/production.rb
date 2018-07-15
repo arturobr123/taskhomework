@@ -117,6 +117,9 @@ Rails.application.configure do
 
   
 
+  #forzar a usar SSL en cada transaccion
+  config.force_ssl = true
+
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
