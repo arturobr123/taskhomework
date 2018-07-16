@@ -10,7 +10,7 @@
   <center class="top30"> <%=circle_img @admin.avatar.url,150  %> </center>
 
   <center>
-    <h4> <%=@admin.name %> </h4>
+    <h4> <%=@admin.name %> <%=@admin.last_name %> </h4>
   </center>
 
 
@@ -43,7 +43,7 @@
 
   <div class="row border-line">
     <h5 class="center-align">Mis propuestas: <%= @admin.proposals.count %> </h5>
-    <h5 class="center-align">Ganancias totales: <%= @money %> </h5>
+    <h5 class="center-align">Ganancias de este periodo: $<%= @money %> </h5>
     <div class="col s10 l10 offset-l1 offset-s1 opacity90"></div>
     <div class="col s10 l10 offset-l1 offset-s1 top15">
 

@@ -15,12 +15,15 @@
 
         .div.input-field.col.s12.l4
           = f.text_field :name, autofocus: true, class:"" ,id:"name"
-          = f.label "Name", class:"blue-text", for:"name"
+          = f.label "Nombre", class:"blue-text", for:"name"
 
+        .div.input-field.col.s12.l4
+          = f.text_field :last_name, autofocus: true, class:"" ,id:"name"
+          = f.label "Apellidos", class:"blue-text", for:"name"
 
         .div.input-field.col.s12.l4
           = f.text_field :email, autofocus: true, class:"" ,id:"email"
-          = f.label "Email", class:"blue-text", for:"email"
+          = f.label "Correo", class:"blue-text", for:"email"
 
 
         .div.col.s12.l4

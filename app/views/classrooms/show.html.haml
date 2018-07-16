@@ -138,7 +138,8 @@
 						= "Trabajador"
 					%p
 						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@admin.avatar.url}", :width => "50", :class => "circle cover"}
-						= @admin.name
+						= @admin.name + " "
+						= @admin.last_name
 
 					.parent-flex
 						%div.top15

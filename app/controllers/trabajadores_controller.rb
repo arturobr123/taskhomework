@@ -3,23 +3,31 @@ class TrabajadoresController < ApplicationController
 	before_action :authenticate_admin!,only: [:index, :update, :clabe, :phrase, :first_phrase,:upload_clabe, :upload_clabe_open_pay] #gema devise
 	before_action :authenticate_owner!,only: [:update]
 
-	def index
+	include OpenPay
 
+	def index
 		#lista de usuarios
 		@usuarios = Admin.nuevos.all.paginate(page:params[:page], per_page:15)
 		#cuantos usuarios hay en la lista
 		@how_many_usuarios = @usuarios.count
-
 	end
 	
 	def show
 		@proposals = @admin.proposals.nuevos.paginate(page:params[:page], per_page:15)
 		@classrooms = @admin.classrooms.where(user_accepts: true)
 
-		@money = 0 #total de ganancias
+		# @money = 0 #total de ganancias
+		# @classrooms.each do |classroom|
+		# 	@money = @money + classroom.proposal.cost
+		# end
 
-		@classrooms.each do |classroom|
-			@money = @money + classroom.proposal.cost
+		##open pay
+		@money = 0
+		@openpay = open_pay_var()
+		@customers= @openpay.create(:customers)
+		response_hash = @customers.get(current_admin.open_pay_user_id)
+		if response_hash["balance"]
+			@money = response_hash["balance"]
 		end
 
 	end

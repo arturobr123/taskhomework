@@ -10,18 +10,18 @@ class SearchController < ApplicationController
     end
 
     if(params[:minPrice].present?)
-      queryTemp = "homeworks.minPrice <= #{params[:minPrice]} AND "
+      queryTemp = "minPrice <= ? AND "
       query = query + queryTemp
     end
 
     if(params[:maxPrice].present?)
-      queryTemp = "homeworks.maxPrice >= #{params[:maxPrice]} AND "
+      queryTemp = "maxPrice >= #{params[:maxPrice]} AND "
       query = query + queryTemp
     end
 
     query = query + "status = ?"
 
-    @homeworks = Homework.where(query, 1)
+    @homeworks = Homework.where(query, 1, params[:minPrice].to_i)
 
     @how_many_homeworks = @homeworks.count 
 

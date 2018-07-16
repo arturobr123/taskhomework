@@ -200,6 +200,8 @@ class MainController < ApplicationController
 
 
 
+
+
     # @payouts = openpay.create(:payouts)
 
     # #AHORA TOCA HACER EL DEPOSITO A LA "CLABE" DEL TRABAJADOR
@@ -218,6 +220,8 @@ class MainController < ApplicationController
     # end
 
     # puts "FUNCIONO !!!!!!!"
+
+
 
 
 
