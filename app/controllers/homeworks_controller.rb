@@ -5,6 +5,7 @@ class HomeworksController < ApplicationController
   before_action :own_user,only: [:destroy,:edit, :update] #NUEVO
   before_action :authenticate_admin!, only: [:index] #NUEVO
   before_action :check_user_card, only: [:create]
+  before_action :own_user_or_worker, only: [:show]
 
   # GET /homeworks
   # GET /homeworks.json
@@ -137,6 +138,14 @@ class HomeworksController < ApplicationController
     def own_user
       if @homework.user.id != current_user.id
         redirect_to root_path, notice: "No estas autorizado"
+      end
+    end
+
+    def own_user_or_worker
+      if current_user
+        if @homework.user.id != current_user.id
+          redirect_to root_path, notice: "No estas autorizado"
+        end
       end
     end
 
