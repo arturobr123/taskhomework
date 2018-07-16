@@ -19,9 +19,9 @@ class SearchController < ApplicationController
       query = query + queryTemp
     end
 
-    query = query + "status = ?"
+    query = query + "status = 1"
 
-    @homeworks = Homework.where(query, 1, params[:minPrice].to_i)
+    @homeworks = Homework.where(query, params[:minPrice].to_i)
 
     @how_many_homeworks = @homeworks.count 
 
