@@ -4,7 +4,7 @@
 
 %div.pink-text.card-panel
 	%h4.center-align
-		="Bienvenido a Task"
+		="Task"
 
 
 
@@ -32,8 +32,17 @@
 			%img{:align => "middle", :alt => "Smiley face", :height => "30", :src => "#{asset_path('cards2.png')}", :class => ""}
 
 
-%center.top45
-	= link_to "Dejarlo para después", phrase_path ,class:"top30"
+
+-if @openpay_clabe
+	%center.top15
+		%p
+			="Ya tienes una CLABE registrada, si quieres registrar una nueva llena el campo nuevamente"
+		%p
+			="CLABE actual: #{@openpay_clabe}"
+
+-if !@openpay_clabe
+	%center.top45
+		= link_to "Dejarlo para después", phrase_path ,class:"top30"
 
 
 

@@ -16,11 +16,6 @@ class TrabajadoresController < ApplicationController
 		@proposals = @admin.proposals.nuevos.paginate(page:params[:page], per_page:15)
 		@classrooms = @admin.classrooms.where(user_accepts: true)
 
-		# @money = 0 #total de ganancias
-		# @classrooms.each do |classroom|
-		# 	@money = @money + classroom.proposal.cost
-		# end
-
 		##open pay
 		@money = 0
 		@openpay = open_pay_var()
@@ -57,11 +52,36 @@ class TrabajadoresController < ApplicationController
 		end
 	end
 
+	def clabe
+		
+		if current_admin.open_pay_clabe_id
+
+			@openpay = open_pay_var()
+
+			@bank_accounts=@openpay.create(:bankaccounts)
+			
+			begin
+				@response_hash = @bank_accounts.get(current_admin.open_pay_user_id, current_admin.open_pay_clabe_id)
+			rescue Exception => e
+				puts e
+			end
+
+			if @response_hash["clabe"]
+				puts @response_hash["clabe"]
+				puts @response_hash["clabe"]
+				@openpay_clabe = @response_hash["clabe"]
+			end
+
+			puts "HOLAAAAAAAAAAA"
+			
+		end
+
+	end
+
 	def upload_clabe
 		clabe = params[:clabe]
 
 		@clabe = upload_clabe_open_pay(clabe)
-
 
     respond_to do |format|
 			if @clabe[0] == true
@@ -75,10 +95,7 @@ class TrabajadoresController < ApplicationController
 
 	def upload_clabe_open_pay(clabe)
 
-		#merchant and private key
-    merchant_id='mnn5gyble3oezlf6ca3v'
-    private_key='sk_33044f35a7364f81b7139b21327a5927'
-    openpay=OpenpayApi.new(merchant_id,private_key)
+    openpay = open_pay_var()
 
 		#OBTENER COMISIONES
 		request_hash={

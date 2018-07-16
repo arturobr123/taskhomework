@@ -6,13 +6,13 @@ class UsuariosController < ApplicationController
 	before_action :authenticate_user!,only: [:update]
 	before_action :authenticate_owner!,only: [:update]
 
-	def index
+	include OpenPay
 
+	def index
 		#lista de usuarios
 		@usuarios = User.nuevos.all.paginate(page:params[:page], per_page:15)
 		#cuantos usuarios hay en la lista
 		@how_many_usuarios = @usuarios.count
-
 	end
 	
 	def show
@@ -21,9 +21,7 @@ class UsuariosController < ApplicationController
 
 	def edit
 
-		merchant_id='mnn5gyble3oezlf6ca3v'
-		private_key='sk_33044f35a7364f81b7139b21327a5927'
-		@openpay=OpenpayApi.new(merchant_id,private_key)
+		@openpay = open_pay_var()
 
 		@cards=@openpay.create(:cards)
 
@@ -47,7 +45,6 @@ class UsuariosController < ApplicationController
 
 
 	def update
-		
 		respond_to do |format|
 			if @user.update(user_params)
 
@@ -75,11 +72,7 @@ class UsuariosController < ApplicationController
 
 	def upload_card(card_number, cvv2, expiration_month, expiration_year)
 
-		#merchant and private key
-	    merchant_id='mnn5gyble3oezlf6ca3v'
-	    private_key='sk_33044f35a7364f81b7139b21327a5927'
-	    openpay=OpenpayApi.new(merchant_id,private_key)
-
+	    openpay = open_pay_var()
 
 	    #CREATE NEW CUSTOMER
 	    if(!current_user.open_pay_user_id)
@@ -93,36 +86,33 @@ class UsuariosController < ApplicationController
 		    customers = openpay.create(:customers)
 
 		    begin
-			  @customer = customers.create(new_client_hash.to_h)
-			rescue Exception => e
-			  puts e #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
-			  return "ERROR generando usuario para cuenta: #{e.description}"
-			end
+				  @customer = customers.create(new_client_hash.to_h)
+				rescue Exception => e
+				  puts e #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
+				  return "ERROR generando usuario para cuenta: #{e.description}"
+				end
 
-			puts @customer
-			@customer_id = @customer["id"]
-
-		else
-			@customer_id = current_user.open_pay_user_id
-
-	    end
+				puts @customer
+				@customer_id = @customer["id"]
+			else
+				@customer_id = current_user.open_pay_user_id
+		  end
 	    
-
 		#CREATE CARD TO CUSTOMER
-	    new_card_hash={
-	        "holder_name" => current_user.name + " " + current_user.firs_last_name,
-	        "card_number" => card_number,
-	        "cvv2" => cvv2,
-	        "expiration_month" => expiration_month,
-	        "expiration_year" => expiration_year[2,3]
-	     }
+    new_card_hash={
+        "holder_name" => current_user.name + " " + current_user.firs_last_name,
+        "card_number" => card_number,
+        "cvv2" => cvv2,
+        "expiration_month" => expiration_month,
+        "expiration_year" => expiration_year[2,3]
+     }
 
-	    cards = openpay.create(:cards)
+    cards = openpay.create(:cards)
 
-	    begin
-		  	@card = cards.create(new_card_hash.to_h, @customer_id)
+    begin
+		  @card = cards.create(new_card_hash.to_h, @customer_id)
 		rescue Exception => e
-		  	puts e.description #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
+		  puts e.description #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
 			return "ERROR con la tarjeta: #{e.description}"
 		end
 
@@ -131,6 +121,7 @@ class UsuariosController < ApplicationController
 
 		return nil
 	end
+
 
 
 	private
@@ -142,11 +133,9 @@ class UsuariosController < ApplicationController
 	  	if current_user != @user
 	  		redirect_to root_path, notice: "No estas autorizado"
 	  	end
-	  	
 	  end
 
 	  def user_params
 	  	params.require(:user).permit(:email,:name, :firs_last_name,:second_last_name, :avatar)
-	  	
 	  end
 end

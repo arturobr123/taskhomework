@@ -7,6 +7,7 @@ class ClassroomsController < ApplicationController
   before_action :check_card, only: [:create]
   before_action :check_user_admin, only: [:show]
   
+  include OpenPay
 
   def index
     @classrooms = Classroom.all

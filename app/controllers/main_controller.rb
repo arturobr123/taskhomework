@@ -10,7 +10,7 @@ class MainController < ApplicationController
 
     respond_to do |format|
       if(current_admin.open_pay_clabe_id.nil?)
-        format.html { redirect_to clabeAccount_path, notice: "Por favor ingresa tu CLABE" }
+        format.html { redirect_to clabeAccount_path, notice: "Por favor ingresa tu CLABE donde le estaremos depositando sus ganancias" }
       else
         format.html { redirect_to my_homeworks_path }
       end
