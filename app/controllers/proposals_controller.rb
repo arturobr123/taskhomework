@@ -6,6 +6,7 @@ class ProposalsController < ApplicationController
   before_action :own_admin,only: [:destroy,:edit] #NUEVO
 
   before_action :check_clabe,only: [:new]
+  before_action :check_phrase,only: [:new]
 
   # GET /proposals
   # GET /proposals.json
@@ -13,12 +14,9 @@ class ProposalsController < ApplicationController
     @proposals = Proposal.all
   end
 
-  # GET /proposals/1
-  # GET /proposals/1.json
   def show
   end
 
-  # GET /proposals/new
   def new
     @proposal = Proposal.new
 
@@ -29,12 +27,10 @@ class ProposalsController < ApplicationController
     end
   end
 
-  # GET /proposals/1/edit
+
   def edit
   end
 
-  # POST /proposals
-  # POST /proposals.json
   def create
     @proposal = Proposal.new(proposal_params)
 
@@ -63,8 +59,7 @@ class ProposalsController < ApplicationController
     end
   end
 
-  # DELETE /proposals/1
-  # DELETE /proposals/1.json
+
   def destroy
     @proposal.destroy
     respond_to do |format|
@@ -92,6 +87,12 @@ class ProposalsController < ApplicationController
     def check_clabe
       if(current_admin.open_pay_clabe_id.nil?)
         redirect_to clabeAccount_path, notice: "Ingresa tu CLABE para recibir pagos antes de empezara subir propuestas."
+      end
+    end
+
+    def check_phrase
+      if (current_admin.phrase.length <= 1)
+        redirect_to phrase_path, notice: "Escribe tu frase antes de subir propuestas."
       end
     end
 
