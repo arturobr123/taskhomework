@@ -195,9 +195,10 @@ class ClassroomsController < ApplicationController
       "amount" => proposal.cost,
       "currency" => "MXN",
       "description" => homework.name,
-      "device_session_id" => "kR1MiQhz2otdIuUlQkbEyitIqVMiI16f",
-      "order_id" => homework.id #este id puede ser inventado pero debe ser unico
+      "device_session_id" => "kR1MiQhz2otdIuUlQkbEyitIqVMiI16f"
+      
     }
+    #"order_id" => homework.id #este id puede ser inventado pero debe ser unico
 
     charges=openpay.create(:charges)
 
