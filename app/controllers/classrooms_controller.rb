@@ -32,7 +32,6 @@ class ClassroomsController < ApplicationController
     @classroom = Classroom.new
   end
 
-
   def edit
   end
 
@@ -54,7 +53,7 @@ class ClassroomsController < ApplicationController
           format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea. Se le notificará al trabajador' }
           format.json { render :show, status: :created, location: @classroom }
         else
-          format.html { render :new }
+          format.html { render root_path notice: "ERROR, alguio salió mal, contactanos."}
           format.json { render json: @classroom.errors, status: :unprocessable_entity }
         end
       else
@@ -184,8 +183,6 @@ class ClassroomsController < ApplicationController
   #cuando el usuario acepta quien le hará la tarea, este se le hace el cobro de lo que tiene
   #asignado la propuesta(y se le agrega a su cuenta en openpay)
   def pay_user(homework, proposal)
-
-    #CREATE THE CHARGE OPEN PAY
 
     #merchant and private key
     merchant_id='mnn5gyble3oezlf6ca3v'
