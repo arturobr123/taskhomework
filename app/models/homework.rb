@@ -8,7 +8,7 @@ class Homework < ApplicationRecord
   #relations
   has_many :proposals , dependent: :destroy
   has_many :classrooms , dependent: :destroy
-  has_many :archives, :dependent => :destroy
+  has_many :archives, dependent: :destroy
 
 
   #enviara una notifiacion al usuario cuando su tarea se finalize
