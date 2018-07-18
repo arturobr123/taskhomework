@@ -107,7 +107,7 @@ class ClassroomsController < ApplicationController
 
     respond_to do |format|
       if @homework.update!(status: 3) && @proposal.update!(status: 3) && @proposal.classroom.update!(:finished => true, :finishedDate => DateTime.now)
-        format.html { redirect_to root_path, notice: 'Tarea terminada! Recibirás tu pago pronto.' }
+        format.html { redirect_to root_path, notice: 'Tarea terminada! Se le notificará al estudiante para que la vea.' }
         format.json { render :show, status: :ok, location: root_path }
       else
         format.html { redirect_to root_path, notice: 'Error'}
@@ -253,7 +253,9 @@ class ClassroomsController < ApplicationController
         @admin = Admin.find(@classroom.admin_id)
         rank_new = (@admin.rank + score.to_f)/2
         @admin.update!(rank: rank_new)
-
+        #enviar correo de notificación al trabajador
+        NotiMailer.notify_worker_score_homework(@admin.email, @classroom.homework , @classroom).deliver
+        
         format.html { redirect_to root_path, notice: 'Tarea calificada. Gracias!' }
         format.json { render :show, status: :ok, location: root_path }
       else
@@ -271,9 +273,7 @@ class ClassroomsController < ApplicationController
   end
 
 
-
-  ##############################
-
+  #################################################################################
 
 
   private

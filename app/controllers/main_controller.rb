@@ -143,14 +143,14 @@ class MainController < ApplicationController
 
 
 
-    # @trabajadores = Admin.all
+    @trabajadores = Admin.where("open_pay_user_id not ? and open_pay_clabe_id not ?", nil,nil)
 
-    # #CUSTOMERS
-    # @customers= openpay.create(:customers)
-    # #COMISIONES
-    # @fees = openpay.create(:fees)
-    # #pagos a CLABE
-    # @payouts = openpay.create(:payouts)
+    #CUSTOMERS
+    @customers= openpay.create(:customers)
+    #COMISIONES
+    @fees = openpay.create(:fees)
+    #pagos a CLABE
+    @payouts = openpay.create(:payouts)
 
 
     #OBTENER LAS COMISIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -200,70 +200,43 @@ class MainController < ApplicationController
 
 
 
-
-
-    # @payouts = openpay.create(:payouts)
-
-    # #AHORA TOCA HACER EL DEPOSITO A LA "CLABE" DEL TRABAJADOR
-    # request_hash={
-    #   "method" => "bank_account",
-    #   "destination_id" => "bmnxej10hbgvdszb4zt8",   
-    #   "amount" => 200,
-    #   "description" => "Retiro de saldo id:20"
-    # }
-
-    # begin
-    #   @payouts.create(request_hash.to_hash, "a4i1spe6t5lkxqbwo8dm")
-    # rescue Exception => e
-    #   puts e.description# => 'The api key or merchant id are invalid.'
-    #   puts e.description# => 'The api key or merchant id are invalid.'
-    # end
-
-    # puts "FUNCIONO !!!!!!!"
-
-
-
-
-
-
-
-
-
-
     #envio de pagos
-    # @trabajadores.each do |trabajador|
-    #   puts trabajador.name
+    @trabajadores.each do |trabajador|
+      puts trabajador.name
 
-    #   if(trabajador.open_pay_user_id && trabajador.open_pay_clabe_id)
+      if(trabajador.open_pay_user_id && trabajador.open_pay_clabe_id)
 
-    #     puts "ENTRO AQUI !!!!"
-    #     response_hash = @customers.get(trabajador.open_pay_user_id)
+        puts "ENTRO AQUI !!!!"
+        response_hash = @customers.get(trabajador.open_pay_user_id)
 
-    #     @total = response_hash["balance"].to_f
-    #     if(@total > 0)
+        @total = response_hash["balance"].to_f
+        if(@total > 0)
 
-    #       puts "EL TRABAJADOR TIENE BALANCE"
-    #       #AHORA TOCA HACER EL DEPOSITO A LA "CLABE"  DEL TRABAJADOR
-    #       request_hash={
-    #         "method" => "bank_account",
-    #         "destination_id" => trabajador.open_pay_clabe_id,   
-    #         "amount" => 200,
-    #         "description" => "Retiro de saldo id: #{trabajador.id}"
-    #       }
+          puts "EL TRABAJADOR TIENE BALANCE"
 
-    #       begin
-    #         @payouts.create(request_hash.to_hash, trabajador.open_pay_user_id)
-    #       rescue Exception => e
-    #         puts e.description# => 'The api key or merchant id are invalid.'
-    #       end
+          puts trabajador.open_pay_user_id
+          #AHORA TOCA HACER EL DEPOSITO A LA "CLABE"  DEL TRABAJADOR
+          request_hash={
+            "method" => "bank_account",
+            "destination_id" => trabajador.open_pay_clabe_id,   
+            "amount" => 200,
+            "description" => "Retiro de saldo id: #{trabajador.id}"
+          }
 
-    #       puts "EXITO MANDANDO EL DEPOSITO"
+          begin
+            @payouts.create(request_hash.to_hash, trabajador.open_pay_user_id)
+          rescue Exception => e
+            puts e.description# => 'The api key or merchant id are invalid.'
+            puts e.json_body
+          end
 
-    #     end        
+          puts "EXITO MANDANDO EL DEPOSITO"
 
-    #   end
+        end        
 
-    # end
+      end
+
+    end
 
 
 

@@ -1,0 +1,25 @@
+<!-- #Notification when user accepts a homework and notify the worker -->
+
+<h3>Task</h3>
+
+<h3>
+  Hola, el usuario de la tarea <%= @homework.name %> ha calificado tu trabajdo
+</h3>
+
+
+<h4>
+	Calificación: <%= @classroom.scoreTrabajador.to_s %>/5 
+</h4>
+
+
+<p> Da click en el siguiente link para ir al salon. </p>
+
+
+<%= link_to  "Ir al salon" , classroom_url(@classroom.id) %>
+
+
+ <p>
+ 	Saludos.
+
+ 	Task 2018.
+ </p>
