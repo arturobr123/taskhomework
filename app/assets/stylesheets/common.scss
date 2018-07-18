@@ -36,6 +36,10 @@
 	margin-bottom: 30px !important;
 }
 
+.left5{
+  margin-left: 5px;
+}
+
 .left15{
   margin-left: 15px !important;
 }
@@ -319,8 +323,6 @@ $medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width 
 
 
 
-
-
 .alignleft {
   float: left;
 }
@@ -331,6 +333,12 @@ $medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width 
 
 
 
+
+@media #{$large-and-up} {
+  .brand-logo {
+     margin-left: 15px;
+  }
+}
 
 
 
