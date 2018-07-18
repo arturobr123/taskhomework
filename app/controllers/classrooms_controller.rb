@@ -136,6 +136,8 @@ class ClassroomsController < ApplicationController
       if(@pago)
         #actualiza el boleano diciendo que el usuario ya aprobo
         @classroom.update(user_accepts: true)
+        #envio de correo al trabajador
+        NotiMailer.notify_worker_accepts_homework(@proposal.admin.email, @homework, @classroom).deliver
 
         format.html { redirect_back(fallback_location: root_path, notice: 'Muchas gracias. Ahora puedes calificar al trabajador en el salon.') }
         format.json { render :show, status: :ok, location: root_path }

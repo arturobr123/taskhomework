@@ -45,6 +45,13 @@ class NotiMailer < ApplicationMailer
     mail(to: worker_email ,subject: "Alguien no estuvo de acuerdo con una tarea salon id: #{classroom_id}")
   end
 
+  def notify_worker_accepts_homework(email, homework ,classroom)
+    @homework = homework
+    @classroom = classroom    
+
+    mail(to: email ,subject: "EL ESTUDIANTE HA ESTADO DE ACUERDO CON TU TRABAJADO DE LA TAREA: #{homework.name}")
+  end
+
 end
 
 
