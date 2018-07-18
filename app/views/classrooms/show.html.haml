@@ -210,10 +210,10 @@
 						= link_to archive.archivo_file_name, archive.archivo.url(:original, false)
 
 
-		-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
-			.col.s12.l12
-				%h5
-					="Recuerda oprimir alguno de los 2 botones, satisfecho o no satisfecho dependiendo de si te gustó la tarea o no. Si en 48 horas despues de haberse finalizado la tarea, no se ha a elegido una opción se tomará como si el estudiante estuviera de acuerdo."
+		/ -if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
+		/ 	.col.s12.l12
+		/ 		%h5
+		/ 			="Recuerda oprimir alguno de los 2 botones, satisfecho o no satisfecho dependiendo de si te gustó la tarea o no. Si en 48 horas despues de haberse finalizado la tarea, no se ha a elegido una opción se tomará como si el estudiante estuviera de acuerdo."
 
 		/ -if current_admin
 		/ 	.col.s12.l12.top15
