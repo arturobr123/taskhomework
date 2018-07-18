@@ -18,9 +18,12 @@ class ClassroomsController < ApplicationController
     @homework = Homework.find(@classroom.homework.id)
     @user = User.find(@classroom.user.id)
     @admin = Admin.find(@classroom.admin.id)
+
+    puts "@@@@@@@@@@@@@@@@@@@@"
     
     if @homework.status != 3
       @deadline = @proposal.deadline.strftime("%Y, %m, %e")
+      puts @deadline
     else
       @deadline = "2015, 7, 24"
     end

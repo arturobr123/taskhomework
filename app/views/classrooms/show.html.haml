@@ -6,11 +6,15 @@
 
 
 :javascript
-	$("#deadline").countdown(new Date("#{@deadline}"), function(event) {
-		$(this).text(
-		  event.strftime('%D dias %H:%M:%S')
-		);
+	$(document).ready(function() {
+		$("#deadline").countdown(new Date("#{@deadline}"), function(event) {
+			$(this).text(
+			  event.strftime('%D dias %H:%M:%S')
+			);
+		});
 	});
+
+	
 
 
 .row

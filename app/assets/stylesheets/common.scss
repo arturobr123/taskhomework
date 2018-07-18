@@ -330,10 +330,6 @@ $medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width 
   float: right;
 }
 
-
-
-
-
 @media #{$large-and-up} {
   .brand-logo {
      margin-left: 15px;
