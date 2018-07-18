@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180713215747) do
+ActiveRecord::Schema.define(version: 20180718010437) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -88,6 +88,8 @@ ActiveRecord::Schema.define(version: 20180713215747) do
     t.integer "scoreTrabajador"
     t.integer "proposal_id"
     t.boolean "user_accepts"
+    t.boolean "finished", default: false
+    t.datetime "finishedDate"
     t.index ["admin_id"], name: "index_classrooms_on_admin_id"
     t.index ["homework_id"], name: "index_classrooms_on_homework_id"
     t.index ["proposal_id"], name: "index_classrooms_on_proposal_id"

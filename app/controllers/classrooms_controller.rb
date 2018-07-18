@@ -106,7 +106,7 @@ class ClassroomsController < ApplicationController
     @proposal = Proposal.find(proposal_id)
 
     respond_to do |format|
-      if @homework.update!(status: 3) && @proposal.update!(status: 3)
+      if @homework.update!(status: 3) && @proposal.update!(status: 3) && @proposal.classroom.update!(:finished => true, :finishedDate => DateTime.now)
         format.html { redirect_to root_path, notice: 'Tarea terminada! Recibirás tu pago pronto.' }
         format.json { render :show, status: :ok, location: root_path }
       else

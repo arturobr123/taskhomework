@@ -15,7 +15,6 @@
 
 .row
 	/columna de la tarea
-	/full-heigth
 	.col.s12.l3.lighten-4
 
 		-if @homework.status == 3
@@ -76,6 +75,12 @@
 				%b
 					="Tiempo para la fecha de entrega: "
 				#deadline
+
+			-if current_admin && @classroom.scoreTrabajador
+
+				%h5
+					%b
+						="Calificación: #{@classroom.scoreTrabajador}/5"
 
 			
 			-if current_admin && @classroom.archive_classrooms.count > 0 && @homework.status != 3
@@ -208,7 +213,7 @@
 		-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
 			.col.s12.l12
 				%h5
-					="Recuerda oprimir alguno de los 2 botones, satisfecho o no satisfecho dependiendo de si te gustó la tarea o no."
+					="Recuerda oprimir alguno de los 2 botones, satisfecho o no satisfecho dependiendo de si te gustó la tarea o no. Si en 48 horas despues de haberse finalizado la tarea, no se ha a elegido una opción se tomará como si el estudiante estuviera de acuerdo."
 
 		/ -if current_admin
 		/ 	.col.s12.l12.top15
