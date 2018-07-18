@@ -6,10 +6,10 @@ task :check_homeworks_deadline_past => :environment do
 
   @homeworks = Homework.where("status = 1 and  deadline < ?", time)
 
-  @homeworks.destroy_all
-
-  puts "funciono"
-
+  @homeworks.each do |homework|
+  	homework.destroy
+  end
+  
 end
 
 

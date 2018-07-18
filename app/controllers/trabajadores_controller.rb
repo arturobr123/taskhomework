@@ -67,12 +67,8 @@ class TrabajadoresController < ApplicationController
 			end
 
 			if @response_hash["clabe"]
-				puts @response_hash["clabe"]
-				puts @response_hash["clabe"]
 				@openpay_clabe = @response_hash["clabe"]
 			end
-
-			puts "HOLAAAAAAAAAAA"
 			
 		end
 

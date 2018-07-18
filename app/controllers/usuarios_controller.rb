@@ -2,7 +2,7 @@ require 'openpay'
 
 class UsuariosController < ApplicationController
 	before_action :set_user ,except: [:index]
-	before_action :authenticate_admin!,only: [:index] #gema devise
+	before_action :authenticate_admin!,only: [:index]
 	before_action :authenticate_user!,only: [:update]
 	before_action :authenticate_owner!,only: [:update]
 
@@ -88,11 +88,10 @@ class UsuariosController < ApplicationController
 		    begin
 				  @customer = customers.create(new_client_hash.to_h)
 				rescue Exception => e
-				  puts e #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
+				  puts e
 				  return "ERROR generando usuario para cuenta: #{e.description}"
 				end
 
-				puts @customer
 				@customer_id = @customer["id"]
 			else
 				@customer_id = current_user.open_pay_user_id
@@ -112,7 +111,7 @@ class UsuariosController < ApplicationController
     begin
 		  @card = cards.create(new_card_hash.to_h, @customer_id)
 		rescue Exception => e
-		  puts e.description #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
+		  puts e.description
 			return "ERROR con la tarjeta: #{e.description}"
 		end
 

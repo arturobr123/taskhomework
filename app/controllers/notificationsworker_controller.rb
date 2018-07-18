@@ -16,7 +16,6 @@ class NotificationsworkerController < ApplicationController
   		"Hubo un error"
   	end
   	redirect_back fallback_location: root_path
-  	
   end
 
 
@@ -32,8 +31,6 @@ class NotificationsworkerController < ApplicationController
       format.html { redirect_back fallback_location: root_path, notice: 'Todas las notificaciones vistas' }
       format.js
     end
-
-    
   end
 
   private

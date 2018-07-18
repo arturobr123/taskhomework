@@ -8,8 +8,7 @@ class ProposalsController < ApplicationController
   before_action :check_clabe,only: [:new]
   before_action :check_phrase,only: [:new]
 
-  # GET /proposals
-  # GET /proposals.json
+
   def index
     @proposals = Proposal.all
   end
@@ -26,7 +25,6 @@ class ProposalsController < ApplicationController
       @phrase = ""
     end
   end
-
 
   def edit
   end
@@ -45,8 +43,7 @@ class ProposalsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /proposals/1
-  # PATCH/PUT /proposals/1.json
+
   def update
     respond_to do |format|
       if @proposal.update(proposal_params)

@@ -4,7 +4,7 @@ module Notificable
 	extend ActiveSupport::Concern
 
 	included do
-	  has_many :notifications, as: :item
+	  has_many :notifications, as: :item, dependent: :destroy
 	  #after_update_commit :send_notification_to_users_classroom
 
 	  #cuando se crea algo que incluya este concern, se crea una notificación y se envia !!!!!!!! (importante)

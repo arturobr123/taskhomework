@@ -13,7 +13,6 @@ class ClassroomsController < ApplicationController
     @classrooms = Classroom.all
   end
 
-
   def show
     @proposal = Proposal.find(@classroom.proposal.id)
     @homework = Homework.find(@classroom.homework.id)
@@ -75,9 +74,8 @@ class ClassroomsController < ApplicationController
     end
   end
 
-
+  #Subida de archivos del trabajador al salon
   def uploadFiles
-
     #subida de archivos
     if params[:files]
       params[:files].each { |file|
@@ -96,7 +94,7 @@ class ClassroomsController < ApplicationController
     end
   end
 
-
+  #el trabajador finaliza la tarea y notifica al estudiante
   def finish_homework
 
     homework_id = params[:homework_id]
@@ -118,7 +116,7 @@ class ClassroomsController < ApplicationController
     
   end
 
-
+  #El estudiante acepta que esta de acuerdo con la tarea que se le entrego
   def agree_homework
 
     homework_id = params[:homework_id]
@@ -148,7 +146,7 @@ class ClassroomsController < ApplicationController
     
   end
 
-
+  #pagina para escribir el mensaje de porque no le gusto la tarea
   def disagree_homework
     classroom_id = params[:classroom_id]
     @classroom = Classroom.find(classroom_id)
@@ -156,11 +154,10 @@ class ClassroomsController < ApplicationController
     if !@classroom
       redirect_to root_path, notice: 'Error'
     end
-
   end
 
+  #mandar el mensaje de porque no le gusto la tarea
   def send_disagree_homework_email
-    
     if(params[:classroom_id])
       classroom_id = params[:classroom_id]
       @classroom = Classroom.find(classroom_id)
@@ -176,7 +173,6 @@ class ClassroomsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @classroom, notice:"Muchas gracias. Se te notificará por correo en 24 horas. Ahora puedes calificar al trabajador." }
     end
-
   end
 
 
@@ -184,10 +180,7 @@ class ClassroomsController < ApplicationController
   #asignado la propuesta(y se le agrega a su cuenta en openpay)
   def pay_user(homework, proposal)
 
-    #merchant and private key
-    merchant_id='mnn5gyble3oezlf6ca3v'
-    private_key='sk_33044f35a7364f81b7139b21327a5927'
-    openpay=OpenpayApi.new(merchant_id,private_key)
+    openpay = open_pay_var()
 
     request_hash={
       "method" => "card",
@@ -205,7 +198,7 @@ class ClassroomsController < ApplicationController
     begin
       @charge = charges.create(request_hash.to_h, homework.user.open_pay_user_id)
     rescue Exception => e
-      puts e.description# => 'The api key or merchant id are invalid.'
+      puts e.description
       return false
     end
 
@@ -214,15 +207,10 @@ class ClassroomsController < ApplicationController
   end
 
 
-
+  #HACER TRANSFERENCIAS ENTRE CLIENTES USUARIOS
   def pay(homework, proposal)
+    openpay = open_pay_var()
 
-    #merchant and private key
-    merchant_id='mnn5gyble3oezlf6ca3v'
-    private_key='sk_33044f35a7364f81b7139b21327a5927'
-    openpay=OpenpayApi.new(merchant_id,private_key)
-
-    #HACER TRANSFERENCIAS ENTRE CLIENTES USUARIOS
     new_transaction_hash={
        "customer_id" => proposal.admin.open_pay_user_id,
        "amount" => proposal.cost,
@@ -234,33 +222,26 @@ class ClassroomsController < ApplicationController
     begin
       transfers.create(new_transaction_hash.to_h, homework.user.open_pay_user_id) #de aqui se sacara el dinero
     rescue Exception => e
-      puts e.http_code  #  => 401
-      puts e.error_code # => 1002
-      puts e.description# => 'The api key or merchant id are invalid.'
-      puts e.json_body #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
+      puts e.description
+      puts e.json_body
       return false
     end
 
     return true
-    
   end
 
-
-
+  #mostrar el modal para calificar la tarea
   def show_to_score
-
     @classroom = Classroom.find(params[:id])
 
     respond_to do |format|
       format.html
       format.js
     end
-    
   end
 
-  #score the homework
+  #Calficiar la tarea
   def score
-
     score = params[:score]
 
     respond_to do |format|
@@ -277,7 +258,6 @@ class ClassroomsController < ApplicationController
         format.html { redirect_to root_path, notice: 'Error'}
       end
     end
-    
   end
 
   def destroy
@@ -290,7 +270,7 @@ class ClassroomsController < ApplicationController
 
 
 
-
+  ##############################
 
 
 
@@ -333,7 +313,6 @@ class ClassroomsController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def classroom_params
       params.require(:classroom).permit(:homework_id, :status, :user_id, :admin_id)
     end

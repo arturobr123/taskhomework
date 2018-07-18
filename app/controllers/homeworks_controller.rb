@@ -49,20 +49,15 @@ class HomeworksController < ApplicationController
 
   end
 
-  # GET /homeworks/new
   def new
     @homework = Homework.new
   end
 
-  # GET /homeworks/1/edit
   def edit
   end
 
-  # POST /homeworks
-  # POST /homeworks.json
   def create
     #@homework = Homework.new(homework_params)
-
     @homework = current_user.homeworks.new(homework_params)
 
     respond_to do |format|
@@ -84,8 +79,6 @@ class HomeworksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /homeworks/1
-  # PATCH/PUT /homeworks/1.json
   def update
     respond_to do |format|
       if @homework.update(homework_params)
@@ -98,8 +91,6 @@ class HomeworksController < ApplicationController
     end
   end
 
-  # DELETE /homeworks/1
-  # DELETE /homeworks/1.json
   def destroy
     @homework.destroy
     respond_to do |format|
@@ -119,8 +110,9 @@ class HomeworksController < ApplicationController
       format.html { redirect_back fallback_location: root_path }
       format.json { head :no_content }
     end
-    
   end
+
+  #######################################
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -148,7 +140,6 @@ class HomeworksController < ApplicationController
         end
       end
     end
-
 
     def check_user_card
       if(current_user.card_id.nil?)
