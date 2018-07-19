@@ -37,6 +37,12 @@ class ProposalsController < ApplicationController
         format.html { redirect_to @proposal.homework, notice: 'Proposal was successfully created.' }
         format.json { render :show, status: :created, location: @proposal }
       else
+        @homework = Homework.find(@proposal.homework.id)
+        if current_admin.phrase
+          @phrase = current_admin.phrase
+        else
+          @phrase = ""
+        end
         format.html { render :new }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
