@@ -153,7 +153,7 @@ class MainController < ApplicationController
     # @payouts = openpay.create(:payouts)
 
 
-    #OBTENER LAS COMISIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    # #OBTENER LAS COMISIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # @trabajadores.each do |trabajador|
     #   puts trabajador.name
 
@@ -163,32 +163,52 @@ class MainController < ApplicationController
 
     #     #puts response_hash
     #     puts " !! "
-    #     puts " !! "
     #     puts response_hash["balance"]
 
     #     #si vemos que tiene un balance > 10, le hacemos la comision
     #     #esto se hace asi porque cada 14 dias se estan haciendo las comisiones
     #     #y vaciando las cuentas, por lo tanto, cada 14 dias las cuentas inician en 0
     #     @total = response_hash["balance"].to_i
-    #     if(@total > 10)
+    #     if(@total > 0)
 
-    #       comision = @total * 0.05
+    #       @comision = @total
 
-    #       puts comision.to_s
+    #       puts @comision.to_s
 
     #       new_fee_hash={
     #         "customer_id" => trabajador.open_pay_user_id,
-    #         "amount" => comision,
-    #         "description" => "Cobro de Comisión"
+    #         "amount" => @comision,
+    #         "description" => "Cobro de Comisión al trabajador con id: #{trabajador.open_pay_user_id}"
     #       }
 
     #       begin
     #         @fees.create(new_fee_hash.to_h)
     #       rescue Exception => e
-    #         puts e.description# => 'The api key or merchant id are invalid.'
+    #         puts e.description
     #       end
 
     #       puts "EXITO EN COMISION!!"
+
+    #       #AHORA TOCA HACER EL DEPOSITO A LA "CLABE"  DEL TRABAJADOR
+
+    #       @pago_final = @comision - (@comision * 0.05)
+    #       puts "pago final quitando comision: #{@pago_final.to_s}"
+
+    #       request_hash={
+    #         "method" => "bank_account",
+    #         "destination_id" => trabajador.open_pay_clabe_id,   
+    #         "amount" => @pago_final,
+    #         "description" => "pago del trabajador con id: #{trabajador.id}"
+    #       }
+
+    #       begin
+    #         @payouts.create(request_hash.to_hash, trabajador.open_pay_user_id)
+    #       rescue Exception => e
+    #         puts e.description# => 'The api key or merchant id are invalid.'
+    #         puts e.json_body
+    #       end
+
+    #       puts "EXITO EN ENVIO DE DINERO!!"
 
 
     #     end        
@@ -246,10 +266,6 @@ class MainController < ApplicationController
 
 
 
-
-
-
-
     #HACER TRANSFERENCIAS ENTRE CLIENTES USUARIOS
     new_transaction_hash={
        "customer_id" => "a1srmitluvr17rncwwfp",
@@ -260,7 +276,8 @@ class MainController < ApplicationController
     # transfers=openpay.create(:transfers)
 
     # begin
-    #   transfers.create(new_transaction_hash.to_h, "afab2dieo94yhjxbsh2s") #de aqui se sacara el dinero
+    #   request = transfers.create(new_transaction_hash.to_h, "afab2dieo94yhjxbsh2s") #de aqui se sacara el dinero
+    #   puts request
     # rescue Exception => e
     #   puts e.http_code  #  => 401
     #   puts e.error_code # => 1002
