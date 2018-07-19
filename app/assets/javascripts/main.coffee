@@ -60,7 +60,7 @@ $(document).on "turbolinks:load page:fetch", ()->
 
 	$('.parallax').parallax()
 
-	$('.materialboxed').materialbox()
+	$('.popImage').materialbox()
 
 
 
