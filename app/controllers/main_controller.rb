@@ -200,7 +200,7 @@ class MainController < ApplicationController
 
 
 
-    # #envio de pagos
+    #envio de pagos
     # @trabajadores.each do |trabajador|
     #   puts trabajador.name
 
@@ -213,13 +213,14 @@ class MainController < ApplicationController
     #     if(@total > 0)
 
     #       puts "EL TRABAJADOR TIENE BALANCE"
+    #       puts @total
 
     #       puts trabajador.open_pay_user_id
     #       #AHORA TOCA HACER EL DEPOSITO A LA "CLABE"  DEL TRABAJADOR
     #       request_hash={
     #         "method" => "bank_account",
     #         "destination_id" => trabajador.open_pay_clabe_id,   
-    #         "amount" => 200,
+    #         "amount" => 10.50,
     #         "description" => "Retiro de saldo id: #{trabajador.id}"
     #       }
 
