@@ -124,7 +124,7 @@
 						= "Estudiante"
 					%p
 						/=circle_img @user.avatar.url,50
-						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@user.avatar.url}", :width => "50", :class => "circle cover"}
+						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@user.avatar.url}", :width => "50", :class => "circle cover materialboxed"}
 						= @user.name + " " + @user.firs_last_name
 
 					.parent-flex
@@ -146,7 +146,7 @@
 					%span.card-title
 						= "Trabajador"
 					%p
-						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@admin.avatar.url}", :width => "50", :class => "circle cover"}
+						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@admin.avatar.url}", :width => "50", :class => "circle cover materialboxed"}
 						= @admin.name + " "
 						= @admin.last_name
 
