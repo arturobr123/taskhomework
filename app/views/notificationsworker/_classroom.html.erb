@@ -1,17 +1,15 @@
-<!-- Parcial de notificacion de que un usuario a aceptado la propuesta del administrador -->
+<!-- Parcial de notificacion de que un usuario a aceptado la propuesta del trabajador -->
 <li class="collection-item avatar">
 
-      <i class="material-icons circle blue">thumb_up</i>
+  <i class="material-icons circle blue">thumb_up</i>
 
-      <span class="title"><%= link_to "El usuario #{notification.item.user.name} ha aceptado tu propuesta de la tarea: #{notification.item.homework.name}" , notification.item, class:"black-text"  %></span>
+  <span class="title"><%= link_to "El usuario #{notification.item.user.name} ha aceptado tu propuesta de la tarea: #{notification.item.homework.name}" , notification.item, class:"black-text"  %></span>
 
-      <p>Fecha: <%= fechaBonita notification.created_at %> </p> 
+  <p>Fecha: <%= fechaBonita notification.created_at %> </p>
 
-      <%= link_to notificationsworker_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
-      		<i>visto</i>
-            <i class="material-icons">check</i>
-
-      <% end %>
-
+  <%= link_to notificationsworker_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
+  	<i>visto</i>
+    <i class="material-icons">check</i>
+  <% end %>
 
 </li>

@@ -156,24 +156,22 @@ class MainController < ApplicationController
     # #OBTENER LAS COMISIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # @trabajadores.each do |trabajador|
     #   puts trabajador.name
+    #   puts trabajador.last_name
 
     #   if(trabajador.open_pay_user_id && trabajador.open_pay_clabe_id)
 
     #     response_hash = @customers.get(trabajador.open_pay_user_id)
 
-    #     #puts response_hash
-    #     puts " !! "
-    #     puts response_hash["balance"]
+    #     #saldo que tiene en su cuenta
+    #     puts "balance: " + response_hash["balance"]
 
-    #     #si vemos que tiene un balance > 10, le hacemos la comision
-    #     #esto se hace asi porque cada 14 dias se estan haciendo las comisiones
-    #     #y vaciando las cuentas, por lo tanto, cada 14 dias las cuentas inician en 0
+    #     #para cada trabajador de comision le sacamos todo lo que tiene en su cuenta
     #     @total = response_hash["balance"].to_i
     #     if(@total > 0)
 
     #       @comision = @total
 
-    #       puts @comision.to_s
+    #       puts "total de dinero: " + @comision.to_s
 
     #       new_fee_hash={
     #         "customer_id" => trabajador.open_pay_user_id,
@@ -189,8 +187,8 @@ class MainController < ApplicationController
 
     #       puts "EXITO EN COMISION!!"
 
-    #       #AHORA TOCA HACER EL DEPOSITO A LA "CLABE"  DEL TRABAJADOR
-
+    #       #ahora para cada trabajador a su saldo que tenia le quitamos el %5 porciento
+    #       #y lo demas se lo depositamos a su cuenta CLABE
     #       @pago_final = @comision - (@comision * 0.05)
     #       puts "pago final quitando comision: #{@pago_final.to_s}"
 
@@ -204,7 +202,7 @@ class MainController < ApplicationController
     #       begin
     #         @payouts.create(request_hash.to_hash, trabajador.open_pay_user_id)
     #       rescue Exception => e
-    #         puts e.description# => 'The api key or merchant id are invalid.'
+    #         puts e.description
     #         puts e.json_body
     #       end
 
