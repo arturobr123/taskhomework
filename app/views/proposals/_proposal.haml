@@ -2,7 +2,7 @@
   .card-content
     %span.card-title.parent-flex
 
-      %img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{proposal.admin.avatar.url}", :width => "50", :class => "circle cover popImage"}
+      %img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{proposal.admin.avatar.url}", :width => "50", :class => "circle cover materialboxed"}
       = proposal.admin.name + " "
       = proposal.admin.last_name
 
@@ -19,7 +19,7 @@
           ="Número de tareas:"
         = proposal.admin.proposals.where(status: 3).count
 
-    
+
     %p.top15
       %b
         ="Notas:"
@@ -45,10 +45,3 @@
     -if current_user && !proposal.homework.classrooms.first
       %div.top15
         =link_to "Elegir",classrooms_path(homework_id: proposal.homework.id, admin_id: proposal.admin.id, proposal_id: proposal.id, user_id: current_user.id),method: :post,data: { confirm: 'Estás seguro de aceptar esta propuesta para tu tarea ? Al momento de elegir se te cobrará el costo de esta propuesta y el dinero se mantendrá en espera hasta que recibas tu tarea. El cobro se hará a tu tarjeta registrada' },class:"pink-text", class:"btn"
-
-
-
-
-
-
-        
