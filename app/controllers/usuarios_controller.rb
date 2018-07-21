@@ -14,7 +14,7 @@ class UsuariosController < ApplicationController
 		#cuantos usuarios hay en la lista
 		@how_many_usuarios = @usuarios.count
 	end
-	
+
 	def show
 	end
 
@@ -38,7 +38,7 @@ class UsuariosController < ApplicationController
 			if @require_hash
 				@card_numer = @require_hash["card_number"]
 			end
-			
+
 		end
 
 	end
@@ -71,32 +71,32 @@ class UsuariosController < ApplicationController
 
 
 	def upload_card(card_number, cvv2, expiration_month, expiration_year)
+		
+    openpay = open_pay_var()
 
-	    openpay = open_pay_var()
+    #CREATE NEW CUSTOMER
+    if(!current_user.open_pay_user_id)
 
-	    #CREATE NEW CUSTOMER
-	    if(!current_user.open_pay_user_id)
+	    new_client_hash={
+	        "name" => current_user.name,
+	        "last_name" => current_user.firs_last_name,
+	        "email" => current_user.email
+	     }
 
-		    new_client_hash={
-		        "name" => current_user.name,
-		        "last_name" => current_user.firs_last_name,
-		        "email" => current_user.email
-		     }
+	    customers = openpay.create(:customers)
 
-		    customers = openpay.create(:customers)
+	    begin
+			  @customer = customers.create(new_client_hash.to_h)
+			rescue Exception => e
+			  puts e
+			  return "ERROR generando usuario para cuenta: #{e.description}"
+			end
 
-		    begin
-				  @customer = customers.create(new_client_hash.to_h)
-				rescue Exception => e
-				  puts e
-				  return "ERROR generando usuario para cuenta: #{e.description}"
-				end
+			@customer_id = @customer["id"]
+		else
+			@customer_id = current_user.open_pay_user_id
+	  end
 
-				@customer_id = @customer["id"]
-			else
-				@customer_id = current_user.open_pay_user_id
-		  end
-	    
 		#CREATE CARD TO CUSTOMER
     new_card_hash={
         "holder_name" => current_user.name + " " + current_user.firs_last_name,

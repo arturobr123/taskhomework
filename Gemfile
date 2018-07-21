@@ -38,7 +38,7 @@ gem 'haml-rails'
 #creacion de usuarios y administradores
 gem 'devise', github: "plataformatec/devise"
 
-#para que se haga grande en automatico los text-area 
+#para que se haga grande en automatico los text-area
 gem 'autosize-rails'
 
 #front_end !! Materialize
