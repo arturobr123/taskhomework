@@ -6,7 +6,7 @@ class ClassroomsController < ApplicationController
   before_action :own_admin, only: [:update]
   before_action :check_card, only: [:create]
   before_action :check_user_admin, only: [:show]
-  
+
   include OpenPay
 
   def index
@@ -18,7 +18,7 @@ class ClassroomsController < ApplicationController
     @homework = Homework.find(@classroom.homework.id)
     @user = User.find(@classroom.user.id)
     @admin = Admin.find(@classroom.admin.id)
-    
+
     if @homework.status != 3
       @deadline = @proposal.deadline.strftime("%Y, %m, %e")
       puts @deadline
@@ -42,10 +42,10 @@ class ClassroomsController < ApplicationController
 
     @homework = Homework.find(homework_id)
     @proposal = Proposal.find(proposal_id)
-    
+
     @pago = pay_user(@homework, @proposal) #antes que nada hace el cobro
 
-    @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id) 
+    @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id)
 
     respond_to do |format|
       if @pago
@@ -114,7 +114,7 @@ class ClassroomsController < ApplicationController
         format.html { redirect_to root_path, notice: 'Error'}
       end
     end
-    
+
   end
 
   #El estudiante acepta que esta de acuerdo con la tarea que se le entrego
@@ -146,7 +146,7 @@ class ClassroomsController < ApplicationController
         format.html { redirect_to root_path, notice: 'Hubo un error. Por favor vuelvelo a intentar y si no contactanos.' }
       end
     end
-    
+
   end
 
   #pagina para escribir el mensaje de porque no le gusto la tarea
@@ -192,7 +192,7 @@ class ClassroomsController < ApplicationController
       "currency" => "MXN",
       "description" => homework.name,
       "device_session_id" => "kR1MiQhz2otdIuUlQkbEyitIqVMiI16f"
-      
+
     }
     #"order_id" => homework.id #este id puede ser inventado pero debe ser unico
 
@@ -206,7 +206,7 @@ class ClassroomsController < ApplicationController
     end
 
     return true #si se pudo hacer el cargo
-    
+
   end
 
 
@@ -256,7 +256,7 @@ class ClassroomsController < ApplicationController
         @admin.update!(rank: rank_new)
         #enviar correo de notificación al trabajador
         NotiMailer.notify_worker_score_homework(@admin.email, @classroom.homework , @classroom).deliver
-        
+
         format.html { redirect_to root_path, notice: 'Tarea calificada. Gracias!' }
         format.json { render :show, status: :ok, location: root_path }
       else
@@ -298,16 +298,17 @@ class ClassroomsController < ApplicationController
 
     def check_user_admin
       if current_user
-        if @classroom.user_id != current_user.id
-          redirect_to root_path, notice: "No estas autorizado"
+        if @classroom.user_id == current_user.id
+          return true
         end
       end
 
       if current_admin
-        if @classroom.admin_id != current_admin.id
-          redirect_to root_path, notice: "No estas autorizado"
+        if @classroom.admin_id == current_admin.id
+          return true
         end
       end
+      redirect_to root_path, notice: "No estas autorizado"
     end
 
     def own_admin
