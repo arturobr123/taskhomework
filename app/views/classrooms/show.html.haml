@@ -14,7 +14,7 @@
 		});
 	});
 
-	
+
 
 
 .row
@@ -25,7 +25,7 @@
 			%h5.top15.pink-text
 				%p Tarea finalizada
 
-				
+
 		.card.z-depth-2
 			.card-content
 				%span.card-title
@@ -86,11 +86,11 @@
 					%b
 						="Calificación: #{@classroom.scoreTrabajador}/5"
 
-			
+
 			-if current_admin && @classroom.archive_classrooms.count > 0 && @homework.status != 3
 
 				.border-line-creditcard.top30
-				
+
 				=link_to "Finalizar tarea", finish_homework_path(homework_id: @homework.id,proposal_id:@proposal.id),data: { confirm: 'Estás seguro de ya terminar esta tarea? Los archivos que hayas subido deben ser la tarea. Con esto se notificará al usuario para que el vea su tarea.' }, class:"btn blue top15"
 
 			-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
@@ -99,13 +99,13 @@
 
 			-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
 				=link_to "No estoy satisfecho", disagree_homework_path(classroom_id:@classroom.id), class:"btn top15"
-			
+
 		/calificar al trabajador
-		.col.s12.l12.lighten-4	
+		.col.s12.l12.lighten-4
 			-if current_user && !@classroom.user_accepts.nil? && @homework.status == 3 && !@classroom.scoreTrabajador
 
 				=link_to "Calificar", show_to_score_path(id: @classroom.id), :remote => true , class:"btn green top15"
-				
+
 
 	/Columna de las propuestas #############################################################
 	.col.s12.l9.lighten-4.full-heigth
@@ -115,17 +115,19 @@
 				%b
 					="Salon"
 
-	
+
 		.col.s12.l6
 			/ESTUDIANTE ######
 			.card.z-depth-2
 				.card-content
 					%span.card-title
 						= "Estudiante"
-					%p
+					%div.parent-flex
 						/=circle_img @user.avatar.url,50
-						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@user.avatar.url}", :width => "50", :class => "circle cover"}
-						= @user.name + " " + @user.firs_last_name
+						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@user.avatar.url}", :width => "50", :class => "circle cover materialboxed"}
+
+						%p.top15.left5
+							= @user.name + " " + @user.firs_last_name
 
 					.parent-flex
 						%div.top15
@@ -145,10 +147,11 @@
 				.card-content
 					%span.card-title
 						= "Trabajador"
-					%p
-						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@admin.avatar.url}", :width => "50", :class => "circle cover"}
-						= @admin.name + " "
-						= @admin.last_name
+					%div.parent-flex
+						%img{:align => "middle", :alt => "Smiley face", :height => "50", :src => "#{@admin.avatar.url}", :width => "50", :class => "circle cover materialboxed"}
+
+						%p.top15.left5
+							= @admin.name + " " + @admin.last_name
 
 					.parent-flex
 						%div.top15
@@ -228,6 +231,3 @@
 
 /est es solo para mostrar el modal de calificar
 #modalRespuestas
-
-
-

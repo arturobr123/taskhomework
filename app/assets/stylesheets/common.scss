@@ -37,7 +37,7 @@
 }
 
 .left5{
-  margin-left: 5px;
+  margin-left: 5px !important;
 }
 
 .left15{
@@ -47,7 +47,7 @@
 
 .text-center{
 	text-align: center;
-	
+
 }
 
 .text-left{
@@ -200,7 +200,7 @@
   display: none;
   align-items: center;
   justify-content: center;
-  
+
 }
 
 .borderTop{
@@ -273,9 +273,9 @@
 
 
 
-// MULTI COLUMN CARDS 
-// MULTI COLUMN CARDS 
-// MULTI COLUMN CARDS 
+// MULTI COLUMN CARDS
+// MULTI COLUMN CARDS
+// MULTI COLUMN CARDS
 $small-screen-up: 601px !default;
 $medium-screen-up: 993px !default;
 $large-screen-up: 1201px !default;
@@ -337,9 +337,7 @@ $medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width 
 }
 
 
-
-
-
-
-
-
+.middle-text__center{
+  margin: auto;
+    width: 50%;
+}

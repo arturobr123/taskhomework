@@ -15,13 +15,13 @@
   <div id="index-banner" class="parallax-container">
     <div class="section no-pad-bot">
       <div class="container">
+
         <br><br>
         <h1 class="header center text-lighten-2 white-text">TASK</h1>
         <div class="row center">
           <h5 class="header col s12 light white-text">Una nueva manera de hacer tareas escolares de todos los niveles facil y rápido</h5>
         </div>
         <div class="row center">
-
           <%=link_to "Quiero registrarme" , new_user_registration_path, class:"btn-large" %>
         </div>
         <br><br>
@@ -30,7 +30,6 @@
     </div>
     <div class="parallax"><img src="<%= asset_path('background1.jpg') %>" alt="Unsplashed background img 1"></div>
   </div>
-
 
 
 
@@ -43,10 +42,7 @@
           <div class="icon-block">
             <h2 class="center brown-text"><i class="medium material-icons originalBlue-text">flash_on</i></h2>
             <h5 class="center">Tareas rápidas</h5>
-
             <p class="light texto_justificado">Tu decides cuando quieres la tarea y nuestros trabajadores la tendrán. Pueden ser tareas de diferentes niveles y de diferentes carreas. Tu seleccionas la propuesta que mas te guste, y ahora simplemente esperas a que llegue.</p>
-
-
           </div>
         </div>
 
@@ -54,7 +50,6 @@
           <div class="icon-block">
             <h2 class="center brown-text"><i class="medium material-icons originalBlue-text">group</i></h2>
             <h5 class="center">Experiencia del usuario</h5>
-
             <p class="light texto_justificado">La interfaz de nuestra plataforma es completamente intuitivo y adaptable a telefonos. Nuestro diseño es completamente minimalista pensando en la interacción del usuario y su comodidad.</p>
           </div>
         </div>
@@ -63,7 +58,6 @@
           <div class="icon-block">
             <h2 class="center brown-text"><i class="medium material-icons originalBlue-text">insert_drive_file</i></h2>
             <h5 class="center">Excelentes resultados</h5>
-
             <p class="light texto_justificado">Nuestros trabajadores entregarán trabajos de calidad, aqui en task nos importa mucho que obtengas buenas calificaciones, por eso las tareas que aqui se entregan son de calidad y siempre buscando el 10. </p>
           </div>
         </div>
@@ -104,52 +98,52 @@
 
 
 
-<!--   CARD Section   -->
-<div class="container topMinus5">
-    <div class="section">
+  <!--   CARD Section   -->
+  <div class="container topMinus5">
+      <div class="section">
 
-      <div class="row">
+        <div class="row">
 
-        <div class="col s12 center">
-          <h3><i class="mdi-content-send brown-text"></i></h3>
-          <h4>Perfiles</h4>
-        </div>
+          <div class="col s12 center">
+            <h3><i class="mdi-content-send brown-text"></i></h3>
+            <h4>Perfiles</h4>
+          </div>
 
-        <div class="col s12 m6">
-          <div class="card z-depth-2">
-            <div class="card-image">
-              <img height="300" src="<%= asset_path('estudiante.jpg') %>">
-              <span class="card-title">Estudiante</span>
-            </div>
-            <div class="card-content">
-              <p class="texto_justificado">Crear tareas, ver las propuestas que les ofrecen los trabajadores para dicha tarea, aceptar la propuesta que mejor le parezca y esperar a la que tarea se suba antes de la fecha seleccionada en el momento de la creación</p>
-            </div>
-            <div class="card-action">
-              <%= link_to "Registrate" , new_user_registration_path %>
+          <div class="col s12 m6">
+            <div class="card z-depth-2">
+              <div class="card-image">
+                <img height="300" src="<%= asset_path('estudiante.jpg') %>">
+                <span class="card-title">Estudiante</span>
+              </div>
+              <div class="card-content">
+                <p class="texto_justificado">Crear tareas, ver las propuestas que les ofrecen los trabajadores para dicha tarea, aceptar la propuesta que mejor le parezca y esperar a la que tarea se suba antes de la fecha seleccionada en el momento de la creación</p>
+              </div>
+              <div class="card-action">
+                <%= link_to "Registrate" , new_user_registration_path %>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="col s12 m6">
-          <div class="card z-depth-2">
-            <div class="card-image">
-              <img height="300" src="<%= asset_path('trabajador.jpg') %>">
-              <span class="card-title">Trabajador</span>
-            </div>
-            <div class="card-content">
-              <p class="texto_justificado">Sube propuestas a las tareas que más te interesen, las propuestas deben de tener un costo, una descripción de porque debes ser elegido, y la fecha de entrega obligatoria. Si eres elegido, se abre una nueva página donde debes entregar la tarea en tiempo y forma.</p>
-            </div>
-            <div class="card-action">
+          <div class="col s12 m6">
+            <div class="card z-depth-2">
+              <div class="card-image">
+                <img height="300" src="<%= asset_path('trabajador.jpg') %>">
+                <span class="card-title">Trabajador</span>
+              </div>
+              <div class="card-content">
+                <p class="texto_justificado">Sube propuestas a las tareas que más te interesen, las propuestas deben de tener un costo, una descripción de porque debes ser elegido, y la fecha de entrega obligatoria. Si eres elegido, se abre una nueva página donde debes entregar la tarea en tiempo y forma.</p>
+              </div>
+              <div class="card-action">
 
-              <%= link_to "Registrate" , work_here_path%>
+                <%= link_to "Registrate" , work_here_path%>
+              </div>
             </div>
           </div>
-        </div>
 
 
+      </div>
     </div>
   </div>
-</div>
 
 
 <!-- <div class="container">
@@ -163,13 +157,13 @@
             </p>
 
             <p class="light texto_justificado">
-              2: El estudiante empieza a recibir propuestas de los trabajadores, cada propuesta contiene la fecha en la que el trabajador se propone a entregarla, el costo que tendrá la tarea, y una frase. 
+              2: El estudiante empieza a recibir propuestas de los trabajadores, cada propuesta contiene la fecha en la que el trabajador se propone a entregarla, el costo que tendrá la tarea, y una frase.
             </p>
 
             <p class="light texto_justificado">
               3: El estudiante elige la propuesta que más le convenga, y cuando la elige, en ese momento se hace el cobro al estudiante por el precio de la propuesta, el dinero se mantiene en la espera hasta que la tarea haya sido entregada.
             </p>
-            
+
             <p class="light texto_justificado">
               4: Ahora el trabajador tiene la responsabilidad de entregar la tarea en tiempo y forma como lo indicó su propuesta.
             </p>
@@ -189,7 +183,6 @@
 </div> -->
 
 
-
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
       <div class="container">
@@ -207,14 +200,12 @@
         <div class="col l6 s12">
           <h5 class="white-text">Quienes somos</h5>
           <p class="grey-text text-lighten-4">Somos un grupo de personas enfocadas en la conexión entre estudiantes y gente con ganas de hacer tareas escolares y recibir una compensación por ello. Task esta hecho para conectar y ayudar.</p>
-
-
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">Links</h5>
           <ul>
-            <li><a class="white-text" href="#!">Iniciar estudiante</a></li>
-            <li><a class="white-text" href="#!">Registrarse</a></li>
+            <li><%=link_to "Iniciar estudiante" , new_user_registration_path, class:"white-text" %></li>
+            <li><%=link_to "Registrarse" , new_user_registration_path, class:"white-text" %></li>
             <li><a class="white-text" href="#!">Avisa de privacidad</a></li>
           </ul>
         </div>

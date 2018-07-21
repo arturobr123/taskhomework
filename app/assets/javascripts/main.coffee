@@ -12,7 +12,7 @@ $(document).on "turbolinks:load page:fetch", ()->
 
 		selector = $(this).attr("for")     #para obtener el id de modal notifications
 		$(selector).click()                #y darle click para abrirlo y mostrar las notificaciones
-		
+
 		if $("#notifications").hasClass("active")
 			ev.preventDefault()
 		else
@@ -22,14 +22,14 @@ $(document).on "turbolinks:load page:fetch", ()->
 
 		$("#notifications").toggleClass("active")
 		console.log("notification main.coffee")
-		
+
 		return $("#notifications").hasClass("active")
 
 
 	$('textarea').autosize()         #para que el text area de haga grande en automatico
-	Materialize.updateTextFields() 	 
+	Materialize.updateTextFields()
 	$('select').material_select()
-	
+
 
 	#esto era para volver a cargar la pagina, por el error de los selects
 	#if $(".select-wrapper > .select-wrapper").length > 0
@@ -60,10 +60,4 @@ $(document).on "turbolinks:load page:fetch", ()->
 
 	$('.parallax').parallax()
 
-	$('.popImage').materialbox()
-
-
-
-	
-
-
+	$('.materialboxed').materialbox()
