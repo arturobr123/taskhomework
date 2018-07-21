@@ -1,15 +1,59 @@
 <!-- Parcial de notificacion de que un usuario a aceptado la propuesta del trabajador -->
-<li class="collection-item avatar">
+<%- if notification.notification_type == "accepted_proposal" %>
 
-  <i class="material-icons circle blue">thumb_up</i>
+  <li class="collection-item avatar">
 
-  <span class="title"><%= link_to "El usuario #{notification.item.user.name} ha aceptado tu propuesta de la tarea: #{notification.item.homework.name}" , notification.item, class:"black-text"  %></span>
+    <i class="material-icons circle blue">thumb_up</i>
 
-  <p>Fecha: <%= fechaBonita notification.created_at %> </p>
+    <span class="title"><%= link_to "El usuario #{notification.item.user.name} ha aceptado tu propuesta de la tarea: #{notification.item.homework.name}" , notification.item, class:"black-text"  %></span>
 
-  <%= link_to notificationsworker_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
-  	<i>visto</i>
-    <i class="material-icons">check</i>
-  <% end %>
+    <p>Fecha: <%= fechaBonita notification.created_at %> </p>
 
-</li>
+    <%= link_to notificationsworker_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
+    	<i>visto</i>
+      <i class="material-icons">check</i>
+    <% end %>
+
+  </li>
+
+<% end %>
+
+
+<%- if notification.notification_type == "accepted_homework" %>
+
+  <li class="collection-item avatar">
+
+    <i class="material-icons circle green">book</i>
+
+    <span class="title"><%= link_to "El usuario #{notification.item.user.name} ha aceptado tu trabajo de la tarea: #{notification.item.homework.name}" , notification.item, class:"black-text"  %></span>
+
+    <p>Fecha: <%= fechaBonita notification.created_at %> </p>
+
+    <%= link_to notificationsworker_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
+    	<i>visto</i>
+      <i class="material-icons">check</i>
+    <% end %>
+
+  </li>
+
+<% end %>
+
+
+<%- if notification.notification_type == "scored_homework" %>
+
+  <li class="collection-item avatar">
+
+    <i class="material-icons circle yellow">star</i>
+
+    <span class="title"><%= link_to "El usuario #{notification.item.user.name} ha dado una calificación a tu trabajo de la tarea: #{notification.item.homework.name}" , notification.item, class:"black-text"  %></span>
+
+    <p>Fecha: <%= fechaBonita notification.created_at %> </p>
+
+    <%= link_to notificationsworker_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
+    	<i>visto</i>
+      <i class="material-icons">check</i>
+    <% end %>
+
+  </li>
+
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180718010437) do
+ActiveRecord::Schema.define(version: 20180720203339) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20180718010437) do
     t.string "item_type"
     t.integer "item_id"
     t.boolean "viewed", default: false
+    t.string "notification_type", default: ""
     t.index ["admin_id"], name: "index_notification_workers_on_admin_id"
     t.index ["item_type", "item_id"], name: "index_notification_workers_on_item_type_and_item_id"
   end

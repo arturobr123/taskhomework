@@ -16,7 +16,6 @@ class Classroom < ApplicationRecord
   	return self.admin.id
   end
 
-
   #solo para verificar que es un salon
   def iam_classroom
     return true
@@ -26,7 +25,7 @@ class Classroom < ApplicationRecord
     #notify by email
     NotiMailer.notification_accepted_homework(self.proposal.admin.email, self.proposal, self.homework).deliver
     #create chat room to chat between them
-    ChatRoom.create(user_id: self.user_id, admin_id: self.admin_id, title: self.homework.name, classroom_id: self.id) 
+    ChatRoom.create(user_id: self.user_id, admin_id: self.admin_id, title: self.homework.name, classroom_id: self.id)
   end
 
 end

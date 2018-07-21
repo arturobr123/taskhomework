@@ -27,7 +27,6 @@ class Admin < ApplicationRecord
   #despues de que el trabajador es creado, se crea su cuenta en openpay
   after_create_commit :create_openpay_account
 
-
   include CreateToken
 
   #este metodo crea el perfil del trabajador en openpay al momento de registrarlo
@@ -48,7 +47,7 @@ class Admin < ApplicationRecord
     begin
       @customer = customers.create(new_client_hash.to_h)
     rescue Exception => e
-      puts e.json_body #  {"category":"request","description":"The api key or merchant id are invalid.","http_code":401,"error_code":1002,"request_id":null}
+      puts e.json_body
     end
 
     Admin.find(self.id).update!(open_pay_user_id: @customer["id"])
@@ -59,5 +58,5 @@ class Admin < ApplicationRecord
     NotificationWorker.for_admin(self.id)
   end
 
-  
+
 end
