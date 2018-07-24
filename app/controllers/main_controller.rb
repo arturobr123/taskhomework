@@ -93,7 +93,7 @@ class MainController < ApplicationController
 
 
 
-    
+
 
 
     #REGRESAR DINERO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -194,7 +194,7 @@ class MainController < ApplicationController
 
     #       request_hash={
     #         "method" => "bank_account",
-    #         "destination_id" => trabajador.open_pay_clabe_id,   
+    #         "destination_id" => trabajador.open_pay_clabe_id,
     #         "amount" => @pago_final,
     #         "description" => "pago del trabajador con id: #{trabajador.id}"
     #       }
@@ -209,11 +209,15 @@ class MainController < ApplicationController
     #       puts "EXITO EN ENVIO DE DINERO!!"
 
 
-    #     end        
+    #     end
 
     #   end
 
     # end
+
+
+
+
 
 
 
@@ -237,7 +241,7 @@ class MainController < ApplicationController
     #       #AHORA TOCA HACER EL DEPOSITO A LA "CLABE"  DEL TRABAJADOR
     #       request_hash={
     #         "method" => "bank_account",
-    #         "destination_id" => trabajador.open_pay_clabe_id,   
+    #         "destination_id" => trabajador.open_pay_clabe_id,
     #         "amount" => 10.50,
     #         "description" => "Retiro de saldo id: #{trabajador.id}"
     #       }
@@ -251,7 +255,7 @@ class MainController < ApplicationController
 
     #       puts "EXITO MANDANDO EL DEPOSITO"
 
-    #     end        
+    #     end
 
     #   end
 

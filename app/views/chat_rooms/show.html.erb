@@ -1,5 +1,5 @@
 <body class="white-background">
-	
+
 
 <center>
   <h5> Chat: <%= @chat_room.title %></h5>
@@ -33,6 +33,12 @@
 
 
 <br>
+<br>
+
+	<center>
+		<%= link_to "Ir al salon", classroom_path(id: @chat_room.classroom_id) , class:"btn text-center" %>
+	</center>
+	
 <br>
 <br>
 

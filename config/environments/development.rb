@@ -45,7 +45,7 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
 
   #url de los mails
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
