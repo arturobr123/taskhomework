@@ -86,7 +86,6 @@ task :get_commisions_and_send_money => :environment do
       if(@total > 0)
 
         @comision = @total
-        puts "total de dinero: " + @comision.to_s
 
         new_fee_hash={
           "customer_id" => trabajador.open_pay_user_id,
