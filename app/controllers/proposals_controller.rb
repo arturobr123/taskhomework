@@ -34,7 +34,7 @@ class ProposalsController < ApplicationController
 
     respond_to do |format|
       if @proposal.save
-        format.html { redirect_to @proposal.homework, notice: 'Proposal was successfully created.' }
+        format.html { redirect_to @proposal.homework, notice: 'Propuesta creada correctamente.' }
         format.json { render :show, status: :created, location: @proposal }
       else
         @homework = Homework.find(@proposal.homework.id)
@@ -53,7 +53,7 @@ class ProposalsController < ApplicationController
   def update
     respond_to do |format|
       if @proposal.update(proposal_params)
-        format.html { redirect_to @proposal, notice: 'Proposal was successfully updated.' }
+        format.html { redirect_to @proposal, notice: 'Propuesta actualizada correctamente.' }
         format.json { render :show, status: :ok, location: @proposal }
       else
         format.html { render :edit }
@@ -66,7 +66,7 @@ class ProposalsController < ApplicationController
   def destroy
     @proposal.destroy
     respond_to do |format|
-      format.html { redirect_to proposals_url, notice: 'Proposal was successfully destroyed.' }
+      format.html { redirect_to proposals_url, notice: 'La propuesta fue eliminada.' }
       format.json { head :no_content }
     end
   end

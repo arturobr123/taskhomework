@@ -102,7 +102,7 @@ task :get_commisions_and_send_money => :environment do
 
         #ahora para cada trabajador a su saldo que tenia le quitamos el %5 porciento
         #y lo demas se lo depositamos a su cuenta CLABE
-        @pago_final = @comision - (@comision * 0.05)
+        @pago_final = @comision - ((@comision * 0.1) + 2.5)
         puts "pago final quitando comision: #{@pago_final.to_s}"
 
         request_hash={

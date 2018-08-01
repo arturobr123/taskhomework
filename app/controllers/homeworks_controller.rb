@@ -70,7 +70,7 @@ class HomeworksController < ApplicationController
           }
         end
 
-        format.html { redirect_to @homework, notice: 'Homework was successfully created.' }
+        format.html { redirect_to @homework, notice: 'La tarea se creó correctamente.' }
         format.json { render :show, status: :created, location: @homework }
       else
         format.html { render :new }
@@ -82,7 +82,7 @@ class HomeworksController < ApplicationController
   def update
     respond_to do |format|
       if @homework.update(homework_params)
-        format.html { redirect_to @homework, notice: 'Homework was successfully updated.' }
+        format.html { redirect_to @homework, notice: 'La tarea fue actualizada correctamente.' }
         format.json { render :show, status: :ok, location: @homework }
       else
         format.html { render :edit }
@@ -94,7 +94,7 @@ class HomeworksController < ApplicationController
   def destroy
     @homework.destroy
     respond_to do |format|
-      format.html { redirect_to my_homeworks_path, notice: 'Homework was successfully destroyed.' }
+      format.html { redirect_to my_homeworks_path, notice: 'La tarea fue eliminada.' }
       format.json { head :no_content }
     end
   end
@@ -124,7 +124,7 @@ class HomeworksController < ApplicationController
       if(!current_user && !current_admin)
         redirect_to home_page_path, notice: "Inicia sesión"
       end
-      
+
     end
 
     def own_user

@@ -66,7 +66,7 @@ class ClassroomsController < ApplicationController
   def update
     respond_to do |format|
       if @classroom.update(classroom_params)
-        format.html { redirect_to @classroom, notice: 'Classroom was successfully updated.' }
+        format.html { redirect_to @classroom, notice: 'El salon fue creado correctamente.' }
         format.json { render :show, status: :ok, location: @classroom }
       else
         format.html { render :edit }
@@ -268,7 +268,7 @@ class ClassroomsController < ApplicationController
   def destroy
     #@classroom.destroy
     respond_to do |format|
-      format.html { redirect_to classrooms_url, notice: 'Classroom was successfully destroyed.' }
+      format.html { redirect_to classrooms_url, notice: 'El salon fue eliminado.' }
       format.json { head :no_content }
     end
   end
