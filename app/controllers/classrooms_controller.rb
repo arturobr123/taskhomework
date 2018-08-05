@@ -124,9 +124,7 @@ class ClassroomsController < ApplicationController
     proposal_id = params[:proposal_id]
     classroom_id = params[:classroom_id]
 
-    #ahora la tarea cambia su status a finalizada
     @homework = Homework.find(homework_id)
-    #ahora la propuesta cambia su status a finalizada
     @proposal = Proposal.find(proposal_id)
 
     @pago = pay(@homework, @proposal)#hace el pago por open pay
@@ -180,7 +178,7 @@ class ClassroomsController < ApplicationController
 
 
   #cuando el usuario acepta quien le hará la tarea, este se le hace el cobro de lo que tiene
-  #asignado la propuesta(y se le agrega a su cuenta en openpay)
+  #asignado la propuesta (y se le agrega a su cuenta en openpay)
   def pay_user(homework, proposal)
 
     openpay = open_pay_var()
@@ -195,7 +193,6 @@ class ClassroomsController < ApplicationController
 
     }
     #"order_id" => homework.id #este id puede ser inventado pero debe ser unico
-
     charges=openpay.create(:charges)
 
     begin
@@ -206,7 +203,6 @@ class ClassroomsController < ApplicationController
     end
 
     return true #si se pudo hacer el cargo
-
   end
 
 

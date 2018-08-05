@@ -2,9 +2,10 @@ require 'openpay'
 
 desc "Tasks task"
 
+#las tareas que estan en el estado de espera, si no acepto ninguna propuesta, desde de 24 horas de su deadline, se eliminara.
 task :check_homeworks_deadline_past => :environment do
 
-	time = DateTime.now + 1.day
+	time = DateTime.now - 1.day
 
   @homeworks = Homework.where("status = 1 and  deadline < ?", time)
 
@@ -14,12 +15,12 @@ task :check_homeworks_deadline_past => :environment do
 
 end
 
-#si ya pasaron 48 horas y el usuario no ha contestando, se tomara como que si le gusto la tare y se hará el cobro
+#si ya pasaron 24 horas y el usuario no ha contestando, se tomara como que si le gusto la tare y se hará el cobro
 task :check_classrooms => :environment do
 
-	time = DateTime.now - 2.days
+	time = DateTime.now - 1.day
 
-  @classrooms = Classroom.where("finished = ? and user_accepts = ? and finishedDate < ?", true, nil, time)
+  @classrooms = Classroom.where("finished = ? and user_accepts is ? and finishedDate < ?", true, nil, time)
 
   merchant_id = 'mnn5gyble3oezlf6ca3v'
 	private_key ='sk_33044f35a7364f81b7139b21327a5927'
@@ -27,18 +28,16 @@ task :check_classrooms => :environment do
 	@transfers = @openpay.create(:transfers)
 
   @classrooms.each do |classroom|
-  	puts classroom
+  	puts classroom.homework.name
 
-  	#ahora la tarea cambia su status a finalizada
     @homework = Homework.find(classroom.homework_id)
-    #ahora la propuesta cambia su status a finalizada
     @proposal = Proposal.find(classroom.proposal_id)
 
     new_transaction_hash={
 	     "customer_id" => @proposal.admin.open_pay_user_id,
 	     "amount" => @proposal.cost,
 	     "description" => "Transferencia entre cuentas tarea #{@homework.id}"
-	   }
+	  }
 
     begin
       @transfers.create(new_transaction_hash.to_h, @homework.user.open_pay_user_id) #de aqui se sacara el dinero
@@ -113,7 +112,7 @@ task :get_commisions => :environment do
 end
 
 
-
+#metodo para mandar el pago a cada uno de los trabajadores
 task :send_money => :environment do
 
   merchant_id = 'mnn5gyble3oezlf6ca3v'
@@ -139,6 +138,7 @@ task :send_money => :environment do
 				@last_earning = 0
 			end
 
+			#checar si su ganancia esa semana fue mayor a 0
       if(@last_earning > 0)
 
 				puts "pago final quitando comision: #{@last_earning.to_s}"
@@ -169,5 +169,5 @@ end
 
 
 task :prueba => :environment do
-	puts "HOLA MUNDO"
+	puts "HOLA MUNDOO"
 end
