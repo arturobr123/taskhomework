@@ -52,10 +52,10 @@ task :check_classrooms => :environment do
 end
 
 
+#obtenemos la comision de los trabajadores, que es el 100 y guardamos su ganancia en la bd tabla EARNINGS
+task :get_commisions => :environment do
 
-task :get_commisions_and_send_money => :environment do
-
-  merchant_id = 'mnn5gyble3oezlf6ca3v'
+	merchant_id = 'mnn5gyble3oezlf6ca3v'
 	private_key ='sk_33044f35a7364f81b7139b21327a5927'
 	openpay = OpenpayApi.new(merchant_id,private_key)
 
@@ -65,26 +65,21 @@ task :get_commisions_and_send_money => :environment do
   @customers= openpay.create(:customers)
   #COMISIONES
   @fees = openpay.create(:fees)
-  #pagos a CLABE
-  @payouts = openpay.create(:payouts)
 
-
-  #OBTENER LAS COMISIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  #OBTENER LAS COMISIONES
   @trabajadores.each do |trabajador|
-    puts trabajador.name
-    puts trabajador.last_name
+    puts trabajador.name + " " + trabajador.last_name
 
     if(trabajador.open_pay_user_id && trabajador.open_pay_clabe_id)
 
       response_hash = @customers.get(trabajador.open_pay_user_id)
 
       #saldo que tiene en su cuenta
-      puts "balance: " + response_hash["balance"]
+      puts "balance: " + response_hash["balance"].to_s
 
       #para cada trabajador de comision le sacamos todo lo que tiene en su cuenta
       @total = response_hash["balance"].to_i
       if(@total > 0)
-
         @comision = @total
 
         new_fee_hash={
@@ -94,33 +89,77 @@ task :get_commisions_and_send_money => :environment do
         }
 
         begin
-          @fees.create(new_fee_hash.to_h)
-          puts "EXITO EN COMISION!!"
+          @fees.create(new_fee_hash.to_h) #hacemos el cobro de comision
+
+					#insertamos la ganancia del trabajador en la tabla earnings
+					@pago_final = @comision - ((@comision * 0.08) + 2.5)
+					Earning.create(admin_id: trabajador.id, money: @pago_final)
+
+          puts "EXITO EN COMISION E INSERSION EN TABLA EARNINGS!!"
         rescue Exception => e
           puts e.description
+					puts "ERROR"
         end
 
-        #ahora para cada trabajador a su saldo que tenia le quitamos el %5 porciento
-        #y lo demas se lo depositamos a su cuenta CLABE
-        @pago_final = @comision - ((@comision * 0.1) + 2.5)
-        puts "pago final quitando comision: #{@pago_final.to_s}"
-
-        request_hash={
-          "method" => "bank_account",
-          "destination_id" => trabajador.open_pay_clabe_id,
-          "amount" => @pago_final,
-          "description" => "pago del trabajador con id: #{trabajador.id}"
-        }
-
-        begin
-          @payouts.create(request_hash.to_hash, trabajador.open_pay_user_id)
-          puts "EXITO EN ENVIO DE DINERO!!"
-        rescue Exception => e
-          puts e.description
-          puts e.json_body
-        end
-
+			else
+				#si tiene de saldo 0, simplemente crea que la ganancia del trabajador fue 0
+				Earning.create(admin_id: trabajador.id, money: 0)
       end
+
+    end
+
+  end
+
+end
+
+
+
+task :send_money => :environment do
+
+  merchant_id = 'mnn5gyble3oezlf6ca3v'
+	private_key ='sk_33044f35a7364f81b7139b21327a5927'
+	openpay = OpenpayApi.new(merchant_id,private_key)
+
+  @trabajadores = Admin.where("open_pay_user_id not ? and open_pay_clabe_id not ?", nil,nil)
+
+  #CUSTOMERS
+  @customers= openpay.create(:customers)
+  #pagos a CLABE
+  @payouts = openpay.create(:payouts)
+
+  #PAGAR A LOS TRABAJADORES
+  @trabajadores.each do |trabajador|
+    puts trabajador.name + " " + trabajador.last_name
+
+    if(trabajador.open_pay_user_id && trabajador.open_pay_clabe_id)
+
+			if(trabajador.earnings.length > 0)
+				@last_earning = trabajador.earnings.nuevos.first.money
+			else
+				@last_earning = 0
+			end
+
+      if(@last_earning > 0)
+
+				puts "pago final quitando comision: #{@last_earning.to_s}"
+
+				request_hash={
+					"method" => "bank_account",
+					"destination_id" => trabajador.open_pay_clabe_id,
+					"amount" => @last_earning,
+					"description" => "pago del trabajador con id: #{trabajador.id}"
+				}
+
+				begin
+					@payouts.create(request_hash.to_hash, trabajador.open_pay_user_id)
+					puts "EXITO EN ENVIO DE DINERO!!"
+				rescue Exception => e
+					puts "ERROR"
+					puts e.description
+					puts e.json_body
+				end
+
+			end
 
     end
 

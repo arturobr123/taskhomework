@@ -20,6 +20,7 @@ class Admin < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :classrooms, dependent: :destroy
   has_many :notification_workers, dependent: :destroy
+  has_many :earnings, dependent: :destroy
 
   has_attached_file :avatar,default_url:"/images/fondoFaurecia4.jpg"
   validates_attachment_content_type :avatar,:content_type => [/\Aimage\/.*\z/]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180720203339) do
+ActiveRecord::Schema.define(version: 20180801141729) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -94,6 +94,14 @@ ActiveRecord::Schema.define(version: 20180720203339) do
     t.index ["homework_id"], name: "index_classrooms_on_homework_id"
     t.index ["proposal_id"], name: "index_classrooms_on_proposal_id"
     t.index ["user_id"], name: "index_classrooms_on_user_id"
+  end
+
+  create_table "earnings", force: :cascade do |t|
+    t.float "money"
+    t.integer "admin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_earnings_on_admin_id"
   end
 
   create_table "homeworks", force: :cascade do |t|
