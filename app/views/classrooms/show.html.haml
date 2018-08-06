@@ -88,17 +88,8 @@
 
 
 			-if current_admin && @classroom.archive_classrooms.count > 0 && @homework.status != 3
-
 				.border-line-creditcard.top30
-
 				=link_to "Finalizar tarea", finish_homework_path(homework_id: @homework.id,proposal_id:@proposal.id),data: { confirm: 'Estás seguro de ya terminar esta tarea? Los archivos que hayas subido deben ser la tarea. Con esto se notificará al usuario para que el vea su tarea.' }, class:"btn blue top15"
-
-			-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
-				=link_to "Estoy satisfecho", agree_homework_path(homework_id: @homework.id,proposal_id:@proposal.id, classroom_id:@classroom.id), class:"btn blue top15"
-
-
-			-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
-				=link_to "No estoy satisfecho", disagree_homework_path(classroom_id:@classroom.id), class:"btn top15"
 
 		/calificar al trabajador
 		.col.s12.l12.lighten-4
@@ -215,6 +206,16 @@
 				.card.z-depth-2
 					.card-content
 						= link_to archive.archivo_file_name, archive.archivo.url(:original, false)
+
+
+		.row
+			.col.s12.l6
+				-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
+					=link_to "Estoy satisfecho", agree_homework_path(homework_id: @homework.id,proposal_id:@proposal.id, classroom_id:@classroom.id), class:"btn blue top15 full-width"
+
+			.col.s12.l6
+				-if current_user && @homework.status == 3 && @classroom.user_accepts.nil?
+					=link_to "No estoy satisfecho", disagree_homework_path(classroom_id:@classroom.id), class:"btn top15 full-width"
 
 
 		/ -if current_user && @homework.status == 3 && @classroom.user_accepts.nil?

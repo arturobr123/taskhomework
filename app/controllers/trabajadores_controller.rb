@@ -11,7 +11,7 @@ class TrabajadoresController < ApplicationController
 		#cuantos usuarios hay en la lista
 		@how_many_usuarios = @usuarios.count
 	end
-	
+
 	def show
 		@proposals = @admin.proposals.nuevos.paginate(page:params[:page], per_page:15)
 		@classrooms = @admin.classrooms.where(user_accepts: true)
@@ -23,6 +23,7 @@ class TrabajadoresController < ApplicationController
 		response_hash = @customers.get(current_admin.open_pay_user_id)
 		if response_hash["balance"]
 			@money = response_hash["balance"]
+			@money = @money - ((@money * 0.179) + 2.5)
 		end
 
 	end
@@ -35,7 +36,7 @@ class TrabajadoresController < ApplicationController
     else
       @phrase = ""
     end
-    
+
 	end
 
 
@@ -53,13 +54,13 @@ class TrabajadoresController < ApplicationController
 	end
 
 	def clabe
-		
+
 		if current_admin.open_pay_clabe_id
 
 			@openpay = open_pay_var()
 
 			@bank_accounts=@openpay.create(:bankaccounts)
-			
+
 			begin
 				@response_hash = @bank_accounts.get(current_admin.open_pay_user_id, current_admin.open_pay_clabe_id)
 			rescue Exception => e
@@ -69,7 +70,7 @@ class TrabajadoresController < ApplicationController
 			if @response_hash["clabe"]
 				@openpay_clabe = @response_hash["clabe"]
 			end
-			
+
 		end
 
 	end
@@ -109,7 +110,7 @@ class TrabajadoresController < ApplicationController
     end
 
     current_admin.update(open_pay_clabe_id: response_hash["id"])
-    return [true,"Subida de CLABE exitoso !"]		
+    return [true,"Subida de CLABE exitoso !"]
 	end
 
 
@@ -134,13 +135,13 @@ class TrabajadoresController < ApplicationController
 	  def authenticate_owner!
 	  	if current_admin != @admin
 	  		redirect_to root_path, notice: "No estas autorizado"
-	  		
+
 	  	end
-	  	
+
 	  end
 
 	  def user_params
 	  	params.require(:admin).permit(:email,:name, :avatar, :phrase)
-	  	
+
 	  end
 end
