@@ -118,7 +118,7 @@ class TrabajadoresController < ApplicationController
 		phrase = params[:phrase]
 
 		respond_to do |format|
-			if current_admin.update(phrase: phrase)
+			if current_admin.update!(phrase: phrase)
 				format.html {redirect_to homeworks_path, notice: "Bienvenido a Task, ahora puedes buscar tareas y subir propuestas. Exito!"}
 			else
 				format.html {redirect_back(fallback_location: root_path, notice: "ocurrio un error, intentalo nuevamente")}

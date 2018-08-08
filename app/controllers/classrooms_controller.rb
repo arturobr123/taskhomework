@@ -45,10 +45,10 @@ class ClassroomsController < ApplicationController
 
     @pago = pay_user(@homework, @proposal) #antes que nada hace el cobro
 
-    @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id)
+    @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id, transaction_id: @pago[1])
 
     respond_to do |format|
-      if @pago
+      if @pago[0] == true
         if @homework.update!(status: 2) && @proposal.update!(status: 2) &&  @classroom.save
           format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea. Se le notificará al trabajador' }
           format.json { render :show, status: :created, location: @classroom }
@@ -199,10 +199,10 @@ class ClassroomsController < ApplicationController
       @charge = charges.create(request_hash.to_h, homework.user.open_pay_user_id)
     rescue Exception => e
       puts e.description
-      return false
+      return [false, nil]
     end
 
-    return true #si se pudo hacer el cargo
+    return [true, @charge["id"]] #si se pudo hacer el cargo
   end
 
 
