@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GamificationFaurecia</title>
+    <title>TaskHomework</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -13,24 +13,24 @@
   <body>
 
 
-  	<!--  Barra de navegacion de los usuarios  -->    
-    <% if user_signed_in? %>  
+  	<!--  Barra de navegacion de los usuarios  -->
+    <% if user_signed_in? %>
           <%= render "partials/navUser" %>
         <main class="mdl-layout__content">
           <div class="page-content">  <%= yield %> </div>
         </main>
 
-    <% end %> 
+    <% end %>
 
 
-    <!--  Barra de navegacion de los administradores  -->    
-    <% if admin_signed_in? %>  
+    <!--  Barra de navegacion de los administradores  -->
+    <% if admin_signed_in? %>
           <%= render "partials/navAdmin" %>
         <main class="mdl-layout__content">
           <div class="page-content">  <%= yield %> </div>
         </main>
 
-    <% end %> 
+    <% end %>
 
     <% if !current_user and !current_admin %>
 
