@@ -2,6 +2,7 @@ require 'openpay'
 
 desc "Tasks task"
 
+#YA PROBADA :)
 #las tareas que estan en el estado de espera, si no acepto ninguna propuesta, desde de 24 horas de su deadline, se eliminara.
 task :check_homeworks_deadline_past => :environment do
 
@@ -15,6 +16,7 @@ task :check_homeworks_deadline_past => :environment do
 
 end
 
+#NO PROBADA
 #cuando el tasker no subido nada y ya paso la fecha de entrega, toca regresar el dinero al estudiante
 task :check_classrooms_tasker_not_complete => :environment do
 
@@ -51,8 +53,8 @@ task :check_classrooms_tasker_not_complete => :environment do
 
 end
 
-
-#si ya pasaron 24 horas y el usuario no ha contestando, se tomara como que si le gusto la tare y se hará el cobro
+#YA PROBADA :)
+#si ya pasaron 24 horas y el usuario no ha contestando, se tomara como que si le gusto la tarea y se hará el cobro
 task :check_classrooms => :environment do
 
 	time = DateTime.now - 1.day
@@ -87,7 +89,7 @@ task :check_classrooms => :environment do
 
 end
 
-
+#YA PROBADA :)
 #obtenemos la comision de los trabajadores, que es el 100 y guardamos su ganancia en la bd tabla EARNINGS
 task :get_commisions => :environment do
 
@@ -148,7 +150,7 @@ task :get_commisions => :environment do
 
 end
 
-
+#YA PROBADA :)
 #metodo para mandar el pago a cada uno de los trabajadores
 task :send_money => :environment do
 
