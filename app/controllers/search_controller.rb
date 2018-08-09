@@ -9,6 +9,12 @@ class SearchController < ApplicationController
       query = query + queryTemp
     end
 
+		if(params[:nivel].present?)
+      queryTemp = "level = #{params[:nivel]} AND "
+      query = query + queryTemp
+    end
+
+
     if(params[:minPrice].present?)
       queryTemp = "minPrice <= ? AND "
       query = query + queryTemp
@@ -23,14 +29,14 @@ class SearchController < ApplicationController
 
     @homeworks = Homework.where(query, params[:minPrice].to_i)
 
-    @how_many_homeworks = @homeworks.count 
+    @how_many_homeworks = @homeworks.count
 
     respond_to do |format|
       format.html{redirect_to root_path}
       format.json {render json: @usuarios}
       format.js
     end
-    
+
   end
 
 end

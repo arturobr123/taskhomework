@@ -16,7 +16,7 @@
           = f.number_field :cost, autofocus: true, class:"" ,id:"cost"
           = f.label "Precio", class:"blue-text", for:"cost"
 
-        .div.input-field.col.s4
+        .div.input-field.col.s12.l6
           =f.date_field :deadline ,type:"text" , class:"datepicker disponible",id:"deadline"
           %label.blue-text{:for => "deadline"}
             ="Fecha que te comprometes a entregar la tarea"
@@ -36,9 +36,3 @@
 
       .actions.top-space2
         = f.submit "Publicar", class:"btn full-width"
-
-
-
-
-
-        

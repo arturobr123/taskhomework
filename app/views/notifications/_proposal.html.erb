@@ -4,9 +4,9 @@
 
       <i class="material-icons circle pink">free_breakfast</i>
 
-      <span class="title"><%= link_to "El usuario #{notification.item.admin.name} ha subido una nueva propuesta a tu tarea: #{notification.item.homework.name}" , notification.item.homework , class:"black-text"  %></span>
+      <span class="title"><%= link_to "El tasker #{notification.item.admin.name} ha subido una nueva propuesta a tu tarea: #{notification.item.homework.name}" , notification.item.homework , class:"black-text"  %></span>
 
-      <p>Fecha: <%= fechaBonita notification.created_at %> </p> 
+      <p>Fecha: <%= fechaBonita notification.created_at %> </p>
 
       <%= link_to notification_path(id: notification.id,notification:{viewed: true}),method: :put, class:"secondary-content" do %>
       		<i>visto</i>

@@ -15,20 +15,20 @@
 				%a{:href => "#test3",:class => ("active" if params[:active_tab] == 'homeworks_finalizadas')} Terminadas
 
 
+-if current_user
+	#test1.row
+		/.col.s12.cards-container
+		.row
+			-if @homeworks_disponibles
+				=render @homeworks_disponibles
 
-#test1.row
-	/.col.s12.cards-container
-	.row
+			-if current_user && @homeworks_disponibles.count <= 0
+				%center.top45
+					%h5
+						="No has creado tareas nuevas"
 		-if @homeworks_disponibles
-			=render @homeworks_disponibles
-
-		-if current_user && @homeworks_disponibles.count <= 0
-			%center.top45
-				%h5
-					="No has creado tareas nuevas"
-	-if @homeworks_disponibles				
-		%center
-			= will_paginate @homeworks_disponibles, param_name:'homeworks_disponibles',params: {active_tab: 'homeworks_disponibles'}
+			%center
+				= will_paginate @homeworks_disponibles, param_name:'homeworks_disponibles',params: {active_tab: 'homeworks_disponibles'}
 
 
 
@@ -60,11 +60,3 @@
 
 	%center
 		= will_paginate @homeworks_finalizadas, param_name:'homeworks_finalizadas',params: {active_tab: 'homeworks_finalizadas'}
-
-
-
-
-
-
-
-
