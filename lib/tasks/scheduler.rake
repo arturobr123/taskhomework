@@ -22,7 +22,7 @@ task :check_classrooms_tasker_not_complete => :environment do
 
 	time = DateTime.now
 
-  @classrooms = Classroom.where("finished = ? and user_accepts is ? and #{finishedDate} < ? and transaction_id is not ?", false, nil, time, nil)
+  @classrooms = Classroom.where("finished = ? and user_accepts is ? and #{"finishedDate"} < ? and transaction_id is not ?", false, nil, time, nil)
 
   merchant_id = 'mnn5gyble3oezlf6ca3v'
 	private_key ='sk_33044f35a7364f81b7139b21327a5927'
