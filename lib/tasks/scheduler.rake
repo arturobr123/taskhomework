@@ -22,7 +22,7 @@ task :check_classrooms_tasker_not_complete => :environment do
 
 	time = DateTime.now
 
-  @classrooms = Classroom.where("finished = ? and user_accepts is ? and #{"finishedDate"} < ? and transaction_id is not ?", false, nil, time, nil)
+  @classrooms = Classroom.where("finished = ? and user_accepts is ? and finished_date < ? and transaction_id is not ?", false, nil, time, nil)
 
   merchant_id = 'mnn5gyble3oezlf6ca3v'
 	private_key ='sk_33044f35a7364f81b7139b21327a5927'
@@ -44,7 +44,7 @@ task :check_classrooms_tasker_not_complete => :environment do
       @charges.refund(classroom.transaction_id, request_hash.to_hash, @homework.user.open_pay_user_id)
 			@homework.update!(status: 3)
 			@proposal.update!(status: 3)
-			classroom.update!(:finished => true, :finishedDate => DateTime.now , :user_accepts => false)
+			classroom.update!(:finished => true, :finished_date => DateTime.now , :user_accepts => false)
 			NotiMailer.refund_user_not_get_homework(@homework.user.email, @homework.user, @homework).deliver
     rescue Exception => e
       puts e.description
@@ -60,7 +60,7 @@ task :check_classrooms => :environment do
 
 	time = DateTime.now - 1.day
 
-  @classrooms = Classroom.where("finished = ? and user_accepts is ? and classrooms.finishedDate < ?", true, nil, time)
+  @classrooms = Classroom.where("finished = ? and user_accepts is ? and finished_date < ?", true, nil, time)
 
   merchant_id = 'mnn5gyble3oezlf6ca3v'
 	private_key ='sk_33044f35a7364f81b7139b21327a5927'

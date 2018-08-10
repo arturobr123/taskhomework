@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180808002645) do
+ActiveRecord::Schema.define(version: 20180810214817) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(version: 20180808002645) do
     t.integer "proposal_id"
     t.boolean "user_accepts"
     t.boolean "finished", default: false
-    t.datetime "finishedDate"
     t.string "transaction_id"
+    t.datetime "finished_date"
     t.index ["admin_id"], name: "index_classrooms_on_admin_id"
     t.index ["homework_id"], name: "index_classrooms_on_homework_id"
     t.index ["proposal_id"], name: "index_classrooms_on_proposal_id"
