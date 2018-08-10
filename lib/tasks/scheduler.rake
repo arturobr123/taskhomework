@@ -45,6 +45,7 @@ task :check_classrooms_tasker_not_complete => :environment do
 			@homework.update!(status: 3)
 			@proposal.update!(status: 3)
 			classroom.update!(:finished => true, :finishedDate => DateTime.now , :user_accepts => false)
+			NotiMailer.refund_user_not_get_homework(@homework.user.email, @homework.user, @homework).deliver
     rescue Exception => e
       puts e.description
     end
@@ -191,6 +192,8 @@ task :send_money => :environment do
 
 				begin
 					@payouts.create(request_hash.to_hash, trabajador.open_pay_user_id)
+					#enviar correo de notficacion al trabajador
+					NotiMailer.pay_ready_worker(trabajador.email, trabajador, @last_earning.to_s).deliver
 					puts "EXITO EN ENVIO DE DINERO!!"
 				rescue Exception => e
 					puts "ERROR"

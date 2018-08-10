@@ -72,4 +72,20 @@ class NotiMailer < ApplicationMailer
     mail(to: email ,subject: "El estudiante ha calificado tu trabajo de la tarea: #{homework.name}")
   end
 
+	#notificar al trabajador que ya se le hizo su pago semanal
+	def pay_ready_worker(email, trabajador, pago)
+		@trabajador = trabajador
+		@pago = pago
+
+		mail(to: email ,subject: "Pago semanal")
+	end
+
+	#notificar al estudiante que el trabajador no cumplió con la treaa, y que se le regresará su dinero
+	def refund_user_not_get_homework(email, user, homework)
+		@user = user
+		@homework = homework
+
+		mail(to: email ,subject: "Rembolso de dinero de la tarea #{homework.name}")
+	end
+
 end
