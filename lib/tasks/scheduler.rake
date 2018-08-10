@@ -22,7 +22,7 @@ task :check_classrooms_tasker_not_complete => :environment do
 
 	time = DateTime.now
 
-  @classrooms = Classroom.joins(:proposal).where(finished: false).where("deadline < ?", time)
+  @classrooms = Classroom.joins(:proposal).where(finished: false).where("transaction_id is not ?", nil).where("deadline < ?", time)
 
   merchant_id = 'mnn5gyble3oezlf6ca3v'
 	private_key ='sk_33044f35a7364f81b7139b21327a5927'
@@ -55,7 +55,7 @@ task :check_classrooms_tasker_not_complete => :environment do
 end
 
 #YA PROBADA :)
-#si ya pasaron 24 horas y el usuario no ha contestando, se tomara como que si le gusto la tarea y se hará el cobro
+#si ya pasaron 24 horas y el usuario no ha contestando, se tomara como que SI le gusto la tarea y se hará el cobro
 task :check_classrooms => :environment do
 
 	time = DateTime.now - 1.day

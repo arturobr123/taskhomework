@@ -26,6 +26,10 @@ class TrabajadoresController < ApplicationController
 			@money = @money - ((@money * 0.179) + 2.5)
 		end
 
+		if @money < 0
+			@money = 0
+		end
+
 	end
 
 
