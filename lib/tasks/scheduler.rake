@@ -98,7 +98,7 @@ task :get_commisions => :environment do
 	private_key ='sk_33044f35a7364f81b7139b21327a5927'
 	openpay = OpenpayApi.new(merchant_id,private_key)
 
-  @trabajadores = Admin.where("open_pay_user_id not ? and open_pay_clabe_id not ?", nil,nil)
+  @trabajadores = Admin.where("open_pay_user_id is not ? and open_pay_clabe_id is not ?", nil,nil)
 
   #CUSTOMERS
   @customers= openpay.create(:customers)
@@ -159,7 +159,7 @@ task :send_money => :environment do
 	private_key ='sk_33044f35a7364f81b7139b21327a5927'
 	openpay = OpenpayApi.new(merchant_id,private_key)
 
-  @trabajadores = Admin.where("open_pay_user_id not ? and open_pay_clabe_id not ?", nil,nil)
+  @trabajadores = Admin.where("open_pay_user_id is not ? and open_pay_clabe_id is not ?", nil,nil)
 
   #CUSTOMERS
   @customers= openpay.create(:customers)
