@@ -65,9 +65,13 @@ class HomeworksController < ApplicationController
 
         #subida de archivos
         if params[:files]
-          params[:files].each { |file|
-            @homework.archives.create!(archivo: file)
-          }
+          begin
+            params[:files].each { |file|
+              @homework.archives.create!(archivo: file)
+            }
+          rescue Exception => e
+            format.html { redirect_to @homework, notice: 'La tarea se creó pero algunos archivos no pudieron subirse'}
+          end
         end
 
         format.html { redirect_to @homework, notice: 'La tarea se creó correctamente.' }

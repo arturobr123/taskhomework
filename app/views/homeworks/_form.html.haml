@@ -22,7 +22,6 @@
         /   = f.text_field :numberpages, class:"" ,id:"numberpages"
         /   = f.label "Número de páginas", class:"blue-text", for:"numberpages"
 
-
         .div.input-field.col.s12.l4
           =f.select :tipo, TC::Type.all.ordenados.collect { |u| [u.tipo, u.id] }, include_blank: "", placeholder:"Placeholder"
           = f.label "Tipo de tarea", class:"blue-text"
@@ -71,14 +70,9 @@
 
         /= file_field_tag "files[]", multiple: true
 
-
-        
-
-                
-
-
-
-
-
       .actions.top-space2
         = f.submit "Publicar", class:"btn full-width"
+
+
+      %center.top30
+        ="Por el momento aceptamos archivos tipo: Word , Power point, Excel, pdf, txt, png/jpg , zip"
