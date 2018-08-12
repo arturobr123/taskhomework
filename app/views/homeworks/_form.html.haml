@@ -37,11 +37,10 @@
 
         .div.input-field.col.s6.l2
           = f.number_field :minPrice, class:"" ,id:"minPrice",placeholder:">=100",autofocus: true
-          = f.label "Minimo(pesos)", class:"blue-text", for:"minPrice"
-
+          = f.label "Minimo(pesos)",{ 'data-position' => "top", 'data-delay' => "50", 'data-tooltip' => "Precio minimo que puedes pagar por la tarea" }, class:"blue-text tooltipped", for:"minPrice"
         .div.input-field.col.s6.l2
           = f.number_field :maxPrice, class:"" ,id:"maxPrice"
-          = f.label "Maximo(pesos)", class:"blue-text", for:"maxPrice"
+          = f.label "Maximo(pesos)",{ 'data-position' => "top", 'data-delay' => "50", 'data-tooltip' => "Precio maximo que puedes pagar por la tarea" }, class:"blue-text tooltipped", for:"maxPrice"
 
         .div.col.s12.l6
           %div.file-field.input-field
@@ -64,7 +63,7 @@
 
 
         .div.input-field.col.full-width
-          = f.text_area :description,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Escribe aqui"
+          = f.text_area :description,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Escribe aqui la descripción: número de páginas, como es el profesor, metodología, etc. En resumen, explica tu tarea"
           = f.label "Descripción", class:"blue-text",for:"textarea1"
 
 

@@ -1,6 +1,6 @@
 class NotiMailer < ApplicationMailer
 
-	default from: 'notification_task@hotmail.com'
+	default from: 'contacto@taskhomework.com'
 
   #Notification when user receives a proposal from a worker
   def notification_proposal(email, proposal, homework)
@@ -86,6 +86,20 @@ class NotiMailer < ApplicationMailer
 		@homework = homework
 
 		mail(to: email ,subject: "Rembolso de dinero de la tarea #{homework.name}")
+	end
+
+	#enviar información a los estudiantes al momento de registrarse
+	def send_info_student_registration(email, user)
+		@user = user
+
+		mail(to: email ,subject: "Bienvenido a Task #{user.name}")
+	end
+
+	#enviar información a los trabajadores al momento de registrarse
+	def send_info_worker_registration(email, worker)
+		@worker = worker
+
+		mail(to: email ,subject: "Bienvenido a Task #{worker.name}")
 	end
 
 end

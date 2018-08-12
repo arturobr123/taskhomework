@@ -18,21 +18,20 @@ class UsuariosController < ApplicationController
 	def show
 	end
 
-
 	def edit
 
 		@openpay = open_pay_var()
 
 		@cards=@openpay.create(:cards)
 
-		@card_numer = ""
+		@card_numer = "error al cargar"
 
 		if current_user.card_id && current_user.open_pay_user_id
 
 			begin
 			  @require_hash = @cards.get(current_user.card_id, current_user.open_pay_user_id)
 			rescue Exception => e
-			  puts e.description.to_s
+			  puts e
 			end
 
 			if @require_hash
@@ -71,7 +70,7 @@ class UsuariosController < ApplicationController
 
 
 	def upload_card(card_number, cvv2, expiration_month, expiration_year)
-		
+
     openpay = open_pay_var()
 
     #CREATE NEW CUSTOMER

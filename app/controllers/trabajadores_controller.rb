@@ -20,14 +20,21 @@ class TrabajadoresController < ApplicationController
 		@money = 0
 		@openpay = open_pay_var()
 		@customers= @openpay.create(:customers)
-		response_hash = @customers.get(current_admin.open_pay_user_id)
-		if response_hash["balance"]
-			@money = response_hash["balance"]
-			@money = @money - ((@money * 0.179) + 2.5)
-		end
+		#response_hash = @customers.get(current_admin.open_pay_user_id)
 
-		if @money < 0
-			@money = 0
+		begin
+			@response_hash = @customers.get(current_admin.open_pay_user_id)
+
+			if @response_hash["balance"]
+				@money = @response_hash["balance"]
+				@money = @money - ((@money * 0.179) + 2.5)
+			end
+
+			if @money < 0
+				@money = 0
+			end
+		rescue Exception => e
+			puts e
 		end
 
 	end
@@ -65,14 +72,15 @@ class TrabajadoresController < ApplicationController
 
 			@bank_accounts=@openpay.create(:bankaccounts)
 
+			@openpay_clabe = "Error al cargar"
+
 			begin
 				@response_hash = @bank_accounts.get(current_admin.open_pay_user_id, current_admin.open_pay_clabe_id)
+				if @response_hash["clabe"]
+					@openpay_clabe = @response_hash["clabe"]
+				end
 			rescue Exception => e
 				puts e
-			end
-
-			if @response_hash["clabe"]
-				@openpay_clabe = @response_hash["clabe"]
 			end
 
 		end

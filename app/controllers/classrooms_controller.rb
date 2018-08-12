@@ -53,11 +53,11 @@ class ClassroomsController < ApplicationController
           format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea. Se le notificará al trabajador' }
           format.json { render :show, status: :created, location: @classroom }
         else
-          format.html { render root_path notice: "ERROR, alguio salió mal, contactanos."}
+          format.html { render root_path, notice: "ERROR, alguio salió mal, contactanos."}
           format.json { render json: @classroom.errors, status: :unprocessable_entity }
         end
       else
-        format.html { redirect_to root_path, notice: 'No se pudo hacer el cargo. Revisa que tengas los fondos necesarios y si no, contactanos.' }
+        format.html { redirect_to root_path, notice: 'No se pudo hacer el cargo. Revisa que tengas los fondos necesarios y conexión a internet y si no, contactanos.' }
       end
     end
   end
@@ -138,10 +138,10 @@ class ClassroomsController < ApplicationController
         #envio de correo al trabajador
         NotiMailer.notify_worker_accepts_homework(@proposal.admin.email, @homework, @classroom).deliver
 
-        format.html { redirect_back(fallback_location: root_path, notice: 'Muchas gracias. Ahora puedes calificar al trabajador en el salon.') }
+        format.html { redirect_back(fallback_location: root_path, notice: 'Muchas gracias. Ahora puedes calificar al tasker en el salon.') }
         format.json { render :show, status: :ok, location: root_path }
       else
-        format.html { redirect_to root_path, notice: 'Hubo un error. Por favor vuelvelo a intentar y si no contactanos.' }
+        format.html { redirect_to root_path, notice: 'Hubo un error. Cheque su conexión a interntet. Por favor vuelvelo a intentar y si no contactanos.' }
       end
     end
 
@@ -198,7 +198,8 @@ class ClassroomsController < ApplicationController
     begin
       @charge = charges.create(request_hash.to_h, homework.user.open_pay_user_id)
     rescue Exception => e
-      puts e.description
+      puts e
+      #puts e.description
       return [false, nil]
     end
 
@@ -221,8 +222,9 @@ class ClassroomsController < ApplicationController
     begin
       transfers.create(new_transaction_hash.to_h, homework.user.open_pay_user_id) #de aqui se sacara el dinero
     rescue Exception => e
-      puts e.description
-      puts e.json_body
+      #puts e.description
+      #puts e.json_body
+      puts e
       return false
     end
 
