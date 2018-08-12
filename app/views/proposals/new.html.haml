@@ -7,5 +7,11 @@
 
 %h5.text-center
 	="Tarea:#{@homework.name}"
+%center
+	%div
+		="Fecha de entrega: #{fechaBonita @homework.deadline}"
+	%div
+		= "Precio: $" + @homework.minPrice.to_s + " - $" + @homework.maxPrice.to_s
+
 
 = render 'form'

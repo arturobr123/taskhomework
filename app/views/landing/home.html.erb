@@ -42,7 +42,7 @@
           <div class="icon-block">
             <h2 class="center brown-text"><i class="medium material-icons originalBlue-text">flash_on</i></h2>
             <h5 class="center">Tareas rápidas</h5>
-            <p class="light texto_justificado">Tu decides cuando quieres la tarea y nuestros taskers la tendrán. Pueden ser tareas de diferentes niveles y de diferentes carreas. Tu seleccionas la propuesta que mas te guste, y ahora simplemente esperas a que llegue.</p>
+            <p class="light texto_justificado">Tu decides cuando quieres la tarea y nuestros taskers la tendrán. Pueden ser tareas de diferentes niveles y de diferentes areas. Tu seleccionas la propuesta que mas te guste, y ahora simplemente esperas a que llegue.</p>
           </div>
         </div>
 
@@ -256,7 +256,8 @@
         <div class="col l3 s12">
           <h5 class="white-text">Links</h5>
           <ul>
-            <li><%=link_to "Iniciar estudiante" , new_user_registration_path, class:"white-text" %></li>
+            <li><%=link_to "Iniciar como estudiante" , new_user_session_path, class:"white-text" %></li>
+            <li><%=link_to "Iniciar como tasker" , new_admin_session_path, class:"white-text" %></li>
             <li><%=link_to "Registrarse" , new_user_registration_path, class:"white-text" %></li>
             <li> <a target="_blank" class="white-text" href="https://s3.amazonaws.com/taskhomework/task.pdf">Aviso de privacidad</a> </li>
           </ul>

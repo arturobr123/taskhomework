@@ -32,8 +32,10 @@ class Proposal < ApplicationRecord
   end
 
   def expiration_date_cannot_be_in_the_past
-    if(deadline < DateTime.now || deadline > self.homework.deadline)
-      errors.add(:deadline, "can't be in the past or before the deadline homework") 
+    if deadline
+      if(deadline < DateTime.now || deadline > self.homework.deadline)
+        errors.add(:deadline, "can't be in the past or before the deadline homework")
+      end
     end
   end
 

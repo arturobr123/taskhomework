@@ -4,8 +4,6 @@
 %body.white-background
   = render "partials/noticeToast"
 
-/%a{:href => "#mostrar"} link text
-
 .row
   /columna de la tarea
   .col.s12.l3.lighten-4
@@ -61,7 +59,7 @@
         %b
           ="Propuestas:#{@homework.proposals.count}"
 
-    -if @homework.classrooms.first
+    -if @homework.classrooms.first && current_admin && current_admin.id == @homework.classrooms.first.admin.id
       %div
         =link_to "Ir al salon", @homework.classrooms.first, class:"btn blue"
 
@@ -79,15 +77,9 @@
 
 
 
-
 %br
 %br
 %br
-
-
-  /.col.s3.l1.lighten-4.full-heigth
-
 
 
 /= link_to 'Edit', edit_homework_path(@homework)
-

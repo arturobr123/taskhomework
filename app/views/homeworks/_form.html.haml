@@ -13,10 +13,9 @@
 
       .row.center-align
 
-
         .div.input-field.col.s12.l4
-          = f.text_field :name, autofocus: true, class:"" ,id:"name"
-          = f.label "Nombre", class:"blue-text", for:"name"
+          = f.text_field :name, autofocus: true, class:"" ,id:"name", placeholder:"Ensayo de..., ecuaciones de..., tarea en ingles, etc"
+          = f.label "Nombre",class:"blue-text", for:"name"
 
         / .div.input-field.col.s12.l4
         /   = f.text_field :numberpages, class:"" ,id:"numberpages"
@@ -63,7 +62,7 @@
 
 
         .div.input-field.col.full-width
-          = f.text_area :description,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Escribe aqui la descripción: número de páginas, como es el profesor, metodología, etc. En resumen, explica tu tarea"
+          = f.text_area :description,id:"textarea1", class:"anchoLetra materialize-textarea",placeholder: "Escribe aqui la descripción: número de páginas, como es el profesor, metodología, etc. En resumen, explica lo que los taskers necesitan saber sobre tu tarea"
           = f.label "Descripción", class:"blue-text",for:"textarea1"
 
 
