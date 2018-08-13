@@ -26,7 +26,7 @@ class Admin < ApplicationRecord
   validates_attachment_content_type :avatar,:content_type => [/\Aimage\/.*\z/]
 
   #despues de que el trabajador es creado, se crea su cuenta en openpay
-  after_create_commit :send_email_info
+  after_create_commit :create_openpay_account, :send_email_info
 
   include CreateToken
 
