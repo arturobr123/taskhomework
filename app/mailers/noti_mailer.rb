@@ -102,4 +102,12 @@ class NotiMailer < ApplicationMailer
 		mail(to: email ,subject: "Bienvenido a Task #{worker.name}")
 	end
 
+#cuando se detecta plagio, le envia la información de porcentaje de plagio e info del mismo al trabajador
+	def send_plagiarism_to_woker(email,worker, info)
+		@worker = worker
+		@info = info
+
+		mail(to: email ,subject: "Task: El algoritmo de plagio detecto un inconveniente")
+	end
+
 end

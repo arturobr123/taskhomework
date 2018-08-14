@@ -165,7 +165,6 @@
 
 
 		/SUBIR NUEVOS ARCHIVOS AL SALON
-
 		-if current_admin
 			=form_tag('/classrooms/uploadFiles', multipart: true) do
 
@@ -175,6 +174,7 @@
 							%span
 								Add new files
 							= file_field_tag "files[]", multiple: true
+							=text_field_tag :type_homework, nil,class:"ocultar type_homework", value: @homework.tipo
 						%div.file-path-wrapper
 							%input.file-path.validate{:type => "text"}
 
@@ -182,9 +182,10 @@
 
 				.col.s12.l2.top15
 					%div.file-field.input-field
-						=button_tag "Subir" , class: 'btn blue' , type: :submit
+						=button_tag "Subir" , class: 'btn blue uploadFile' , type: :submit
 
-
+		.col.s12.l12.top15
+			= render "partials/preloaderPlagiarism"			
 
 		/ARCHIVOS YA SUBIDOS
 		.col.s12.l12.top15
@@ -226,9 +227,10 @@
 		/ -if current_admin
 		/ 	.col.s12.l12.top15
 		/ 		%p.fontSize18
-		/ 			="*Se aceptan pdf, excel, word, jpg, png, videos."
+		/ 			="*Se aceptan pdf, excel, word, jpg, png"
 
 
 
 /est es solo para mostrar el modal de calificar
 #modalRespuestas
+= render "partials/modalShowApplyPlagiarism"

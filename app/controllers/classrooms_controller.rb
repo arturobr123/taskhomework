@@ -8,6 +8,7 @@ class ClassroomsController < ApplicationController
   before_action :check_user_admin, only: [:show]
 
   include OpenPay
+  include CopyLeaks
 
   def index
     @classrooms = Classroom.all
@@ -25,6 +26,7 @@ class ClassroomsController < ApplicationController
     else
       @deadline = "2015, 7, 24"
     end
+
   end
 
 
@@ -78,21 +80,42 @@ class ClassroomsController < ApplicationController
   #Subida de archivos del trabajador al salon
   def uploadFiles
     #subida de archivos
+    @result_plag = [false, []]
     if params[:files]
       params[:files].each { |file|
+
+        if params[:type_homework] == "2" #español, aplica el algoritmo de plagio
+          @result_plag = check_plagiarism_document(file.path)
+          break if @result_plag.first
+        end
+
         @classroom.archive_classrooms.create!(archivo: file)
       }
     end
 
     respond_to do |format|
-      if params[:files]
-        format.html { redirect_to @classroom, notice: 'Subida de archivos exitoso.' }
-        format.json { render :show, status: :ok, location: @classroom }
+      if @result_plag.first == true #SI HUBO PLAGIO
+        NotiMailer.send_plagiarism_to_woker(@classroom.admin.email, @classroom.admin, @result_plag.second).deliver #enviar correo con la info de plagio al tasker
+        format.html { redirect_to plagiarism_checker_path(:info => @result_plag.second), notice: "El algoritmo de plagio detecto algo." }
       else
-        format.html { redirect_to root_path}
-        format.json { render json: @classroom.errors, status: :unprocessable_entity }
+        if params[:files]
+          format.html { redirect_to @classroom, notice: 'Subida de archivos exitoso.' }
+          format.json { render :show, status: :ok, location: @classroom }
+        else
+          format.html { redirect_to @classroom, notice:"No hay archivos que subir"}
+          format.json { render json: @classroom.errors, status: :unprocessable_entity }
+        end
       end
     end
+  end
+
+
+  def plagiarism_checker
+    #fake
+    @info = [{"url"=>"https://www.wikiplanet.click/enciclopedia/es/Revolución_mexicana", "percents"=>"99", "embededComparison"=>"https://copyleaks.com/compare-embed/a904be8a-6f74-4f1c-b4e1-6214a86ee980/5243250"},
+            {"url"=>"http://asambleademajaras.com/videos/detalle_video.php?idvideo=826", "percents"=>"77", "embededComparison"=>"https://copyleaks.com/compare-embed/a904be8a-6f74-4f1c-b4e1-6214a86ee980/5243257"}]
+
+    @info = params[:info]
   end
 
   #el trabajador finaliza la tarea y notifica al estudiante

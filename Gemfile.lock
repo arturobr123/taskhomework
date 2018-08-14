@@ -181,6 +181,8 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
     pg (0.21.0)
+    plagiarism-checker (2.1.2)
+      mimemagic
     public_suffix (3.0.1)
     puma (3.11.2)
     rack (2.0.4)
@@ -312,6 +314,7 @@ DEPENDENCIES
   openpay
   paperclip (~> 5.0.0beta1)
   pg
+  plagiarism-checker
   puma (~> 3.7)
   rails (~> 5.1.4)
   redis (~> 3.0)

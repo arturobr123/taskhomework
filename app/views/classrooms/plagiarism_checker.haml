@@ -1,0 +1,39 @@
+%body.white-background
+= render "partials/noticeToast"
+
+%center
+  %h4.red-text
+    ="Algoritmo de plagio"
+
+  %div
+    %h5.lighter
+      ="Se ha encontrado que en #{@info.length} paginas hay mas del 30% de similitud con su documento"
+
+
+  %div
+    - @info.each_with_index do |info, index|
+      .card.z-depth-2
+        .card-content
+          %span.card-title
+            ="Porcentaje de semejanza: #{info['percents']}%"
+          %div
+
+            %p
+              ="URL:"
+              = link_to info['url'], info['url'],:target => "_blank"
+            %p
+              ="Pagina de similitud donde puedes ver el parecido:"
+              = link_to info['embededComparison'], info['embededComparison'],:target => "_blank"
+
+
+
+  %div.top30
+    %h5.lighter.green-text
+      ="Por favor verifique su documento y arreglelo para poder enviarlo nuevamente."
+    %h5.lighter.green-text
+      ="Le hemos enviado por correo esta misma información."
+
+
+%br
+%br
+%br

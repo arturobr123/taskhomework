@@ -2,13 +2,16 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  #plagiarism_checker
+  get 'classrooms/plagiarism_checker' => 'classrooms#plagiarism_checker', :as => :plagiarism_checker
+
   get "trabajadores/first_phrase" => 'trabajadores#first_phrase', :as => :first_phrase
   get "trabajadores/upload_clabe" => 'trabajadores#upload_clabe', :as => :upload_clabe
   get "trabajadores/phrase" => 'trabajadores#phrase', :as => :phrase
   get "trabajadores/clabe" => 'trabajadores#clabe', :as => :clabeAccount
 
   resources :chat_rooms, only: [:new, :create, :show, :index]
-  
+
   #send insatisfaction comment
   get 'classrooms/send_disagree_homework_email' => 'classrooms#send_disagree_homework_email', :as => :send_disagree_homework_email
   #page to send the insatisfaction comment homework
@@ -98,8 +101,3 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
 end
-
-
-
-
-

@@ -1,0 +1,36 @@
+<h3>TASK</h3>
+
+<h3>
+  Hola <%= @worker.name %>
+</h3>
+
+<p> <%="Se ha encontrado que en #{@info.length} paginas hay mas del 30% de similitud con su documento" %> </p>
+
+<div>
+  <% @info.each_with_index do |info, index| %>
+    <div class="">
+      <div class="">
+        <h5 class="">
+          <%= "Porcentaje de semejanza: #{info['percents']}%" %>
+        </h5>
+        <div>
+          <p>
+            <%= "URL:" %>
+            <%= link_to info['url'], info['url'],:target => "_blank" %>
+          </p>
+          <p>
+            <%= "Pagina de similitud donde puedes ver el parecido:" %>
+            <%= link_to info['embededComparison'], info['embededComparison'],:target => "_blank" %>
+          </p>
+        </div>
+        <p>-------------</p>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<p>
+	Saludos.
+
+	Task 2018.
+</p>
