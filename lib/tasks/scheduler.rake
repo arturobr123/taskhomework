@@ -16,7 +16,7 @@ task :check_homeworks_deadline_past => :environment do
 
 end
 
-#NO PROBADA
+#YA PROBADA :)
 #cuando el tasker no subido nada y ya paso la fecha de entrega, toca regresar el dinero al estudiante
 task :check_classrooms_tasker_not_complete => :environment do
 

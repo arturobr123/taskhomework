@@ -59,9 +59,15 @@
         %b
           ="Propuestas:#{@homework.proposals.count}"
 
+    /boton ir al salon para el tasker y para el estudiante
     -if @homework.classrooms.first && current_admin && current_admin.id == @homework.classrooms.first.admin.id
       %div
         =link_to "Ir al salon", @homework.classrooms.first, class:"btn blue"
+
+    -if @homework.classrooms.first && current_user && current_user.id == @homework.classrooms.first.user.id
+      %div
+        =link_to "Ir al salon", @homework.classrooms.first, class:"btn blue"
+        
 
     -if current_admin && !@homework.classrooms.first
       %div.top15
