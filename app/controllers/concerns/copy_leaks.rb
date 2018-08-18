@@ -9,7 +9,7 @@ module CopyLeaks
 
     # There are currently 3 available products - :businesses, :education, :websites
     begin
-      cloud = CopyleaksApi::CopyleaksCloud.new(email, api_key, :businesses)
+      cloud = CopyleaksApi::CopyleaksCloud.new(email, api_key, :education)
     rescue
       return[false , []]
     end
