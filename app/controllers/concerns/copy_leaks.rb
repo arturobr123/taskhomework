@@ -58,7 +58,7 @@ module CopyLeaks
       embededComparison = temp_info.index("EmbededComparison:")
       embededComparison += 1
 
-      if(number.first.to_f >= 30)
+      if(number.first.to_f >= 25)
         hash = {}
         hash["url"] = temp_info[url]
         hash["percents"] = number.first
