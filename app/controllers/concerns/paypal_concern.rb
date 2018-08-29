@@ -6,7 +6,15 @@ module PaypalConcern
   include PayPal::SDK::REST
   include PayPal::SDK::Core::Logging
 
+  PayPal::SDK.configure(
+  :mode => "live", # "sandbox" or "live"
+  :client_id => "AW_25WLkQtd9wEzKxfRJOOPtfi9uahJ0TzZArIViFECAzvREQixwFX55g9oNQ0fQlGrokUPvNpIfV43g",
+  :client_secret => "EDKPhCRAUerObfYI2HQIFhWk0gN8BEw7hu0hlONUbsSNHjRJVUp3yh_6crfUmOqfzvdwsVu63KJAI3NF",
+  :ssl_options => { } )
+
   def pay_paypal(admin_id, homework_id, proposal_id)
+
+
 
     @homework = Homework.find(homework_id)
     @proposal = Proposal.find(proposal_id)

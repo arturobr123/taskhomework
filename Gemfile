@@ -76,7 +76,6 @@ gem 'plagiarism-checker'
 
 #PAYPAL
 gem 'paypal-sdk-rest'
-gem 'sass', '~> 3.5.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
