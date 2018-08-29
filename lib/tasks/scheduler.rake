@@ -1,5 +1,10 @@
 require 'openpay'
 
+require 'paypal-sdk-rest'
+require 'securerandom'
+include PayPal::SDK::REST
+include PayPal::SDK::Core::Logging
+
 desc "Tasks task"
 
 #YA PROBADA :)
@@ -16,18 +21,13 @@ task :check_homeworks_deadline_past => :environment do
 
 end
 
-#YA PROBADA :)
+#YA PROBADA :) :) CON PAYPAL !! ME MANDA UN CORREO Y YO DEBO DEVOLVER EL PAGO DE MANERA MANUAL
 #cuando el tasker no subido nada y ya paso la fecha de entrega, toca regresar el dinero al estudiante
 task :check_classrooms_tasker_not_complete => :environment do
 
-	time = DateTime.now
+	time = DateTime.now + 2.day
 
-  @classrooms = Classroom.joins(:proposal).where(finished: false).where("transaction_id is not ?", nil).where("deadline < ?", time)
-
-  merchant_id = 'mnn5gyble3oezlf6ca3v'
-	private_key ='sk_33044f35a7364f81b7139b21327a5927'
-	@openpay = OpenpayApi.new(merchant_id,private_key)
-	@charges = @openpay.create(:charges)
+  @classrooms = Classroom.joins(:proposal).where(finished: false).where("deadline < ?", time)
 
   @classrooms.each do |classroom|
   	puts classroom.homework.name
@@ -35,13 +35,7 @@ task :check_classrooms_tasker_not_complete => :environment do
     @homework = Homework.find(classroom.homework_id)
     @proposal = Proposal.find(classroom.proposal_id)
 
-		request_hash={
-      "description" => "Monto de cargo devuelto de la tarea #{@homework.id}",
-      "amount" => @proposal.cost
-    }
-
     begin
-      @charges.refund(classroom.transaction_id, request_hash.to_hash, @homework.user.open_pay_user_id)
 			@homework.update!(status: 3)
 			@proposal.update!(status: 3)
 			classroom.update!(:finished => true, :finished_date => DateTime.now , :user_accepts => false)
@@ -54,18 +48,13 @@ task :check_classrooms_tasker_not_complete => :environment do
 
 end
 
-#YA PROBADA :)
+#YA PROBADA :) CON PAYPAL!!    :( PERO SE QUEDARA EN PAUSA POR LOS PAYOUTS
 #si ya pasaron 24 horas y el usuario no ha contestando, se tomara como que SI le gusto la tarea y se hará el cobro
 task :check_classrooms => :environment do
 
-	time = DateTime.now - 1.day
+	time = DateTime.now + 1.day
 
   @classrooms = Classroom.where("finished = ? and user_accepts is ? and finished_date < ?", true, nil, time)
-
-  merchant_id = 'mnn5gyble3oezlf6ca3v'
-	private_key ='sk_33044f35a7364f81b7139b21327a5927'
-	@openpay = OpenpayApi.new(merchant_id,private_key)
-	@transfers = @openpay.create(:transfers)
 
   @classrooms.each do |classroom|
   	puts classroom.homework.name
@@ -73,22 +62,53 @@ task :check_classrooms => :environment do
     @homework = Homework.find(classroom.homework_id)
     @proposal = Proposal.find(classroom.proposal_id)
 
-    new_transaction_hash={
-	     "customer_id" => @proposal.admin.open_pay_user_id,
-	     "amount" => @proposal.cost,
-	     "description" => "Transferencia entre cuentas tarea #{@homework.id}"
-	  }
+		price = @proposal.cost - (0.15 * @proposal.cost)
+
+    @payout = Payout.new(
+      {
+        :sender_batch_header => {
+          :sender_batch_id => SecureRandom.hex(8),
+          :email_subject => 'Pago por la tarea de: ' + @homework.name,
+        },
+        :items => [
+          {
+            :recipient_type => 'EMAIL',
+            :amount => {
+              :value => price.to_s,
+              :currency => 'MXN'
+            },
+            :note => 'Pago por la tarea de: ' + @homework.name,
+            :receiver =>  @proposal.admin.email, #proposal.admin.email
+            :sender_item_id => "8EKK43ENJJYS2", #aqui el id de la cuenta
+          }
+        ]
+      }
+    )
 
     begin
-      @transfers.create(new_transaction_hash.to_h, @homework.user.open_pay_user_id) #de aqui se sacara el dinero
-      classroom.update(user_accepts: true)
+      @payout_batch = @payout.create
+			puts "bieeen"
+			#classroom.update(user_accepts: true)
     rescue Exception => e
-      puts e.description
+      puts e
     end
 
   end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #YA PROBADA :)
 #obtenemos la comision de los trabajadores, que es el 100 y guardamos su ganancia en la bd tabla EARNINGS

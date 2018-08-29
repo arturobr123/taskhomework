@@ -1,0 +1,26 @@
+<h3>Task</h3>
+
+<p>
+  Hola, Arturo, tienes que enviar el dinero al tasker con la sig info.
+</p>
+
+<p>
+  CORREO DEL TASKER: <%= @email_tasker %>
+</p>
+
+<p>
+  TAREA: <%= @homework.name %>
+</p>
+
+
+<p>
+PAGO: <%= (@classroom.proposal.cost) - (@classroom.proposal.cost * 0.20)  %>
+</p>
+
+<%= link_to  "Ir al salon" , classroom_url(@classroom.id) %>
+
+ <p>
+ 	Saludos.
+
+ 	Task 2018.
+ </p>

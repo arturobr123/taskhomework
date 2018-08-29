@@ -5,7 +5,6 @@ class ProposalsController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :create] #NUEVO
   before_action :own_admin,only: [:destroy,:edit] #NUEVO
 
-  before_action :check_clabe,only: [:new]
   before_action :check_phrase,only: [:new]
 
 
@@ -84,12 +83,6 @@ class ProposalsController < ApplicationController
     def own_admin
       if @proposal.admin.id != current_admin.id
         redirect_to root_path, notice: "No estas autorizado"
-      end
-    end
-
-    def check_clabe
-      if(current_admin.open_pay_clabe_id.nil?)
-        redirect_to clabeAccount_path, notice: "Ingresa tu CLABE para recibir pagos antes de empezara subir propuestas."
       end
     end
 

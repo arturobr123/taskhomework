@@ -9,6 +9,7 @@ class ClassroomsController < ApplicationController
 
   include OpenPay
   include CopyLeaks
+  include PaypalConcern
 
   def index
     @classrooms = Classroom.all
@@ -37,6 +38,40 @@ class ClassroomsController < ApplicationController
   def edit
   end
 
+  def select_proposal_paypal
+    admin_id = params[:admin_id]
+    homework_id = params[:homework_id]
+    proposal_id = params[:proposal_id]
+
+    @result = pay_paypal(admin_id, homework_id, proposal_id)
+
+    respond_to do |format|
+      format.html { redirect_to @result }
+      format.json { render :show, status: :ok, location: root_path}
+    end
+  end
+
+  def create_classroom_paypal
+    admin_id = params[:admin_id]
+    homework_id = params[:homework_id]
+    proposal_id = params[:proposal_id]
+
+    @homework = Homework.find(homework_id)
+    @proposal = Proposal.find(proposal_id)
+
+    @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id)
+
+    respond_to do |format|
+      if @homework.update!(status: 2) && @proposal.update!(status: 2) &&  @classroom.save
+        format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea. Se le notificará al trabajador' }
+        format.json { render :show, status: :created, location: @classroom }
+      else
+        format.html { render root_path, notice: "ERROR, alguio salió mal, contactanos. contacto@taskhomework.com"}
+        format.json { render json: @classroom.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def create
     admin_id = params[:admin_id]
     homework_id = params[:homework_id]
@@ -45,7 +80,7 @@ class ClassroomsController < ApplicationController
     @homework = Homework.find(homework_id)
     @proposal = Proposal.find(proposal_id)
 
-    @pago = pay_user(@homework, @proposal) #antes que nada hace el cobro
+    #@pago = pay_user(@homework, @proposal) #antes que nada hace el cobro
 
     @classroom = Classroom.new(user_id:current_user.id, homework_id: homework_id, admin_id: admin_id, proposal_id:proposal_id, transaction_id: @pago[1])
 
@@ -99,7 +134,7 @@ class ClassroomsController < ApplicationController
         format.html { redirect_to plagiarism_checker_path(:info => @result_plag.second), notice: "El algoritmo de plagio detecto algo." }
       else
         if params[:files]
-          format.html { redirect_to @classroom, notice: 'Subida de archivos exitoso.' }
+          format.html { redirect_to @classroom, notice: 'Subida de archivos exitoso. Si ya terminaste la tarea recuerda darle click al boton "finalizar tarea".' }
           format.json { render :show, status: :ok, location: @classroom }
         else
           format.html { redirect_to @classroom, notice:"No hay archivos que subir"}
@@ -150,7 +185,8 @@ class ClassroomsController < ApplicationController
     @homework = Homework.find(homework_id)
     @proposal = Proposal.find(proposal_id)
 
-    @pago = pay(@homework, @proposal)#hace el pago por open pay
+    #@pago = payout_paypal(@homework, @proposal)
+    @pago = true
 
     @classroom = Classroom.find(classroom_id)
 
@@ -158,7 +194,10 @@ class ClassroomsController < ApplicationController
       if(@pago)
         #actualiza el boleano diciendo que el usuario ya aprobo
         @classroom.update(user_accepts: true)
+
         #envio de correo al trabajador
+        NotiMailer.send_money_to_tasker_homework_complete(@proposal.admin.email, @homework, @classroom).deliver
+        #enviarme correo para pasar el dinero a la cuenta del trabajador
         NotiMailer.notify_worker_accepts_homework(@proposal.admin.email, @homework, @classroom).deliver
 
         format.html { redirect_back(fallback_location: root_path, notice: 'Muchas gracias. Ahora puedes calificar al tasker en el salon.') }
@@ -192,66 +231,11 @@ class ClassroomsController < ApplicationController
       comment = params[:comment]
     end
 
-    NotiMailer.disagree_homework_email(comment, classroom_id , @classroom.homework.user.open_pay_user_id,  @classroom.admin.email).deliver
+    NotiMailer.disagree_homework_email(comment, classroom_id,  @classroom.admin.email , @classroom.proposal.cost).deliver
 
     respond_to do |format|
       format.html { redirect_to @classroom, notice:"Muchas gracias. Se te notificará por correo en 24 horas. Ahora puedes calificar al trabajador." }
     end
-  end
-
-
-  #cuando el usuario acepta quien le hará la tarea, este se le hace el cobro de lo que tiene
-  #asignado la propuesta (y se le agrega a su cuenta en openpay)
-  def pay_user(homework, proposal)
-
-    openpay = open_pay_var()
-
-    request_hash={
-      "method" => "card",
-      "source_id" => homework.user.card_id,
-      "amount" => proposal.cost,
-      "currency" => "MXN",
-      "description" => homework.name,
-      "device_session_id" => "kR1MiQhz2otdIuUlQkbEyitIqVMiI16f"
-
-    }
-    #"order_id" => homework.id #este id puede ser inventado pero debe ser unico
-    charges=openpay.create(:charges)
-
-    begin
-      @charge = charges.create(request_hash.to_h, homework.user.open_pay_user_id)
-    rescue Exception => e
-      puts e
-      #puts e.description
-      return [false, nil]
-    end
-
-    return [true, @charge["id"]] #si se pudo hacer el cargo
-  end
-
-
-  #HACER TRANSFERENCIAS ENTRE CLIENTES USUARIOS
-  def pay(homework, proposal)
-    openpay = open_pay_var()
-
-    new_transaction_hash={
-       "customer_id" => proposal.admin.open_pay_user_id,
-       "amount" => proposal.cost,
-       "description" => "Transferencia entre cuentas tarea #{homework.id}"
-     }
-
-    transfers=openpay.create(:transfers)
-
-    begin
-      transfers.create(new_transaction_hash.to_h, homework.user.open_pay_user_id) #de aqui se sacara el dinero
-    rescue Exception => e
-      #puts e.description
-      #puts e.json_body
-      puts e
-      return false
-    end
-
-    return true
   end
 
   #mostrar el modal para calificar la tarea

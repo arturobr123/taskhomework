@@ -1,25 +1,32 @@
-<!-- #Notification when user receives a proposal from a worker -->
-
-<h3>Task</h3>
-
-<p>
-  Hola, alguien no esta de acuerdo con su tarea.
-</p>
-
-<p>
- 	Comentario:	<%= @comment %>
-</p>
-
-<p>
-	ID DEL SALON  <%= @classroom %>
-</p>
-
-<p>
-	CLAVE: <%= @open_pay_user_id %>
-</p>
+ <h3>Task</h3>
 
  <p>
- 	Saludos.
-
- 	Task 2018.
+   Hola, alguien no esta de acuerdo con tu trabajo entregado en una tarea.
  </p>
+
+ <p>
+  	Comentario:	<%= @comment %>
+ </p>
+
+ <%= link_to  "Ir al salon" , classroom_url(@classroom) %>
+
+
+ <p>
+   Task evaluará la situación y checará si de verdad se cancela la tarea, o se acepta el pago de la tarea.
+ </p>
+
+ <p>
+   user: <%= @salon.homework.user.name %> <%= @salon.homework.user.firs_last_name %>
+   User email: <%= @salon.homework.user.email %>
+ </p>
+
+ <p>
+   Costo:<%= @cost %>
+ </p>
+
+
+  <p>
+  	Saludos.
+
+  	Task 2018.
+  </p>

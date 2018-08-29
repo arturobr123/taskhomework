@@ -16,27 +16,7 @@ class TrabajadoresController < ApplicationController
 		@proposals = @admin.proposals.nuevos.paginate(page:params[:page], per_page:15)
 		@classrooms = @admin.classrooms.where(user_accepts: true)
 
-		##open pay
 		@money = 0
-		@openpay = open_pay_var()
-		@customers= @openpay.create(:customers)
-		#response_hash = @customers.get(current_admin.open_pay_user_id)
-
-		begin
-			@response_hash = @customers.get(current_admin.open_pay_user_id)
-
-			if @response_hash["balance"]
-				@money = @response_hash["balance"]
-				@money = @money - ((@money * 0.179) + 2.5)
-			end
-
-			if @money < 0
-				@money = 0
-			end
-		rescue Exception => e
-			puts e
-		end
-
 	end
 
 

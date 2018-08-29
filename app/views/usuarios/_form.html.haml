@@ -39,49 +39,6 @@
               %input.file-path.validate{:type => "text"}
 
 
-
-        /TARJETA DE CREDITO
-        .col.s12.l12.xl12.offset-s1.top15.bottom30.border-line-creditcard
-
-          %center
-            %h5 Tarjeta credito/debito
-
-          %img{:align => "middle", :alt => "Smiley face", :height => "30", :src => "#{asset_path('cards1.png')}", :class => ""}
-
-          %img{:align => "middle", :alt => "Smiley face", :height => "30", :src => "#{asset_path('cards2.png')}", :class => ""}
-
-
-          -if current_user.card_id
-            %center
-              %p
-                ="Ya tienes una tarjeta agregada."
-                ="Si quieres cambiar tu tarjeta, llena nuevamente los datos con la nueva tarjeta"
-                ="Por seguridad no mostramos toda la información de la tarjeta"
-
-            %center
-              %ul
-                %li
-                  ="Numero de tarjeta: #{@card_numer}"
-
-        .div.col.s12.l4
-          = label_tag('card', 'Credit Card Number:')
-          = text_field_tag('card', nil, maxlength: 20, autocomplete: 'off')
-
-        .div.col.s12.l4
-          = label_tag('cc-cvc', 'CVC:')
-          = text_field_tag('cc_cvc', nil, maxlength: 4, autocomplete: 'off')
-
-
-        .div.col.s12.l4
-          = label_tag('cc-exp-month', 'Expiry Date:')
-          .row
-            .div.col.s12.l6
-              = select_month(Date.new(Date.today.year, 1).beginning_of_month, {use_two_digit_numbers: true}, {id: 'cc-exp-month'})
-            .div.col.s12.l6
-              = select_year(Date.today, {start_year: Date.today.year, end_year: Date.today.year+10}, {id: 'cc-exp-year'})
-
-
-
       .actions.top-space2
         = f.submit "Guardar", class:"btn full-width"
 

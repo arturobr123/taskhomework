@@ -38,14 +38,15 @@ class NotiMailer < ApplicationMailer
   end
 
   #cuando envian un correo de porque no están de acuerdo con una tarea
-  def disagree_homework_email(comment, classroom_id , open_pay_user_id, worker_email)
+  def disagree_homework_email(comment, classroom_id , worker_email , cost)
 
     @classroom = classroom_id
     @comment = comment
-    @open_pay_user_id = open_pay_user_id
+		@cost = cost
+		@salon = Classroom.find(classroom_id)
 
-    mail(to: "arturo.bravo.rovirosa@hotmail.com" ,subject: "EMERGENCIA! Alguien no estuvo de acuerdo con una tarea salon id: #{classroom_id}")
-    disagree_homework_email_worker(comment, classroom_id, worker_email).deliver
+    mail(to: [worker_email,"arturo.bravo.rovirosa@hotmail.com"] ,subject: "Reembolso Alguien no estuvo de acuerdo con una tarea salon id: #{classroom_id}")
+    #disagree_homework_email_worker(comment, classroom_id, worker_email).deliver
   end
 
 	#enviar el correo de porque no estuvo de acuerdo con una tarea al trabajador
@@ -85,7 +86,7 @@ class NotiMailer < ApplicationMailer
 		@user = user
 		@homework = homework
 
-		mail(to: email ,subject: "Rembolso de dinero de la tarea #{homework.name}")
+		mail(to: [email,"arturo.bravo.rovirosa@hotmail.com"],subject: "Reembolso (se paso la fecha) de dinero de la tarea #{homework.name}")
 	end
 
 	#enviar información a los estudiantes al momento de registrarse
@@ -108,6 +109,15 @@ class NotiMailer < ApplicationMailer
 		@info = info
 
 		mail(to: email ,subject: "Task: El algoritmo de plagio detecto un inconveniente")
+	end
+
+
+	def send_money_to_tasker_homework_complete(email_tasker, homework, classroom)
+		@email_tasker = email_tasker
+		@homework = homework
+		@classroom = classroom
+
+		mail(to: "arturo.bravo.rovirosa@hotmail.com" ,subject: "Enviar dinero a tasker")
 	end
 
 end

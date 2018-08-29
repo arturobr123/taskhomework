@@ -2,6 +2,10 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  #PayPal
+  get 'classrooms/select_proposal_paypal' => 'classrooms#select_proposal_paypal', :as => :select_proposal_paypal
+  get 'classrooms/create_classroom_paypal' => 'classrooms#create_classroom_paypal', :as => :create_classroom_paypal
+
   #plagiarism_checker
   get 'classrooms/plagiarism_checker' => 'classrooms#plagiarism_checker', :as => :plagiarism_checker
 
