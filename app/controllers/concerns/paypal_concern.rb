@@ -4,7 +4,6 @@ module PaypalConcern
   require 'paypal-sdk-rest'
   require 'securerandom'
   include PayPal::SDK::REST
-  include PayPal::SDK::Core::Logging
 
   PayPal::SDK.configure(
   :mode => "live", # "sandbox" or "live"
@@ -13,8 +12,6 @@ module PaypalConcern
   :ssl_options => { } )
 
   def pay_paypal(admin_id, homework_id, proposal_id)
-
-
 
     @homework = Homework.find(homework_id)
     @proposal = Proposal.find(proposal_id)
@@ -42,11 +39,8 @@ module PaypalConcern
 
     if @payment.create
       @redirect_url = @payment.links.find{|v| v.rel == "approval_url" }.href
-      logger.info "Payment[#{@payment.id}]"
-      puts @payment.id
       puts @payment.id
       puts "--------"
-      logger.info "Redirect: #{@redirect_url}"
       return @redirect_url
     else
       logger.error @payment.error.inspect

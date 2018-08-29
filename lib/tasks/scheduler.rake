@@ -3,7 +3,6 @@ require 'openpay'
 require 'paypal-sdk-rest'
 require 'securerandom'
 include PayPal::SDK::REST
-include PayPal::SDK::Core::Logging
 
 desc "Tasks task"
 
