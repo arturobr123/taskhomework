@@ -12,7 +12,7 @@ development: &default
 test:
   <<: *default
 production:
-  mode: sandbox
+  mode: live
   client_id: AW_25WLkQtd9wEzKxfRJOOPtfi9uahJ0TzZArIViFECAzvREQixwFX55g9oNQ0fQlGrokUPvNpIfV43g
   client_secret: EDKPhCRAUerObfYI2HQIFhWk0gN8BEw7hu0hlONUbsSNHjRJVUp3yh_6crfUmOqfzvdwsVu63KJAI3NF
 
