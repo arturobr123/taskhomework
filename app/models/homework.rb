@@ -17,7 +17,7 @@ class Homework < ApplicationRecord
   validates :maxPrice, presence: true
   validates :description, presence: true
   validates :deadline, presence: true
-  validates :minPrice, numericality: { greater_than_or_equal_to: 100 }
+  validates :minPrice, numericality: { greater_than_or_equal_to: 20 }
 	validates :maxPrice, numericality: { greater_than_or_equal_to: :minPrice }
   validate :expiration_date_cannot_be_in_the_past,:on => :create
 
