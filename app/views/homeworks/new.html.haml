@@ -6,10 +6,3 @@
 	="Nueva tarea"
 
 = render 'form'
-
-
-%center
-	-if current_user.card_id.nil?
-		="Antes de crear cualquier tarea, debes de ingresar tu tarjeta de credito/debito"
-		= link_to "Subir mi tarjeta", edit_user_path(current_user)
-
