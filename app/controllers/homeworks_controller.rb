@@ -4,7 +4,6 @@ class HomeworksController < ApplicationController
   before_action :authenticate_user!, only: [:new, :destroy,:edit, :update]
   before_action :own_user,only: [:destroy,:edit, :update] #NUEVO
   before_action :authenticate_admin!, only: [:index] #NUEVO
-  before_action :check_user_card, only: [:create]
   before_action :own_user_or_worker, only: [:show]
 
   # GET /homeworks
@@ -142,12 +141,6 @@ class HomeworksController < ApplicationController
         if @homework.user.id != current_user.id
           redirect_to root_path, notice: "No estas autorizado"
         end
-      end
-    end
-
-    def check_user_card
-      if(current_user.card_id.nil?)
-        redirect_to edit_user_path(current_user), notice:"Ingresa tu tarjeta de credito/debito antes de crear tareas."
       end
     end
 
