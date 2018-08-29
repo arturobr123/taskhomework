@@ -16,8 +16,8 @@ module PaypalConcern
       :payer =>  {
         :payment_method =>  "paypal" },
       :redirect_urls => {
-        :return_url => "http://localhost:3000/" +  create_classroom_paypal_path(admin_id: admin_id, homework_id: homework_id, proposal_id: proposal_id),
-        :cancel_url => "http://localhost:3000/" },
+        :return_url => "https://www.taskhomework.com" +  create_classroom_paypal_path(admin_id: admin_id, homework_id: homework_id, proposal_id: proposal_id),
+        :cancel_url => "https://www.taskhomework.com/" },
       :transactions =>  [{
         :item_list => {
           :items => [{

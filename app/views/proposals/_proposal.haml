@@ -44,5 +44,5 @@
 
     -if current_user && !proposal.homework.classrooms.first
       %div.top15
-        /=link_to "Elegir", select_proposal_paypal_path(admin_id: proposal.admin.id, homework_id: proposal.homework.id, proposal_id: proposal.id),data: { confirm: 'Estas seguro de elegir esta propuesta? Se te redirigirá a paypal para pagar con tarjeta de credito o debito' } , class:"btn waves-effect waves-light"
-        =render "partials/buttonPaypal", price: proposal.cost , admin_id: proposal.admin.id, homework_id: proposal.homework.id, proposal_id: proposal.id, homework_name: proposal.homework.name
+        =link_to "Elegir", select_proposal_paypal_path(admin_id: proposal.admin.id, homework_id: proposal.homework.id, proposal_id: proposal.id),data: { confirm: 'Estas seguro de elegir esta propuesta? Se te redirigirá a paypal para pagar con tarjeta de credito o debito' } , class:"btn waves-effect waves-light"
+        /=render "partials/buttonPaypal", price: proposal.cost , admin_id: proposal.admin.id, homework_id: proposal.homework.id, proposal_id: proposal.id, homework_name: proposal.homework.name

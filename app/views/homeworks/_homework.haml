@@ -29,10 +29,16 @@
           = homework.proposals.count
 
         %p.left15
-          %b
-            ="Precio:"
-          /= "$100 - $500"
-          = "$" + homework.minPrice.to_s + " - $" + homework.maxPrice.to_s
+          -if homework.status == 1
+            %b
+              ="Precio:"
+            /= "$100 - $500"
+            = "$" + homework.minPrice.to_s + " - $" + homework.maxPrice.to_s
+          -else
+            -if homework.status == 2 && homework.classrooms.first.proposal.cost
+              %b
+                ="Precio:"
+              = "$" + homework.classrooms.first.proposal.cost.to_s
 
       %div.top15
         %b
