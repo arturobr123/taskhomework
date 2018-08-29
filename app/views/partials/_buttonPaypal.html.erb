@@ -6,7 +6,7 @@
 <input type="hidden" name="item_name" value="Tarea: <%= homework_name %>">
 <input type="hidden" name="tax_rate" value="4">
 <input type="hidden" name="amount" placeholder="Monto a pagar" value=" <%= (price + 4).to_s %> "> <!-- <%= price.to_s %> -->
-<input type="hidden" name="return" value="https://www.taskhomework.com <%= create_classroom_paypal_path(admin_id: admin_id, homework_id: homework_id, proposal_id: proposal_id) %>">
+<input type="hidden" name="return" value="https://www.taskhomework.com<%= create_classroom_paypal_path(admin_id: admin_id, homework_id: homework_id, proposal_id: proposal_id) %>">
 <input type="hidden" name="cancel_return" value="https://www.taskhomework.com/">
 
 <input type="hidden" name="button_subtype" value="services">
