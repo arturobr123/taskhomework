@@ -46,9 +46,35 @@ class ClassroomsController < ApplicationController
     @result = pay_paypal(admin_id, homework_id, proposal_id)
 
     respond_to do |format|
-      format.html { redirect_to @result }
-      format.json { render :show, status: :ok, location: root_path}
+      if @result[1] == true
+        format.html { redirect_to @result[0] }
+      else
+        format.html { render root_path, notice: "ERROR, alguio salió mal, vuelve a intentarlo y si no contactanos."}
+      end
     end
+  end
+
+  def execute_payment_paypal
+
+    admin_id = params[:admin_id]
+    homework_id = params[:homework_id]
+    proposal_id = params[:proposal_id]
+
+    paymentId = params[:paymentId]
+    payerID = params[:PayerID]
+
+    @result = execute_payment(paymentId,payerID)
+
+    respond_to do |format|
+      if @result
+        format.html { redirect_to create_classroom_paypal_path(admin_id: admin_id, homework_id: homework_id, proposal_id: proposal_id) }
+        format.json { render :show, status: :created, location: @classroom }
+      else
+        format.html { render root_path, notice: "ERROR, alguio salió mal, vuelve a intentarlo y si no contactanos."}
+        format.json { render json: @classroom.errors, status: :unprocessable_entity }
+      end
+    end
+
   end
 
   def create_classroom_paypal

@@ -10,36 +10,51 @@ module PaypalConcern
     @homework = Homework.find(homework_id)
     @proposal = Proposal.find(proposal_id)
 
+    #url_return = "https://www.taskhomework.com/classrooms/execute_payment_paypal?admin_id=#{admin_id}&homework_id=#{homework_id}&proposal_id=#{proposal_id}"
+    url_return = "http://localhost:3000/classrooms/execute_payment_paypal?admin_id=#{admin_id}&homework_id=#{homework_id}&proposal_id=#{proposal_id}"
+
+    price = @proposal.cost + ((@proposal.cost * 0.04) + 4)
+
     # Build Payment object
     @payment = Payment.new({
       :intent =>  "sale",
       :payer =>  {
         :payment_method =>  "paypal" },
       :redirect_urls => {
-        :return_url => "https://www.taskhomework.com" +  create_classroom_paypal_path(admin_id: admin_id, homework_id: homework_id, proposal_id: proposal_id),
+        :return_url => url_return,
         :cancel_url => "https://www.taskhomework.com/" },
       :transactions =>  [{
         :item_list => {
           :items => [{
             :name => @homework.name,
             :sku => @homework.name,
-            :price => @proposal.cost.to_s,
+            :price => price.to_s,
             :currency => "MXN",
             :quantity => 1 }]},
         :amount =>  {
-          :total =>  @proposal.cost.to_s,
+          :total =>  price.to_s,
           :currency =>  "MXN" },
         :description =>  @homework.name }]})
 
     if @payment.create
       @redirect_url = @payment.links.find{|v| v.rel == "approval_url" }.href
-      puts @payment.id
-      puts "--------"
-      return @redirect_url
+      return [@redirect_url, true]
     else
-      logger.error @payment.error.inspect
+      return [root_path, false]
     end
 
+  end
+
+  def execute_payment(paymentId, payerID)
+    # ID of the payment. This ID is provided when creating payment.
+    @payment = Payment.find(paymentId)
+
+    # PayerID is required to approve the payment.
+    if @payment.execute( :payer_id => payerID)  # return true or false
+      return true
+    else
+      return false
+    end
   end
 
 

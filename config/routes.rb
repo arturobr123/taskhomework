@@ -3,6 +3,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
 
   #PayPal
+  get 'classrooms/execute_payment_paypal' => 'classrooms#execute_payment_paypal', :as => :execute_payment_paypal
   get 'classrooms/select_proposal_paypal' => 'classrooms#select_proposal_paypal', :as => :select_proposal_paypal
   get 'classrooms/create_classroom_paypal' => 'classrooms#create_classroom_paypal', :as => :create_classroom_paypal
 
