@@ -73,7 +73,7 @@ class HomeworksController < ApplicationController
           end
         end
 
-        format.html { redirect_to @homework, notice: 'La tarea se creó correctamente.' }
+        format.html { redirect_to @homework, notice: 'La tarea se creó correctamente. Ahora espera las propuestas de los taskers' }
         format.json { render :show, status: :created, location: @homework }
       else
         format.html { render :new }

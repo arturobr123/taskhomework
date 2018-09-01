@@ -10,8 +10,8 @@ module PaypalConcern
     @homework = Homework.find(homework_id)
     @proposal = Proposal.find(proposal_id)
 
-    #url_return = "https://www.taskhomework.com/classrooms/execute_payment_paypal?admin_id=#{admin_id}&homework_id=#{homework_id}&proposal_id=#{proposal_id}"
-    url_return = "http://localhost:3000/classrooms/execute_payment_paypal?admin_id=#{admin_id}&homework_id=#{homework_id}&proposal_id=#{proposal_id}"
+    url_return = "https://www.taskhomework.com/classrooms/execute_payment_paypal?admin_id=#{admin_id}&homework_id=#{homework_id}&proposal_id=#{proposal_id}"
+    #url_return = "http://localhost:3000/classrooms/execute_payment_paypal?admin_id=#{admin_id}&homework_id=#{homework_id}&proposal_id=#{proposal_id}"
 
     price = @proposal.cost + ((@proposal.cost * 0.04) + 4)
 

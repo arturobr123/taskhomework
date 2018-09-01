@@ -17,10 +17,6 @@
           = f.text_field :name, autofocus: true, class:"" ,id:"name", placeholder:"Ensayo de..., ecuaciones de..., tarea en ingles, etc"
           = f.label "Nombre",class:"blue-text", for:"name"
 
-        / .div.input-field.col.s12.l4
-        /   = f.text_field :numberpages, class:"" ,id:"numberpages"
-        /   = f.label "Número de páginas", class:"blue-text", for:"numberpages"
-
         .div.input-field.col.s12.l4
           =f.select :tipo, TC::Type.all.ordenados.collect { |u| [u.tipo, u.id] }, include_blank: "", placeholder:"Placeholder"
           = f.label "Tipo de tarea", class:"blue-text"
