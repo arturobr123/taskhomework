@@ -331,6 +331,11 @@ class ClassroomsController < ApplicationController
     end
 
     def check_user_admin
+      #control maestro
+      if(current_admin && current_admin.master_control == true)
+        return true
+      end
+
       if current_user
         if @classroom.user_id == current_user.id
           return true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180810214817) do
+ActiveRecord::Schema.define(version: 20180901182104) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20180810214817) do
     t.string "open_pay_clabe_id"
     t.text "phrase", default: ""
     t.string "last_name", default: ""
+    t.boolean "master_control", default: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
