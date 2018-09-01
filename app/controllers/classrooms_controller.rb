@@ -89,7 +89,7 @@ class ClassroomsController < ApplicationController
 
     respond_to do |format|
       if @homework.update!(status: 2) && @proposal.update!(status: 2) &&  @classroom.save
-        format.html { redirect_to @classroom, notice: 'Se ha creado el salon para la tarea. Se le notificará al trabajador' }
+        format.html { redirect_to @classroom, notice: 'Pago realizado. Se ha creado el salon para la tarea. Se le notificará al tasker' }
         format.json { render :show, status: :created, location: @classroom }
       else
         format.html { render root_path, notice: "ERROR, alguio salió mal, contactanos. contacto@taskhomework.com"}
@@ -257,7 +257,10 @@ class ClassroomsController < ApplicationController
       comment = params[:comment]
     end
 
+    #notificame a mi
     NotiMailer.disagree_homework_email(comment, classroom_id,  @classroom.admin.email , @classroom.proposal.cost).deliver
+    #notifica al tasker
+    NotiMailer.disagree_homework_email_worker(comment, classroom_id,  @classroom.admin.email).deliver
 
     respond_to do |format|
       format.html { redirect_to @classroom, notice:"Muchas gracias. Se te notificará por correo en 24 horas. Ahora puedes calificar al trabajador." }

@@ -45,7 +45,7 @@ class NotiMailer < ApplicationMailer
 		@cost = cost
 		@salon = Classroom.find(classroom_id)
 
-    mail(to: [worker_email,"arturo.bravo.rovirosa@hotmail.com"] ,subject: "Reembolso Alguien no estuvo de acuerdo con una tarea salon id: #{classroom_id}")
+    mail(to: ["arturo.bravo.rovirosa@hotmail.com"] ,subject: "Reembolso Alguien no estuvo de acuerdo con una tarea salon id: #{classroom_id}")
     #disagree_homework_email_worker(comment, classroom_id, worker_email).deliver
   end
 

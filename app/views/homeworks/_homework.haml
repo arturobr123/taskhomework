@@ -35,7 +35,7 @@
             /= "$100 - $500"
             = "$" + homework.minPrice.to_s + " - $" + homework.maxPrice.to_s
           -else
-            -if homework.status == 2 && homework.classrooms.first.proposal.cost
+            -if (homework.status == 2 || homework.status == 3) && homework.classrooms.first.proposal.cost
               %b
                 ="Precio:"
               = "$" + homework.classrooms.first.proposal.cost.to_s
