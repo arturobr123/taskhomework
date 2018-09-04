@@ -1,6 +1,6 @@
 class NotiMailer < ApplicationMailer
 
-	default from: 'contacto@taskhomework.com'
+	default from: 'task@hotmail.com'
 
   #Notification when user receives a proposal from a worker
   def notification_proposal(email, proposal, homework)
