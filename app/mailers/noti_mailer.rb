@@ -120,4 +120,12 @@ class NotiMailer < ApplicationMailer
 		mail(to: "arturo.bravo.rovirosa@hotmail.com" ,subject: "Enviar dinero a tasker")
 	end
 
+	def send_message_classroom(email, homework ,classroom, message)
+		@homework = homework
+		@classroom = classroom
+		@message = message
+
+		mail(to: email ,subject: "Te han enviado un mensaje de la tarea: #{@homework.name}")
+	end
+
 end
