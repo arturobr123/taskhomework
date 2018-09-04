@@ -2,7 +2,7 @@
   .card-content
     %span.card-title
       =link_to proposal.homework.name, proposal.homework
-    
+
     %p.top15
       %b
         ="Notas:"
@@ -20,15 +20,22 @@
           ="Fecha de entrega:"
         = fechaBonita proposal.deadline
 
-      -if proposal.classroom
+      -if proposal.status == 1 && proposal.homework.status == 1
+        %div.top15.left15
+          %b.blue-text
+            ="En espera..."
+
+      -if proposal.status == 1 && proposal.homework.status != 1
         %div.top15.left15
           %b.red-text
-            ="Elegido!"
+            ="No fuiste elegido"
 
+      -if proposal.status == 2
+        %div.top15.left15
+          %b.green-text
+            ="En proceso"
 
-
-
-
-
-
-        
+      -if proposal.status == 3
+        %div.top15.left15
+          %b.green-text
+            ="Terminada"
