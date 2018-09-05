@@ -86,7 +86,7 @@ class NotiMailer < ApplicationMailer
 		@user = user
 		@homework = homework
 
-		mail(to: [email,"arturo.bravo.rovirosa@hotmail.com"],subject: "Reembolso (se paso la fecha) de dinero de la tarea #{homework.name}")
+		mail(to: [email,"contacto@taskhomework.com"],subject: "Reembolso (se paso la fecha) de dinero de la tarea #{homework.name}")
 	end
 
 	#enviar información a los estudiantes al momento de registrarse

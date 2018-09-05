@@ -1,21 +1,31 @@
 require 'openpay'
 
-require 'paypal-sdk-rest'
-require 'securerandom'
-include PayPal::SDK::REST
-
 desc "Tasks task"
+
 
 #YA PROBADA :)
 #las tareas que estan en el estado de espera, si no acepto ninguna propuesta, desde de 24 horas de su deadline, se eliminara.
 task :check_homeworks_deadline_past => :environment do
 
-	time = DateTime.now - 1.day
+	@time = DateTime.now + 12.hours #asi le da 12 horas antes de la fecha de entrega
 
-  @homeworks = Homework.where("status = 1 and  deadline < ?", time)
+  @homeworks = Homework.where("status = 1 and deadline < ?", @time)
 
   @homeworks.each do |homework|
+		# puts homework.deadline.to_datetime
+		# puts x = '%02d' % homework.deadline.to_datetime.hour #hora
+		# puts @time
+		# puts DateTime.now
+		# puts homework.name
+
+		@notifications = Notification.where(item_id: homework.id)
+
+		if(@notifications)
+			@notifications.destroy_all
+		end
+
   	homework.destroy
+
   end
 
 end
@@ -24,7 +34,7 @@ end
 #cuando el tasker no subido nada y ya paso la fecha de entrega, toca regresar el dinero al estudiante
 task :check_classrooms_tasker_not_complete => :environment do
 
-	time = DateTime.now + 2.day
+	time = DateTime.now - 5.hours
 
   @classrooms = Classroom.joins(:proposal).where(finished: false).where("deadline < ?", time)
 
@@ -47,11 +57,10 @@ task :check_classrooms_tasker_not_complete => :environment do
 
 end
 
-#YA PROBADA :) CON PAYPAL!!    :( PERO SE QUEDARA EN PAUSA POR LOS PAYOUTS
-#si ya pasaron 24 horas y el usuario no ha contestando, se tomara como que SI le gusto la tarea y se hará el cobro
+
 task :check_classrooms => :environment do
 
-	time = DateTime.now + 1.day
+	time = DateTime.now - 1.day
 
   @classrooms = Classroom.where("finished = ? and user_accepts is ? and finished_date < ?", true, nil, time)
 
@@ -61,33 +70,13 @@ task :check_classrooms => :environment do
     @homework = Homework.find(classroom.homework_id)
     @proposal = Proposal.find(classroom.proposal_id)
 
-		price = @proposal.cost - (0.15 * @proposal.cost)
-
-    @payout = Payout.new(
-      {
-        :sender_batch_header => {
-          :sender_batch_id => SecureRandom.hex(8),
-          :email_subject => 'Pago por la tarea de: ' + @homework.name,
-        },
-        :items => [
-          {
-            :recipient_type => 'EMAIL',
-            :amount => {
-              :value => price.to_s,
-              :currency => 'MXN'
-            },
-            :note => 'Pago por la tarea de: ' + @homework.name,
-            :receiver =>  @proposal.admin.email, #proposal.admin.email
-            :sender_item_id => "8EKK43ENJJYS2", #aqui el id de la cuenta
-          }
-        ]
-      }
-    )
-
     begin
-      @payout_batch = @payout.create
-			puts "bieeen"
-			#classroom.update(user_accepts: true)
+			#envio de correo al trabajador
+			NotiMailer.send_money_to_tasker_homework_complete(@proposal.admin.email, @homework, classroom).deliver
+			#enviarme correo para pasar el dinero a la cuenta del trabajador
+			NotiMailer.notify_worker_accepts_homework(@proposal.admin.email, @homework, classroom).deliver
+
+			classroom.update(user_accepts: true)
     rescue Exception => e
       puts e
     end
@@ -95,6 +84,68 @@ task :check_classrooms => :environment do
   end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#YA PROBADA :) CON PAYPAL!!    :( PERO SE QUEDARA EN PAUSA POR LOS PAYOUTS
+#si ya pasaron 24 horas y el usuario no ha contestando, se tomara como que SI le gusto la tarea y se hará el cobro
+# task :check_classrooms => :environment do
+#
+# 	time = DateTime.now + 1.day
+#
+#   @classrooms = Classroom.where("finished = ? and user_accepts is ? and finished_date < ?", true, nil, time)
+#
+#   @classrooms.each do |classroom|
+#   	puts classroom.homework.name
+#
+#     @homework = Homework.find(classroom.homework_id)
+#     @proposal = Proposal.find(classroom.proposal_id)
+#
+# 		price = @proposal.cost - (0.15 * @proposal.cost)
+#
+#     @payout = Payout.new(
+#       {
+#         :sender_batch_header => {
+#           :sender_batch_id => SecureRandom.hex(8),
+#           :email_subject => 'Pago por la tarea de: ' + @homework.name,
+#         },
+#         :items => [
+#           {
+#             :recipient_type => 'EMAIL',
+#             :amount => {
+#               :value => price.to_s,
+#               :currency => 'MXN'
+#             },
+#             :note => 'Pago por la tarea de: ' + @homework.name,
+#             :receiver =>  @proposal.admin.email, #proposal.admin.email
+#             :sender_item_id => "8EKK43ENJJYS2", #aqui el id de la cuenta
+#           }
+#         ]
+#       }
+#     )
+#
+#     begin
+#       @payout_batch = @payout.create
+# 			puts "bieeen"
+# 			#classroom.update(user_accepts: true)
+#     rescue Exception => e
+#       puts e
+#     end
+#
+#   end
+#
+# end
 
 
 

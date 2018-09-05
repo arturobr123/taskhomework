@@ -14,7 +14,7 @@
 
 
 <p>
-PAGO: <%= (@classroom.proposal.cost) - (@classroom.proposal.cost * 0.20)  %>
+PAGO: <%= (@classroom.proposal.cost) - ((@classroom.proposal.cost * 0.179) + 4) %>
 </p>
 
 <%= link_to  "Ir al salon" , classroom_url(@classroom.id) %>

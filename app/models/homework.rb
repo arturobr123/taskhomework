@@ -17,7 +17,7 @@ class Homework < ApplicationRecord
   validates :maxPrice, presence: true
   validates :description, presence: true
   validates :deadline, presence: true
-  validates :minPrice, numericality: { greater_than_or_equal_to: 20 }
+  validates :minPrice, numericality: { greater_than_or_equal_to: 100 }
 	validates :maxPrice, numericality: { greater_than_or_equal_to: :minPrice }
   validate :expiration_date_cannot_be_in_the_past,:on => :create
 
@@ -40,8 +40,8 @@ class Homework < ApplicationRecord
   end
 
   def expiration_date_cannot_be_in_the_past
-    if deadline.present? && deadline < DateTime.now
-      errors.add(:deadline, "can't be in the past")
+    if deadline.present? && deadline < DateTime.now + 1.day
+      errors.add(:deadline, "can't be in the past or the date should be 24 hours after current time")
     end
   end
 

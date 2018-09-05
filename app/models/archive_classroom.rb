@@ -15,7 +15,6 @@ class ArchiveClassroom < ApplicationRecord
   	return self.classroom.user_id
   end
 
-
   def notify_user_file
     NotiMailer.upload_file_homework(self.classroom.homework.user.email, self.classroom, self.classroom.homework).deliver
   end
