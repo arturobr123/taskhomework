@@ -37,6 +37,7 @@ class NotiMailer < ApplicationMailer
     mail(to: email ,subject: "HAN TERMINADO TU TAREA: #{homework.name}")
   end
 
+	################
   #cuando envian un correo de porque no están de acuerdo con una tarea
   def disagree_homework_email(comment, classroom_id , worker_email , cost)
 
@@ -81,6 +82,7 @@ class NotiMailer < ApplicationMailer
 		mail(to: email ,subject: "Pago semanal")
 	end
 
+	################
 	#notificar al estudiante que el trabajador no cumplió con la treaa, y que se le regresará su dinero
 	def refund_user_not_get_homework(email, user, homework)
 		@user = user
@@ -111,7 +113,7 @@ class NotiMailer < ApplicationMailer
 		mail(to: email ,subject: "Task: El algoritmo de plagio detecto un inconveniente")
 	end
 
-
+	################
 	def send_money_to_tasker_homework_complete(email_tasker, homework, classroom)
 		@email_tasker = email_tasker
 		@homework = homework
