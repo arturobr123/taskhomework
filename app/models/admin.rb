@@ -25,6 +25,8 @@ class Admin < ApplicationRecord
   has_attached_file :avatar,default_url:"/images/fondoFaurecia4.jpg"
   validates_attachment_content_type :avatar,:content_type => [/\Aimage\/.*\z/]
 
+  after_create_commit :send_email_info
+
   include CreateToken
 
   def unviewed_notifications_count
