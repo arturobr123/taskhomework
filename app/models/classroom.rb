@@ -22,10 +22,10 @@ class Classroom < ApplicationRecord
   end
 
   def notify_worker
-    #notify by email
-    NotiMailer.notification_accepted_homework(self.proposal.admin.email, self.proposal, self.homework).deliver
     #create chat room to chat between them
     ChatRoom.create(user_id: self.user_id, admin_id: self.admin_id, title: self.homework.name, classroom_id: self.id)
+    #notify by email
+    NotiMailer.notification_accepted_homework(self.proposal.admin.email, self.proposal, self.homework).deliver
   end
 
 end
